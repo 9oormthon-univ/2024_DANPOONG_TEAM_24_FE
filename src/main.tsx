@@ -6,6 +6,7 @@ import { createBrowserRouter, RouterProvider } from 'react-router-dom'
 import Information from './pages/Information.tsx'
 
 const router = createBrowserRouter([
+  // 정보 페이지
   { path: '/information', element: <Information /> },
 ])
 

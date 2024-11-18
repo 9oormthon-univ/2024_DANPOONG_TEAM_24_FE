@@ -1,5 +1,5 @@
 {
-  "name": "ieum-client",
+  "name": "2024_DANPOONG_TEAM_24_FE",
   "private": true,
   "version": "0.0.0",
   "type": "module",
@@ -12,7 +12,8 @@
   "dependencies": {
     "react": "^18.3.1",
     "react-dom": "^18.3.1",
-    "react-router-dom": "6"
+    "react-router-dom": "6",
+    "vite-plugin-svgr": "^4.3.0"
   },
   "devDependencies": {
     "@eslint/js": "^9.13.0",
