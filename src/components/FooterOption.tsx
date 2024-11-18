@@ -27,6 +27,8 @@ function FooterOption({ title }: FooterOptionProps) {
   const getIconColor = () => {
     switch (location.pathname) {
       // 추가해서 사용해 주시면 됩니다!
+      case '/around':
+        return title === '내주변' ? '#1C1D1F' : '#A0A4A8'
       case '/information':
         return title === '정보' ? '#1C1D1F' : '#A0A4A8'
       case '/':
@@ -41,6 +43,8 @@ function FooterOption({ title }: FooterOptionProps) {
   const getLinkPath = () => {
     switch (title) {
       // 추가해서 사용해 주시면 됩니다!
+      case '내주변':
+        return '/around'
       case '정보':
         return '/information'
       case '홈':
@@ -53,18 +57,16 @@ function FooterOption({ title }: FooterOptionProps) {
   return (
     <Link to={getLinkPath()}>
       <div
-        className={`flex h-[53px] cursor-pointer ${
-          title === '홈'
-            ? 'relative gap-0 z-30'
-            : 'flex-col gap-1 items-center justify-between w-full'
-        } `}
+        className={`flex h-[53px] cursor-pointer ${title === '홈'
+          ? 'relative gap-0 z-30'
+          : 'flex-col gap-1 items-center justify-between w-full'
+          } `}
       >
         <div
-          className={`flex flex-col items-center  ${
-            title === '홈'
-              ? 'bg-Main rounded-full pt-[15px] w-[68px] h-[68px]'
-              : 'justify-center'
-          }`}
+          className={`flex flex-col items-center  ${title === '홈'
+            ? 'bg-Main rounded-full pt-[15px] w-[68px] h-[68px]'
+            : 'justify-center'
+            }`}
         >
           {iconComponent &&
             React.cloneElement(iconComponent, {
