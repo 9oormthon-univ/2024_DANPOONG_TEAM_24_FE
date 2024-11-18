@@ -1,21 +1,27 @@
+import useAddressStore from '../../store/useAddressStore'
 import LocationIcon from '../../assets/address/Location.svg?react'
 
 interface AddressCardProps {
+  index: number
   selected?: boolean
   address: string
   isLastAddress?: boolean
 }
 
 export default function AddressCard({
+  index,
   selected,
   address,
   isLastAddress,
 }: AddressCardProps) {
+  const { selectAddress } = useAddressStore()
+
   return (
     <div
+      onClick={() => selectAddress(index)}
       className={`py-5 w-full flex flex-row gap-[10px] ${
         isLastAddress ? '' : 'border-b'
-      } border-200 items-center`}
+      } border-200 items-center cursor-pointer`}
     >
       <LocationIcon
         style={{

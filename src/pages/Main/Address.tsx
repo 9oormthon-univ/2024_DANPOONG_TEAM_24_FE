@@ -1,3 +1,4 @@
+import useAddressStore from '../../store/useAddressStore'
 import { Link } from 'react-router-dom'
 import Cn from '../../utils/Cn'
 import search from '../../assets/common/Search.svg'
@@ -6,11 +7,7 @@ import arrow from '../../assets/common/Arrow.svg'
 import AddressCard from '../../components/Main/AddressCard'
 
 export default function Address() {
-  // 더미 주소 데이터입니당
-  const addresses = [
-    { address: '서울 광진구 능동로 209', selected: true },
-    { address: '서울 광진구 능동로 209', selected: false },
-  ]
+  const { addresses } = useAddressStore()
 
   return (
     <>
@@ -55,6 +52,7 @@ export default function Address() {
           {addresses.map((item, index) => (
             <AddressCard
               key={index}
+              index={index}
               selected={item.selected}
               address={item.address}
               isLastAddress={index === addresses.length - 1}
