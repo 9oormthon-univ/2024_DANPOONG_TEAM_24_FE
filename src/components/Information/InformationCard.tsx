@@ -1,5 +1,5 @@
-import yellowDot from '../assets/information/YellowDot.svg'
-import redDot from '../assets/information/RedDot.svg'
+import yellowDot from '../../assets/information/YellowDot.svg'
+import redDot from '../../assets/information/RedDot.svg'
 
 interface informationCardProps {
   title: string
