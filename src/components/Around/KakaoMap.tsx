@@ -1,11 +1,14 @@
 import { useEffect, useState } from 'react'
 import { Map, MapMarker } from 'react-kakao-maps-sdk'
+import FilterButton from './FilterButton'
+import Filter from './Filter'
 
 const KaKaoMap = () => {
   const [userPosition, setUserPosition] = useState({
     lat: 33.450701,
     lng: 126.570667,
   })
+  const [selectedFilter, setSelectedFilter] = useState<number | null>(1)
 
   useEffect(() => {
     if (navigator.geolocation) {
@@ -25,6 +28,10 @@ const KaKaoMap = () => {
     }
   }, [])
 
+  const handleFilterClick = (id: number) => {
+    setSelectedFilter(id === selectedFilter ? null : id)
+  }
+
   return (
     <div className="relative w-full">
       <div id="map" className="w-full">
@@ -34,6 +41,19 @@ const KaKaoMap = () => {
         >
           <MapMarker position={userPosition}></MapMarker>
         </Map>
+        <div className="[&::-webkit-scrollbar]:hidden absolute top-4 left-0 right-0 overflow-x-auto whitespace-nowrap px-4 z-10">
+          <div className="inline-flex space-x-2">
+            {Filter.map((filter) => (
+              <FilterButton
+                key={filter.id}
+                id={filter.id}
+                label={filter.label}
+                selectedFilter={selectedFilter}
+                onClick={handleFilterClick}
+              />
+            ))}
+          </div>
+        </div>
       </div>
     </div>
   )
