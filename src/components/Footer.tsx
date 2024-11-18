@@ -3,9 +3,9 @@ import footerBack from '../assets/common/FooterBack.svg'
 
 function Footer() {
   return (
-    <footer className="fixed bottom-0 left-0 right-0 bg-white z-10">
+    <footer className="fixed bottom-0 left-0 right-0 z-10">
       <div
-        className="relative bg-white bg-cover bg-center"
+        className="relative  bg-cover bg-center"
         style={{
           backgroundImage: `url(${footerBack})`,
           height: '100px',
