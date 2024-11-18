@@ -4,8 +4,11 @@ import logoText from '../assets/common/LogoText.svg'
 import arrow from '../assets/common/Arrow.svg'
 import user from '../assets/common/User.svg'
 import search from '../assets/common/Search.svg'
+import { useNavigate } from 'react-router-dom'
 
 function Header() {
+  const navigation = useNavigate()
+
   return (
     <>
       <header className="mt-7 ml-[17px] mr-[19px]">
@@ -21,16 +24,20 @@ function Header() {
                 src={arrow}
                 alt="Arrow"
                 className="w-4 h-[6px] cursor-pointer"
+                onClick={() => navigation('/address')}
               />
             </div>
             <img
               src={user}
               alt="userIcon"
               className="w-[19px] h-[19px] cursor-pointer"
+              onClick={() => navigation('/mypage')}
             />
           </div>
         </div>
-        {window.location.pathname === '/home' ? (
+
+        {window.location.pathname === '/' ||
+        window.location.pathname === '/around' ? (
           <div className="relative mt-[5.99px] w-full">
             <input
               id="searchStore"
@@ -44,7 +51,7 @@ function Header() {
             <img
               src={search}
               alt="searchIcon"
-              className="absolute top-1/2 left-3 transform -translate-y-1/2 pl-[311px]"
+              className="absolute top-1/2 right-4 transform -translate-y-1/2"
             />
           </div>
         ) : (
