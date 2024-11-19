@@ -13,7 +13,7 @@ const NaviBar: React.FC<NaviProps> = ({ subject }) => {
       <button
         type="button"
         onClick={() => navigate(-1)}
-        className="absolute left-[16px]"
+        className="absolute left-[19px]"
       >
         <img src={arrow} />
       </button>

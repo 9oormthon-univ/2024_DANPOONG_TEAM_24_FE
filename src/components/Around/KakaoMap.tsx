@@ -49,17 +49,17 @@ const KaKaoMap = () => {
   };
 
   return (
-    <div className="relative w-full">
-      <div id="map" className="w-full">
+    <div className="relative">
+      <div id="map" className="max-w-[390px]">
         <Map
           center={mapCenter}
-          style={{ width: '100vw', height: '80vh' }}
+          style={{ width: '100%', height: '80vh' }}
           level={3}
           ref={mapRef} // Map 객체에 ref 연결
         >
           <MapMarker position={userPosition}></MapMarker>
         </Map>
-        <div className="[&::-webkit-scrollbar]:hidden absolute top-4 left-0 right-0 overflow-x-auto whitespace-nowrap px-4 z-10">
+        <div className="[&::-webkit-scrollbar]:hidden absolute top-2 left-0 right-0 overflow-x-auto whitespace-nowrap z-10">
           <div className="inline-flex space-x-2">
             {Filter.map((filter) => (
               <FilterButton
