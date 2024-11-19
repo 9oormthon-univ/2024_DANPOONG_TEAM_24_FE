@@ -65,7 +65,7 @@ export default function Splash() {
       </svg>
       {/* 로그인 유무에 따라 버튼 보이기 */}
       {!isLoggedIn && (
-        <div className="flex flex-col mx-[19px] -mt-[154px] justify-center">
+        <div className="flex flex-col mx-[19px] -mt-[200px] justify-center">
           {/* 카카오 로그인 버튼 */}
           <SocialKakao />
         </div>
