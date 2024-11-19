@@ -22,7 +22,7 @@ const Community: React.FC = () => {
             nickname="익명의 카피바라"
             updateHour={1}
             postId={1}
-            isAll
+            isLabel
           />
         </div>
         <div className="fixed right-[16px] bottom-[108px] z-50">

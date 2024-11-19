@@ -1,6 +1,7 @@
 import React from 'react'
 import Profile from './Profile'
 import CountComponent from './CountComponent'
+import LikeButton from './LikeButton'
 
 const PostContent: React.FC = () => {
   return (
@@ -13,10 +14,13 @@ const PostContent: React.FC = () => {
         GS25 공릉역점 <br />
         서울 노원구 동일로192길 15 https://naver.me/5z5xRoOC
       </div>
-      <div className="flex flex-row justify-start items-center gap-[10px] mt-[10px] mb-[30px]">
-        <CountComponent label="view" count={17} />
-        <CountComponent label="like" count={17} />
-        <CountComponent label="comment" count={17} />
+      <div className="flex h-[28px] justify-between items-center mt-[10px] mb-[21px]">
+        <LikeButton />
+        <div className="flex flex-row items-center gap-[10px]">
+          <CountComponent label="view" count={17} />
+          <CountComponent label="like" count={17} />
+          <CountComponent label="comment" count={17} />
+        </div>
       </div>
     </div>
   )

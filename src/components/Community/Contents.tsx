@@ -8,14 +8,14 @@ interface ContentProps {
   nickname: string
   updateHour: number
   postId: number
-  isAll: boolean
+  isLabel: boolean
 }
 
 const Contents: React.FC<ContentProps> = ({
   nickname,
   updateHour,
   postId,
-  isAll,
+  isLabel,
 }) => {
   const navigate = useNavigate()
 
@@ -43,7 +43,7 @@ const Contents: React.FC<ContentProps> = ({
           <CountComponent label="comment" count={17} />
         </div>
       </div>
-      {isAll ? <Label category="recipe" /> : ''}
+      {isLabel ? <Label category="recipe" /> : ''}
     </div>
   )
 }
