@@ -5,7 +5,7 @@ import arrow from '../assets/common/Arrow.svg'
 import user from '../assets/common/User.svg'
 import search from '../assets/common/Search.svg'
 import { useNavigate } from 'react-router-dom'
-import useAddressStore from '../store/useAddressStore'
+import useAddressStore from '../store/UseAddressStore'
 
 function Header() {
   const navigation = useNavigate()

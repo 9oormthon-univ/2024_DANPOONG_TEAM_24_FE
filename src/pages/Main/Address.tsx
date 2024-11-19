@@ -1,4 +1,4 @@
-import useAddressStore from '../../store/useAddressStore'
+import useAddressStore from '../../store/UseAddressStore'
 import { Link } from 'react-router-dom'
 import Cn from '../../utils/Cn'
 import search from '../../assets/common/Search.svg'

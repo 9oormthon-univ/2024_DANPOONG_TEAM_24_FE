@@ -1,6 +1,9 @@
 import SocialKakao from '../utils/KakaoLogin'
+import useAuthStore from '../store/UseAuthStore'
 
 export default function Splash() {
+  const { isLoggedIn } = useAuthStore()
+
   return (
     <div style={{ width: '100vw', height: '100vh' }}>
       <svg
@@ -60,10 +63,13 @@ export default function Splash() {
           </linearGradient>
         </defs>
       </svg>
-      <div className="flex -mt-[154px] justify-center">
-        {/* 카카오 로그인 버튼 */}
-        <SocialKakao />
-      </div>
+      {/* 로그인 유무에 따라 버튼 보이기 */}
+      {!isLoggedIn && (
+        <div className="flex flex-col mx-[19px] -mt-[154px] justify-center">
+          {/* 카카오 로그인 버튼 */}
+          <SocialKakao />
+        </div>
+      )}
     </div>
   )
 }

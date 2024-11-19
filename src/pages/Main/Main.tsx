@@ -1,4 +1,4 @@
-import { useState, useEffect } from 'react'
+import { useEffect } from 'react'
 import Header from '../../components/Header'
 import Footer from '../../components/Footer'
 import CarouselSlider from '../../components/Main/CarouselSlider'
@@ -15,25 +15,22 @@ import BestPostCard from '../../components/Main/BestPostCard'
 import BackRecipeCarouselSlider from '../../components/Main/BackRecipeCarouselSlider'
 import { Link } from 'react-router-dom'
 import Splash from '../Splash'
+import useAuthStore from '../../store/UseAuthStore'
 
 function Main() {
-  // 초기 스플래시 여부는 false (한 번도 본 적 없으므로)
-  const [showSplash, setShowSplash] = useState(false)
+  const { showSplash, setLoggedIn, setShowSplash } = useAuthStore()
 
-  // 2초 후 스플래시 숨기기
   useEffect(() => {
-    // 세션 스토리지에서 스플래시 여부 확인
-    const hasSeenSplash = sessionStorage.getItem('hasSeenSplash')
-
-    if (!hasSeenSplash) {
-      setShowSplash(true)
-      // 스플래시가 끝나면 세션 스토리지에 플래그 저장
+    const loginStatus = localStorage.getItem('isLoggedIn')
+    if (loginStatus === 'true') {
       setTimeout(() => {
-        setShowSplash(false)
-        sessionStorage.setItem('hasSeenSplash', 'true')
-      }, 5000) // 5초 후 스플래시 숨기기
+        setShowSplash(false) // 스플래시 2초 후 숨기기
+      }, 2000)
+      setLoggedIn(true) // 로그인 상태 설정
+    } else {
+      setShowSplash(true) // 스플래시 화면 유지
     }
-  }, [])
+  }, [setLoggedIn, setShowSplash])
 
   if (showSplash) {
     // 스플래시 화면 표시
