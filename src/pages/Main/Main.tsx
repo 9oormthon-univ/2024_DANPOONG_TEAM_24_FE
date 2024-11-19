@@ -73,61 +73,63 @@ function Main() {
 
   return (
     <>
-      <div className="mb-[31.5px]">
+      <div className="flex flex-col items-center justify-center">
         <Header />
-        <section className="mt-[17px]">
-          <CarouselSlider />
-        </section>
-        <section className="mt-5">
-          <div className="mx-3 px-4 pb-[18px] flex flex-wrap justify-center bg-100 border-[0.4px] border-200 rounded-lg">
-            {svgs.map((svg, index) => (
-              <div
-                key={index}
-                className="mt-4 w-1/4 flex flex-col gap-[7px] justify-center items-center"
-              >
-                <div className="p-2 w-[50px] h-[50px] bg-[#ffffff] flex justify-center border border-200 rounded-[5px] cursor-pointer">
-                  <img src={svg.src} alt={svg.alt} />
+        <div className="mb-[31.5px] w-[390px] ">
+          <section className="mt-[17px]">
+            <CarouselSlider />
+          </section>
+          <section className="mt-5">
+            <div className="mx-3 px-4 pb-[18px] flex flex-wrap justify-center bg-100 border-[0.4px] border-200 rounded-lg">
+              {svgs.map((svg, index) => (
+                <div
+                  key={index}
+                  className="mt-4 w-1/4 flex flex-col gap-[7px] justify-center items-center"
+                >
+                  <div className="p-2 w-[50px] h-[50px] bg-[#ffffff] flex justify-center border border-200 rounded-[5px] cursor-pointer">
+                    <img src={svg.src} alt={svg.alt} />
+                  </div>
+                  <div className="font-M00 text-sm leading-[135%]">
+                    {svg.description}
+                  </div>
                 </div>
-                <div className="font-M00 text-sm leading-[135%]">
-                  {svg.description}
-                </div>
-              </div>
-            ))}
-          </div>
-        </section>
-        <section className="mt-5 px-4">
-          <Link to={'/recipe'}>
-            <img
-              src={introRecipe}
-              alt="Introduce Recipe"
-              className="cursor-pointer"
-            />
-          </Link>
-        </section>
-        <section className="mt-[30px]">
-          <div className="px-[18px] font-M00 text-[18px]">요번주 인기글</div>
-          <div className="px-4">
-            {bestPosts.map((bestPost, index) => (
-              <BestPostCard
-                key={index}
-                contents={bestPost.contents}
-                writer={bestPost.writer}
-                updatedAt={bestPost.updatedAt}
-                category={bestPost.category}
-                views={bestPost.views}
-                likes={bestPost.likes}
-                comments={bestPost.comments}
+              ))}
+            </div>
+          </section>
+          <section className="mt-5 px-4">
+            <Link to={'/recipe'}>
+              <img
+                src={introRecipe}
+                alt="Introduce Recipe"
+                className="cursor-pointer"
               />
-            ))}
-          </div>
-        </section>
-        <section className="mt-[30px] mb-[117px] max-w-[367px]">
-          <div className="px-[18px] mb-[10px] font-M00 text-[18px]">
-            백선생이 추천한 레시피
-          </div>
-          <BackRecipeCarouselSlider />
-        </section>
-        <Footer />
+            </Link>
+          </section>
+          <section className="mt-[30px]">
+            <div className="px-[18px] font-M00 text-[18px]">요번주 인기글</div>
+            <div className="px-4">
+              {bestPosts.map((bestPost, index) => (
+                <BestPostCard
+                  key={index}
+                  contents={bestPost.contents}
+                  writer={bestPost.writer}
+                  updatedAt={bestPost.updatedAt}
+                  category={bestPost.category}
+                  views={bestPost.views}
+                  likes={bestPost.likes}
+                  comments={bestPost.comments}
+                />
+              ))}
+            </div>
+          </section>
+          <section className="mt-[30px] mb-[117px] max-w-[367px]">
+            <div className="px-[18px] mb-[10px] font-M00 text-[18px]">
+              백선생이 추천한 레시피
+            </div>
+            <BackRecipeCarouselSlider />
+          </section>
+          <Footer />
+        </div>
       </div>
     </>
   )

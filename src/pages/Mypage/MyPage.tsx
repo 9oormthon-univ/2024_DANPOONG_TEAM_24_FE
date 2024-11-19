@@ -21,6 +21,10 @@ function MyPage() {
         { src: Like, alt: 'Like', description: '좋아요 누른 글', path: '/mypage/likepost' },
     ];
 
+    const handleClick = () => {
+        navigate('/mypage/comingsoon');
+    };
+
     return (
         <div className="flex flex-col items-center justify-center">
             <div className="max-w-[390px]">
@@ -41,7 +45,7 @@ function MyPage() {
                         <button
                             key={index}
                             className="p-3 bg-100 border border-200 rounded-lg flex flex-col justify-between h-full"
-                            onClick={() => navigate(svg.path)} // 경로를 안전하게 전달
+                            onClick={() => navigate(svg.path)}
                         >
                             <span className="font-SB00 text-sm text-left">{svg.description}</span>
                             <div className="self-end">
@@ -53,8 +57,12 @@ function MyPage() {
 
                 <div className="px-4">
                     {['계정 정보', '서비스 이용약관', '개인정보처리 방침', '로그아웃'].map((text, index) => (
-                        <div key={index} className="py-3 border-b border-200">
-                            <a href="#" className="font-M00 text-m">{text}</a>
+                    <div 
+                        key={index} 
+                        className="py-3 border-b border-200"
+                        onClick={handleClick}
+                    >    
+                        <a className="font-M00 text-m">{text}</a>
                         </div>
                     ))}
                 </div>

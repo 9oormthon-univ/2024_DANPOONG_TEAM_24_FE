@@ -1,4 +1,3 @@
-import React from 'react';
 import { useNavigate } from 'react-router-dom';
 import Backbutton from '../../assets/mypage/Backbutton.svg';
 

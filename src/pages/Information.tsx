@@ -13,7 +13,7 @@ function Information() {
 
   return (
     <>
-      <div className="mb-[53px] relative">
+      <div className="mb-[53px] relative flex flex-col items-center justify-center">
         <Header />
         <section className="mt-[7.49px] pb-[92px] border-t border-200">
           <button

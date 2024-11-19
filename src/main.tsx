@@ -14,6 +14,8 @@ import MyPage from './pages/Mypage/MyPage.tsx'
 import WrittenPost from './pages/Mypage/WrittenPost.tsx'
 import CommentPost from './pages/Mypage/CommentPost.tsx'
 import LikePost from './pages/Mypage/LikePost.tsx'
+import ComingSoon from './pages/Mypage/ComingSoon.tsx'
+
 
 const router = createBrowserRouter([
   { path: '/', element: <Main /> },
@@ -27,6 +29,7 @@ const router = createBrowserRouter([
   { path: '/mypage/writtenpost', element: <WrittenPost /> },
   { path: '/mypage/commentpost', element: <CommentPost /> },
   { path: '/mypage/likepost', element: <LikePost /> },
+  { path: '/mypage/comingsoon', element: <ComingSoon /> },
 
 
 ])

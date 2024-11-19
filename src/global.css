@@ -2,14 +2,6 @@
 @tailwind components;
 @tailwind utilities;
 
-body {
-  -ms-overflow-style: none;
-}
-
-::-webkit-scrollbar {
-  display: none;
-}
-
 @font-face {
   font-family: 'AppleSDGothicNeoSB00';
   font-weight: regular;
@@ -34,3 +26,11 @@ body {
   src: url('./assets/fonts/AppleSDGothicNeoL.ttf'), format('truetype');
 }
 
+
+body {
+  -ms-overflow-style: none;
+}
+
+::-webkit-scrollbar {
+  display: none;
+}
