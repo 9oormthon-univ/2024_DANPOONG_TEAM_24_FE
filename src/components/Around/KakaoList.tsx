@@ -76,49 +76,49 @@ const KakaoList = () => {
   }
 
   return (
-    <div className="mt-2">
-      <div className="[&::-webkit-scrollbar]:hidden mb-4 flex overflow-x-auto whitespace-nowrap space-x-2">
-        <div className="space-x-2">
-          {Filter.map((filter) => (
-            <FilterButton
-              key={filter.id}
-              id={filter.id}
-              label={filter.label}
-              selectedFilter={selectedFilter}
-              onClick={handleFilterClick}
-            />
-          ))}
-        </div>
+    <div className="mt-2 pb-24">
+    <div className="[&::-webkit-scrollbar]:hidden mb-4 flex overflow-x-auto whitespace-nowrap space-x-2">
+      <div className="space-x-2">
+        {Filter.map((filter) => (
+          <FilterButton
+            key={filter.id}
+            id={filter.id}
+            label={filter.label}
+            selectedFilter={selectedFilter}
+            onClick={handleFilterClick}
+          />
+        ))}
       </div>
-      {places.length > 0 ? (
-        <ul className="space-y-2">
-          {places.map((place) => (
-            <li
-              key={place.id}
-              className="p-2 border-b border-200 bg-white cursor-pointer flex justify-between items-center"
-              style={{ width: '390px', height: '120px' }}
-              onClick={() => handlePlaceClick(place.place_url)}
-            >
-              <div>
-                <p className="mb-0.5 text-xl font-M00">
-                  {place.place_name} <span className="text-sm text-point1">{place.distance}m</span>
-                </p>
-                <p className="mb-[12px] text-sm font-R00">{place.address_name}</p>
-                {place.phone && <p className="text-sm font-R00">{place.phone}</p>}
-              </div>
-              <div
-                className="w-24 h-24 rounded-xl"
-                style={{
-                  backgroundColor: '#d3d3d3',
-                }}
-              />
-            </li>
-          ))}
-        </ul>
-      ) : (
-        <p className="text-800">음식점을 불러오는 중입니다...</p>
-      )}
     </div>
+    {places.length > 0 ? (
+      <ul className="space-y-2 overflow-visible">
+        {places.map((place) => (
+          <li
+            key={place.id}
+            className="p-2 border-b border-200 bg-white cursor-pointer flex justify-between items-center"
+            style={{ width: '390px', height: '120px' }}
+            onClick={() => handlePlaceClick(place.place_url)}
+          >
+            <div>
+              <p className="mb-0.5 text-xl font-M00">
+                {place.place_name} <span className="text-sm text-point1">{place.distance}m</span>
+              </p>
+              <p className="mb-[12px] text-sm font-R00">{place.address_name}</p>
+              {place.phone && <p className="text-sm font-R00">{place.phone}</p>}
+            </div>
+            <div
+              className="w-24 h-24 rounded-xl"
+              style={{
+                backgroundColor: '#d3d3d3',
+              }}
+            />
+          </li>
+        ))}
+      </ul>
+    ) : (
+      <p className="text-800">음식점을 불러오는 중입니다...</p>
+    )}
+  </div>
   )
 }
 
