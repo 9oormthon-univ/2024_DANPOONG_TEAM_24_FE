@@ -10,8 +10,8 @@ interface AddressStore {
 const useAddressStore = create<AddressStore>((set, get) => ({
   // 더미 주소 데이터입니다.
   addresses: [
-    { address: '서울 광진구 능동로 209', selected: true },
-    { address: '서울 광진구 능동로 210', selected: false },
+    { address: '광진구 능동로 209', selected: true },
+    { address: '광진구 능동로 210', selected: false },
   ],
   selectedAddress: '서울 광진구 능동로 209',
 
