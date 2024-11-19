@@ -124,7 +124,7 @@ function Main() {
           </section>
           <section className="mt-[30px] mb-[117px] max-w-[367px]">
             <div className="px-[18px] mb-[10px] font-M00 text-[18px]">
-              백선생이 추천한 레시피
+              정부 추천 편의점 건강 레시피
             </div>
             <BackRecipeCarouselSlider />
           </section>
