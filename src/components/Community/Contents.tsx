@@ -47,7 +47,7 @@ const Contents: React.FC<ContentProps> = ({
           <CountComponent label="comment" count={17} />
         </div>
       </div>
-      {isLabel ? <Label category="recipe" /> : ''}
+      {isLabel ? <Label category="레시피 공유" /> : ''}
     </div>
   )
 }

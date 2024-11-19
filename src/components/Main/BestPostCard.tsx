@@ -2,6 +2,7 @@ import preProfile from '../../assets/common/PreProfileImg.svg'
 import viewSvg from '../../assets/common/Views.svg'
 import likeSvg from '../../assets/common/Likes.svg'
 import commentSvg from '../../assets/common/Comments.svg'
+import Label from '../Community/Label'
 
 interface bestPostCardProps {
   contents: string
@@ -24,15 +25,12 @@ export default function BestPostCard({
 }: bestPostCardProps) {
   return (
     <>
-      <div className="mt-[10px] px-[10px] py-4 bg-100 flex flex-col rounded-xl border border-200">
+      <div className="relative mt-[10px] px-[10px] py-4 bg-100 flex flex-col rounded-xl border border-200">
         <div className="flex flex-row gap-[10px]">
           <img src={preProfile} alt="pre profile img" />
           <div className="flex flex-col">
             <div className="font-SB00 text-[14px]">{writer}</div>
             <div className="font-L00 text-xs text-C400">{updatedAt}</div>
-          </div>
-          <div className="ml-[99px] flex items-center justify-center w-[71px] h-6 bg-[#d9d9d9] rounded-md">
-            <div className="font-R00 text-[10px]">{category}</div>
           </div>
         </div>
         <div className="pt-3 font-R00 text-[14px] leading-[135%]">
@@ -52,6 +50,7 @@ export default function BestPostCard({
             <div>{comments}</div>
           </div>
         </div>
+        <Label category={category} />
       </div>
     </>
   )
