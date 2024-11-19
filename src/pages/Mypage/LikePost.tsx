@@ -21,6 +21,7 @@ const LikePost: React.FC = () => {
                             updateHour={post.updateHour}
                             postId={post.postId}
                             isLabel
+                            isLastComment={false}
                         />
                     ))}
                 </div>
