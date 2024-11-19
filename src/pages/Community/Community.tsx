@@ -20,7 +20,7 @@ const Community: React.FC = () => {
         <div className="flex flex-col gap-[10px]">
           <Contents nickname="익명의 카피바라" updateHour={1} postId={1} />
         </div>
-        <div className="fixed right-[16px] bottom-[109px] z-50">
+        <div className="fixed right-[16px] bottom-[108px] z-50">
           <WriteButton />
         </div>
       </div>
