@@ -63,18 +63,16 @@ function FooterOption({ title }: FooterOptionProps) {
   return (
     <Link to={getLinkPath()}>
       <div
-        className={`flex h-[53px] cursor-pointer ${
-          title === '홈'
-            ? 'relative gap-0 z-30'
-            : 'flex-col gap-1 items-center justify-between w-full'
-        } `}
+        className={`flex h-[53px] cursor-pointer ${title === '홈'
+          ? 'relative gap-0 z-30'
+          : 'flex-col gap-1 items-center justify-between w-full'
+          } `}
       >
         <div
-          className={`flex flex-col items-center  ${
-            title === '홈'
-              ? 'bg-Main rounded-full pt-[15px] w-[68px] h-[68px]'
-              : 'justify-center'
-          }`}
+          className={`flex flex-col items-center  ${title === '홈'
+            ? 'bg-Main rounded-full pt-[15px] w-[68px] h-[68px]'
+            : 'justify-center'
+            }`}
         >
           {iconComponent &&
             React.cloneElement(iconComponent, {
