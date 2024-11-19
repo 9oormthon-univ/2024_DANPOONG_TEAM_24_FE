@@ -13,15 +13,15 @@ function Header() {
 
   return (
     <>
-      <header className="mt-7 ml-[17px] mr-[19px]">
-        <div className=" flex justify-between">
+      <header className="mt-7 ml-[17px] mr-[19px] w-[390px]">
+        <div className="flex px-4 gap-[94px]">
           <div className="flex flex-row gap-[10px] items-center">
             <img src={logo} alt="logoIcon" className="w-9 h-9" />
             <img src={logoText} alt="logoText" className="w-[37.33px] h-7" />
           </div>
           <div className="flex flex-row gap-[14.5px] items-center">
             <div className="flex gap-2 items-center">
-              <div className="font-SB00 text-[16px]">
+              <div className="font-SB00 text-[16px] text-ellipsis line-clamp-1">
                 {getSelectedAddress()}
               </div>
               <img

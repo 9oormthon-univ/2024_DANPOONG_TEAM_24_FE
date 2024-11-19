@@ -13,7 +13,7 @@ const useAddressStore = create<AddressStore>((set, get) => ({
     { address: '광진구 능동로 209', selected: true },
     { address: '광진구 능동로 210', selected: false },
   ],
-  selectedAddress: '서울 광진구 능동로 209',
+  selectedAddress: '광진구 능동로 209',
 
   selectAddress: (index) =>
     set((state) => {
