@@ -1,4 +1,4 @@
-import useAddressStore from '../../store/UseAddressStore'
+import useAddressStore from '../../store/useAddressStore'
 import LocationIcon from '../../assets/address/Location.svg?react'
 
 interface AddressCardProps {
