@@ -11,6 +11,8 @@ import Community from './pages/Community/Community.tsx'
 import Write from './pages/Community/Write.tsx'
 import Post from './pages/Community/Post.tsx'
 import MyPage from './pages/MyPage.tsx'
+import Recipe from './pages/Recipe/Recipe.tsx'
+import RecipeReturn from './pages/Recipe/RecipeReturn.tsx'
 
 const router = createBrowserRouter([
   { path: '/', element: <Main /> },
@@ -21,6 +23,8 @@ const router = createBrowserRouter([
   { path: '/community/write', element: <Write /> },
   { path: '/community/:postId', element: <Post /> },
   { path: '/mypage', element: <MyPage /> },
+  { path: '/recipe', element: <Recipe /> },
+  { path: '/recipeReturn', element: <RecipeReturn /> },
 ])
 
 createRoot(document.getElementById('root')!).render(
