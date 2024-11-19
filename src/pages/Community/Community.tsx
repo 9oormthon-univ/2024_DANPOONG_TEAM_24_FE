@@ -21,10 +21,10 @@ const Community: React.FC = () => {
   }, [])
 
   return (
-    <div className="flex flex-col items-center">
+    <div className="flex flex-col items-center bg-white">
       <Header />
       <Footer />
-      <div className="relative w-[390px] flex flex-col items-center">
+      <div className="relative w-screen md:w-[390px] flex flex-col items-center">
         <div className="flex flex-col w-full border-t border-t-200 mt-[10px] items-center">
           <ScrollCategoryBar />
           <div className="flex flex-col gap-[10px]">
@@ -39,7 +39,7 @@ const Community: React.FC = () => {
               />
             ))}
           </div>
-          <div className="fixed right-4 bottom-[108px] 2xl:right-[664px] z-50">
+          <div className="fixed right-4 bottom-[108px] xl:right-[664px] z-50">
             <WriteButton />
           </div>
         </div>
