@@ -5,9 +5,11 @@ import arrow from '../assets/common/Arrow.svg'
 import user from '../assets/common/User.svg'
 import search from '../assets/common/Search.svg'
 import { useNavigate } from 'react-router-dom'
+import useAddressStore from '../store/useAddressStore'
 
 function Header() {
   const navigation = useNavigate()
+  const { getSelectedAddress } = useAddressStore()
 
   return (
     <>
@@ -19,7 +21,9 @@ function Header() {
           </div>
           <div className="flex flex-row gap-[14.5px] items-center">
             <div className="flex gap-2 items-center">
-              <div className="font-SB00 text-[16px]">광진구 능동로 209</div>
+              <div className="font-SB00 text-[16px]">
+                {getSelectedAddress()}
+              </div>
               <img
                 src={arrow}
                 alt="Arrow"
