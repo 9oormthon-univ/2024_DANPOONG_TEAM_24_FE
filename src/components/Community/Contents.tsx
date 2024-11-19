@@ -2,14 +2,21 @@ import React from 'react'
 import CountComponent from './CountComponent'
 import { useNavigate } from 'react-router-dom'
 import Profile from './Profile'
+import Label from './Label'
 
 interface ContentProps {
   nickname: string
   updateHour: number
   postId: number
+  isLabel: boolean
 }
 
-const Contents: React.FC<ContentProps> = ({ nickname, updateHour, postId }) => {
+const Contents: React.FC<ContentProps> = ({
+  nickname,
+  updateHour,
+  postId,
+  isLabel,
+}) => {
   const navigate = useNavigate()
 
   const onClickPost = () => {
@@ -21,7 +28,7 @@ const Contents: React.FC<ContentProps> = ({ nickname, updateHour, postId }) => {
   return (
     <div
       onClick={onClickPost}
-      className="flex w-[358px] h-[144px] items-center justify-center bg-100 rounded-[12px] border border-200"
+      className="relative flex w-[358px] h-[144px] items-center justify-center bg-100 rounded-[12px] border border-200"
     >
       <div className="flex flex-col w-[338px] h-[116px] gap-[10px]">
         <Profile nickname={nickname} updateHour={updateHour} />
@@ -36,6 +43,7 @@ const Contents: React.FC<ContentProps> = ({ nickname, updateHour, postId }) => {
           <CountComponent label="comment" count={17} />
         </div>
       </div>
+      {isLabel ? <Label category="recipe" /> : ''}
     </div>
   )
 }
