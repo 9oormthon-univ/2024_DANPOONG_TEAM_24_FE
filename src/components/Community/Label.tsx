@@ -8,7 +8,7 @@ interface LabelProps {
 const Label: React.FC<LabelProps> = ({ category }) => {
   return (
     <div
-      className={`absolute border border-[0.51px] rounded-[4px] top-[19px] right-[13px] p-1 text-center text-[10px] ${label[category].style}`}
+      className={`absolute border-[0.51px] rounded-[4px] top-[19px] right-[13px] p-1 text-center text-[10px] ${label[category].style}`}
     >
       <p>{label[category].label}</p>
     </div>
