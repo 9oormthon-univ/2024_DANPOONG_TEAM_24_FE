@@ -10,7 +10,7 @@ import Around from './pages/Around.tsx'
 import Community from './pages/Community/Community.tsx'
 import Write from './pages/Community/Write.tsx'
 import Post from './pages/Community/Post.tsx'
-
+import MyPage from './pages/MyPage.tsx'
 
 const router = createBrowserRouter([
   { path: '/', element: <Main /> },
@@ -20,6 +20,7 @@ const router = createBrowserRouter([
   { path: '/community', element: <Community /> },
   { path: '/community/write', element: <Write /> },
   { path: '/community/:postId', element: <Post /> },
+  { path: '/mypage', element: <MyPage /> },
 ])
 
 createRoot(document.getElementById('root')!).render(
