@@ -25,3 +25,11 @@
   font-weight: regular;
   src: url('./assets/fonts/AppleSDGothicNeoL.ttf'), format('truetype');
 }
+
+body {
+  -ms-overflow-style: none;
+}
+
+::-webkit-scrollbar {
+  display: none;
+}

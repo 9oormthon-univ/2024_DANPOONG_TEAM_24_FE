@@ -6,7 +6,7 @@ type InformationModalProps = {
 
 export default function InformationModal({ onClose }: InformationModalProps) {
   return (
-    <div className="fixed top-0 left-0 w-full h-full bg-black/50 flex items-center justify-center z-50">
+    <div className="fixed top-0  w-[390px] h-full bg-black/50 flex items-center justify-center z-50">
       <div className="mx-4 px-4 py-[18px] flex flex-col gap-5 bg-white rounded-lg shadow-lg font-M00 text-[14px] text-800">
         {/* 2024 서울시 지원단가 */}
         <article className="flex flex-row justify-between">
