@@ -15,18 +15,16 @@ const ScrollCategoryBar: React.FC<{ aboutWrite?: boolean }> = ({
   }
 
   const containerClasses = [
-    'w-full',
     'overflow-x-auto',
     'scrollbar-hidden',
-    'px-[16px]',
-    'pt-[10px]',
-    '[&::-webkit-scrollbar]:hidden',
+    'mt-[10px]',
     aboutWrite ? 'pb-[10px]' : 'pb-[16px]',
   ].join(' ')
 
   const buttonContainerClasses = [
     'flex',
     'flex-row',
+    'w-[358px]',
     'justify-start',
     'items-center',
     aboutWrite ? 'gap-[6px]' : 'gap-2',
