@@ -1,3 +1,4 @@
+import { useState, useEffect } from 'react'
 import Header from '../../components/Header'
 import Footer from '../../components/Footer'
 import CarouselSlider from '../../components/Main/CarouselSlider'
@@ -13,8 +14,32 @@ import introRecipe from '../../assets/main/IntroRecipe.svg'
 import BestPostCard from '../../components/Main/BestPostCard'
 import BackRecipeCarouselSlider from '../../components/Main/BackRecipeCarouselSlider'
 import { Link } from 'react-router-dom'
+import Splash from '../Splash'
 
 function Main() {
+  // 초기 스플래시 여부는 false (한 번도 본 적 없으므로)
+  const [showSplash, setShowSplash] = useState(false)
+
+  // 2초 후 스플래시 숨기기
+  useEffect(() => {
+    // 세션 스토리지에서 스플래시 여부 확인
+    const hasSeenSplash = sessionStorage.getItem('hasSeenSplash')
+
+    if (!hasSeenSplash) {
+      setShowSplash(true)
+      // 스플래시가 끝나면 세션 스토리지에 플래그 저장
+      setTimeout(() => {
+        setShowSplash(false)
+        sessionStorage.setItem('hasSeenSplash', 'true')
+      }, 5000) // 5초 후 스플래시 숨기기
+    }
+  }, [])
+
+  if (showSplash) {
+    // 스플래시 화면 표시
+    return <Splash />
+  }
+
   const svgs = [
     { src: all, alt: 'All', description: '전체' },
     { src: korean, alt: 'Korean', description: '한식' },
