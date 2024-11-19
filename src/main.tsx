@@ -15,6 +15,9 @@ import WrittenPost from './pages/Mypage/WrittenPost.tsx'
 import CommentPost from './pages/Mypage/CommentPost.tsx'
 import LikePost from './pages/Mypage/LikePost.tsx'
 import ComingSoon from './pages/Mypage/ComingSoon.tsx'
+import Recipe from './pages/Recipe/Recipe.tsx'
+import RecipeReturn from './pages/Recipe/RecipeReturn.tsx'
+
 
 
 const router = createBrowserRouter([
@@ -30,7 +33,8 @@ const router = createBrowserRouter([
   { path: '/mypage/commentpost', element: <CommentPost /> },
   { path: '/mypage/likepost', element: <LikePost /> },
   { path: '/mypage/comingsoon', element: <ComingSoon /> },
-
+  { path: '/recipe', element: <Recipe /> },
+  { path: '/recipeReturn', element: <RecipeReturn /> },
 
 ])
 
