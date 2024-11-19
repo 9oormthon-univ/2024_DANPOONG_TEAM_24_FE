@@ -1,4 +1,9 @@
-const label = {
+export interface LabelStyle {
+  label: string
+  style: string
+}
+
+const label: Record<string, LabelStyle> = {
   popular: {
     label: '인기글',
     style: 'bg-[#FFF8BE] border-[#F80] text-[#F80]',
