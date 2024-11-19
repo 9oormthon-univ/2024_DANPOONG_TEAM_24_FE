@@ -6,7 +6,7 @@ import green from '../../assets/main/Green.svg'
 import pink from '../../assets/main/Pink.svg'
 
 interface carouselSlideProps {
-  index: Number
+  index: number
 }
 
 export default function CarouselSlide({ index }: carouselSlideProps) {
