@@ -1,5 +1,4 @@
 import { useNavigate } from 'react-router-dom';
-import useAuthStore from '../../store/UseAuthStore';
 import Post from '../../assets/mypage/Post.svg';
 import Comment from '../../assets/mypage/Comment.svg';
 import Like from '../../assets/mypage/Like.svg';
