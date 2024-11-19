@@ -1,25 +1,10 @@
 import React, { useState } from 'react'
 import CategoryButton from './CategoryButton'
+import { categoryArr, writeCategoryArr } from '../../utils/category'
 
 const ScrollCategoryBar: React.FC<{ aboutWrite?: boolean }> = ({
   aboutWrite,
 }) => {
-  const categoryArr = [
-    '전체',
-    '인기글',
-    '레시피 공유',
-    '추천 가맹점',
-    '지원 프로그램 공유',
-    '일상',
-  ]
-
-  const writeCategoryArr = [
-    '레시피 공유',
-    '추천 가맹점',
-    '지원 프로그램 공유',
-    '일상',
-  ]
-
   const [activeCategory, setActiveCategory] = useState<string | null>(
     aboutWrite ? null : '전체'
   )
@@ -48,10 +33,12 @@ const ScrollCategoryBar: React.FC<{ aboutWrite?: boolean }> = ({
     'whitespace-nowrap',
   ].join(' ')
 
+  const categories = aboutWrite ? writeCategoryArr : categoryArr
+
   return (
     <div className={containerClasses}>
       <div className={buttonContainerClasses}>
-        {(aboutWrite ? writeCategoryArr : categoryArr).map((category) => (
+        {categories.map((category) => (
           <CategoryButton
             key={category}
             category={category}
