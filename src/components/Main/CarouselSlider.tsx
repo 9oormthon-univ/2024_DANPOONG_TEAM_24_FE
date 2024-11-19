@@ -40,7 +40,7 @@ export default class CarouselSlider extends Component {
         <div
           style={{
             position: 'absolute',
-            left: '50%',
+            left: '177px',
             paddingBottom: '8px',
             bottom: '8px',
             display: 'flex',

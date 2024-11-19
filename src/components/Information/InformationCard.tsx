@@ -15,7 +15,7 @@ function InformationCard({
   const iconSrc = isAccepted ? True : False
 
   return (
-    <div className="flex items-start px-[18px] py-[14px] gap-[0.5625rem] border border-200 rounded-xl">
+    <div className="flex items-start px-[18px] py-[14px] w-[359px] gap-[0.5625rem] border border-200 rounded-xl">
       <img src={iconSrc} alt="Information of Card" />
       <div>
         <div
