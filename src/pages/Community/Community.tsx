@@ -39,7 +39,7 @@ const Community: React.FC = () => {
               />
             ))}
           </div>
-          <div className="fixed right-4 bottom-[108px] z-50">
+          <div className="fixed right-4 bottom-[108px] 2xl:right-[664px] z-50">
             <WriteButton />
           </div>
         </div>
