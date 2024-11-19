@@ -1,24 +1,32 @@
-import Post from '../assets/mypage/Post.svg'
-import Comment from '../assets/mypage/Comment.svg'
-import Like from '../assets/mypage/Like.svg'
-import Xbutton from '../assets/mypage/Xbutton.svg'
+import Post from '../../assets/mypage/Post.svg'
+import Comment from '../../assets/mypage/Comment.svg'
+import Like from '../../assets/mypage/Like.svg'
+import Xbutton from '../../assets/mypage/Xbutton.svg'
+
 import { useNavigate } from 'react-router-dom'
 
-function MyPage() {
-    const navigation = useNavigate()
+interface SvgItem {
+    src: string;
+    alt: string;
+    description: string;
+    path: string;
+}
 
-    const svgs = [
-        { src: Post, alt: 'Post', description: '작성한 글' },
-        { src: Comment, alt: 'Comment', description: '댓글 단 글' },
-        { src: Like, alt: 'Like', description: '좋아요 누른 글' },
+function MyPage() {
+    const navigate = useNavigate()
+
+    const svgs: SvgItem[] = [
+        { src: Post, alt: 'Post', description: '작성한 글', path: '/mypage/writtenpost' },
+        { src: Comment, alt: 'Comment', description: '댓글 단 글', path: '/mypage/commentpost' },
+        { src: Like, alt: 'Like', description: '좋아요 누른 글', path: '/mypage/likepost' },
     ];
 
     return (
         <div>
-            <div className="flex items-center justify-center p-3 relative">
+            <div className="flex items-center justify-center p-3 relative pt-[20px]">
                 <p className="text-lg font-SB00 text-center">마이페이지</p>
-                <button onClick={() => navigation(-1)} className="absolute right-4">
-                    <img src={Xbutton} alt="Close"/>
+                <button onClick={() => navigate(-1)} className="absolute right-4">
+                    <img src={Xbutton} alt="Close" />
                 </button>
             </div>
 
@@ -33,6 +41,7 @@ function MyPage() {
                     <button
                         key={index}
                         className="p-3 bg-100 border border-200 rounded-lg flex flex-col justify-between h-full"
+                        onClick={() => navigate(svg.path)} // 경로를 안전하게 전달
                     >
                         <span className="font-SB00 text-sm text-left">{svg.description}</span>
                         <div className="self-end">
