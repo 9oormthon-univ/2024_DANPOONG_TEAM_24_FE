@@ -42,7 +42,7 @@ function Header() {
 
         {window.location.pathname === '/' ||
         window.location.pathname === '/around' ? (
-          <div className="relative mt-[5.99px] w-full">
+          <div className="relative mt-[5.99px] mx-4">
             <input
               id="searchStore"
               type="text"
