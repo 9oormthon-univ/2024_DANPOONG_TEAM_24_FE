@@ -1,5 +1,5 @@
-import yellowDot from '../assets/information/YellowDot.svg'
-import redDot from '../assets/information/RedDot.svg'
+import True from '../../assets/information/True.svg'
+import False from '../../assets/information/False.svg'
 
 interface informationCardProps {
   title: string
@@ -12,11 +12,11 @@ function InformationCard({
   description,
   isAccepted,
 }: informationCardProps) {
-  const iconSrc = isAccepted ? yellowDot : redDot
+  const iconSrc = isAccepted ? True : False
 
   return (
-    <div className="h-[120px] flex items-start px-[18px] py-[27px] gap-[0.5625rem] border border-200 rounded-xl">
-      <img src={iconSrc} alt="informationDot" />
+    <div className="flex items-start px-[18px] py-[14px] w-[359px] gap-[0.5625rem] border border-200 rounded-xl">
+      <img src={iconSrc} alt="Information of Card" />
       <div>
         <div
           className={`font-SB00 text-800 text-[16px] leading-[140%] whitespace-pre-line ${

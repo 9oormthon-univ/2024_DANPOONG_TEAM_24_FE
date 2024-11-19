@@ -1,0 +1,11 @@
+<!-- FooterBack.svg -->
+<svg width="390" height="101" viewBox="0 0 390 101" xmlns="http://www.w3.org/2000/svg">
+  <path
+    fill-rule="evenodd"
+    clip-rule="evenodd"
+    d="M165.487 13.5032C172.8 5.51358 183.315 0.503174 195 0.503174C206.685 0.503174 217.2 5.51359 224.513 13.5032L390 13.5032V14.5032V15.5032V100.503H0V15.5032V14.5032V13.5032L165.487 13.5032Z"
+    stroke="#CBCDD2"    
+    stroke-width="1"     
+    fill="white"
+  />
+</svg>
