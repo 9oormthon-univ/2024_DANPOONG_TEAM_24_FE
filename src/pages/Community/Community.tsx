@@ -18,9 +18,14 @@ const Community: React.FC = () => {
         <ScrollCategoryBar />
         {/* map 함수를 사용하여 나타낼 예정입니다! */}
         <div className="flex flex-col gap-[10px]">
-          <Contents nickname="익명의 카피바라" updateHour={1} postId={1} />
+          <Contents
+            nickname="익명의 카피바라"
+            updateHour={1}
+            postId={1}
+            isLabel
+          />
         </div>
-        <div className="fixed right-[16px] bottom-[109px] z-50">
+        <div className="fixed right-[16px] bottom-[108px] z-50">
           <WriteButton />
         </div>
       </div>
