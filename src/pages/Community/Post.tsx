@@ -19,7 +19,7 @@ const Post: React.FC = () => {
   ]
 
   return (
-    <div className="flex flex-col">
+    <div className="flex flex-col bg-white">
       <NaviBar subject={category} />
       <div className="flex flex-col border-t border-t-200 items-center">
         <PostContent />

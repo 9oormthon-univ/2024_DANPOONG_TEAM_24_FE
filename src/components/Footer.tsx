@@ -3,7 +3,7 @@ import footerBack from '../assets/common/FooterBack.svg'
 
 function Footer() {
   return (
-    <footer className="fixed bottom-0 left-0 right-0 z-10">
+    <footer className="fixed bottom-0 z-10 w-[390px]">
       <div
         className="relative  bg-cover bg-center"
         style={{
