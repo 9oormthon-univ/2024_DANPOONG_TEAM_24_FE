@@ -1,9 +1,9 @@
-import Post from '../../assets/mypage/Post.svg'
-import Comment from '../../assets/mypage/Comment.svg'
-import Like from '../../assets/mypage/Like.svg'
-import Xbutton from '../../assets/mypage/Xbutton.svg'
-
-import { useNavigate } from 'react-router-dom'
+import { useNavigate } from 'react-router-dom';
+import useAuthStore from '../../store/UseAuthStore';
+import Post from '../../assets/mypage/Post.svg';
+import Comment from '../../assets/mypage/Comment.svg';
+import Like from '../../assets/mypage/Like.svg';
+import Xbutton from '../../assets/mypage/Xbutton.svg';
 
 interface SvgItem {
     src: string;
@@ -25,6 +25,10 @@ function MyPage() {
         navigate('/mypage/comingsoon');
     };
 
+    const handleLogout = () => {
+        navigate('/'); 
+    };
+
     return (
         <div className="flex flex-col items-center justify-center">
             <div className="max-w-[390px]">
@@ -35,8 +39,7 @@ function MyPage() {
                     </button>
                 </div>
                 <div className="border-t border-200 bg-Main w-full h-[212px] flex flex-col items-center justify-center">
-                    <div className="w-[96px] h-[96px] rounded-full bg-200 mb-[16px]">
-                    </div>
+                    <div className="w-[96px] h-[96px] rounded-full bg-200 mb-[16px]"></div>
                     <p className="font-SB00 mb-3">익명의 고슴도치</p>
                 </div>
                 <p className="w-full px-4 pt-6 pb-2 font-SB00">활동내역</p>
@@ -56,15 +59,14 @@ function MyPage() {
                 </div>
 
                 <div className="px-4">
-                    {['계정 정보', '서비스 이용약관', '개인정보처리 방침', '로그아웃'].map((text, index) => (
-                    <div 
-                        key={index} 
-                        className="py-3 border-b border-200"
-                        onClick={handleClick}
-                    >    
-                        <a className="font-M00 text-m">{text}</a>
+                    {['계정 정보', '서비스 이용약관', '개인정보처리 방침'].map((text, index) => (
+                        <div key={index} className="py-3 border-b border-200" onClick={handleClick}>
+                            <a className="font-M00 text-m">{text}</a>
                         </div>
                     ))}
+                    <div className="py-3 border-b border-200 cursor-pointer" onClick={handleLogout}>
+                        <span className="font-M00 text-m">로그아웃</span>
+                    </div>
                 </div>
             </div>
         </div>
