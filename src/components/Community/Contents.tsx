@@ -9,6 +9,7 @@ interface ContentProps {
   updateHour: number
   postId: number
   isLabel: boolean
+  isLastComment: boolean
 }
 
 const Contents: React.FC<ContentProps> = ({
@@ -16,19 +17,22 @@ const Contents: React.FC<ContentProps> = ({
   updateHour,
   postId,
   isLabel,
+  isLastComment,
 }) => {
   const navigate = useNavigate()
 
   const onClickPost = () => {
     navigate(`${postId}`, {
-      state: { nickname: { nickname }, updateHour: { updateHour } },
+      state: { nickname, updateHour },
     })
   }
 
   return (
     <div
       onClick={onClickPost}
-      className="relative flex w-[358px] h-[144px] items-center justify-center bg-100 rounded-[12px] border border-200"
+      className={`relative flex w-[358px] h-[144px] items-center justify-center bg-100 rounded-[12px] border border-200 ${
+        isLastComment ? 'mb-[103px]' : ''
+      }`}
     >
       <div className="flex flex-col w-[338px] h-[116px] gap-[10px]">
         <Profile nickname={nickname} updateHour={updateHour} />

@@ -8,9 +8,9 @@ import CompleteButton from '../../components/Community/CompleteButton'
 
 const Write: React.FC = () => {
   return (
-    <div>
+    <div className="flex flex-col items-center bg-white">
       <NaviBar subject="글쓰기" />
-      <div className="flex flex-col border-t border-t-200 items-center gap-[30px]">
+      <div className="flex flex-col w-screen md:w-[390px] border-t border-t-200 items-center gap-[30px]">
         <Notice />
         <div className="flex flex-col items-center">
           <ScrollCategoryBar aboutWrite />

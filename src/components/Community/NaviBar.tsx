@@ -9,7 +9,7 @@ interface NaviProps {
 const NaviBar: React.FC<NaviProps> = ({ subject }) => {
   const navigate = useNavigate()
   return (
-    <div className="relative flex items-center justify-center py-[11px]">
+    <div className="relative w-[390px] flex items-center justify-center py-[11px]">
       <button
         type="button"
         onClick={() => navigate(-1)}
