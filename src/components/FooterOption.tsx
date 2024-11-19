@@ -26,11 +26,16 @@ function FooterOption({ title }: FooterOptionProps) {
 
   const getIconColor = () => {
     switch (location.pathname) {
-      // 추가해서 사용해 주시면 됩니다!
+      case '/around':
+        return title === '내주변' ? '#1C1D1F' : '#A0A4A8'
       case '/information':
         return title === '정보' ? '#1C1D1F' : '#A0A4A8'
       case '/':
         return title === '홈' ? '#1C1D1F' : '#A0A4A8'
+      case '/community':
+        return title === '커뮤니티' ? '#1C1D1F' : '#A0A4A8'
+      case '/recipe':
+        return title === '레시피' ? '#1C1D1F' : '#A0A4A8'
       default:
         return '#A0A4A8'
     }
@@ -40,11 +45,16 @@ function FooterOption({ title }: FooterOptionProps) {
 
   const getLinkPath = () => {
     switch (title) {
-      // 추가해서 사용해 주시면 됩니다!
+      case '내주변':
+        return '/around'
       case '정보':
         return '/information'
       case '홈':
         return '/'
+      case '커뮤니티':
+        return '/community'
+      case '레시피':
+        return '/recipe'
       default:
         return '/'
     }
