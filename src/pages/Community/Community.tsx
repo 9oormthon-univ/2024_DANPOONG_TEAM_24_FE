@@ -11,7 +11,7 @@ const Community: React.FC = () => {
   }, [])
 
   return (
-    <>
+    <div className="flex flex-col items-center">
       <Header />
       <Footer />
       <div className="flex flex-col border-t border-t-200 mt-[10px] items-center">
@@ -29,7 +29,7 @@ const Community: React.FC = () => {
           <WriteButton />
         </div>
       </div>
-    </>
+    </div>
   )
 }
 
