@@ -6,13 +6,17 @@ import LikeButton from './LikeButton'
 const PostContent: React.FC = () => {
   return (
     <div className="flex flex-col justify-start px-4 pt-[39px]">
-      <Profile nickname="익명의 카피바라" updateHour={1} />
-      <div className="w-[358px] mt-[30px] text-start text-sm font-L00 text-800 leading-135 whitespace-pre-wrap">
+      <div className="flex flex-col gap-[18px]">
+        <Profile nickname="익명의 카피바라" updateHour={1} />
+        <div className="text-800 text-base font-SB00 font-normal">제목</div>
+      </div>
+      <div className="w-[358px] mt-[18px] text-start text-sm font-L00 text-800 leading-135 whitespace-pre-wrap">
         00님 편의점 레시피 시도했는데 맛있어요! 먹기 좋은 편의점 위치도
         공유합니다 <br />
         <br />
         GS25 공릉역점 <br />
-        서울 노원구 동일로192길 15 https://naver.me/5z5xRoOC
+        서울 노원구 동일로192길 15 <br />
+        https://naver.me/5z5xRoOC
       </div>
       <div className="flex h-[28px] justify-between items-center mt-[10px] mb-[21px]">
         <LikeButton />
