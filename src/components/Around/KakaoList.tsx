@@ -76,7 +76,7 @@ const KakaoList = () => {
   }
 
   return (
-    <div className="p-4 w-full">
+    <div className="mt-2">
       <div className="[&::-webkit-scrollbar]:hidden mb-4 flex overflow-x-auto whitespace-nowrap space-x-2">
         <div className="space-x-2">
           {Filter.map((filter) => (
@@ -96,7 +96,7 @@ const KakaoList = () => {
             <li
               key={place.id}
               className="p-2 border-b border-200 bg-white cursor-pointer flex justify-between items-center"
-              style={{ height: '120px' }}
+              style={{ width: '390px', height: '120px' }}
               onClick={() => handlePlaceClick(place.place_url)}
             >
               <div>

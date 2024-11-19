@@ -10,17 +10,20 @@ const CommentPost: React.FC = () => {
     ];
 
     return (
-        <div>
-            <MyPageHeader title="댓글 단 글" />
-            <div className="p-4 flex flex-col gap-4 border-t border-200">
-                {commentPost.map((post) => (
-                    <Contents
-                        key={post.postId}
-                        nickname={post.nickname}
-                        updateHour={post.updateHour}
-                        postId={post.postId}
-                    />
-                ))}
+        <div className="flex flex-col items-center justify-center">
+            <div className="max-w-[390px]">
+                <MyPageHeader title="댓글 단 글" />
+                <div className="p-4 flex flex-col gap-4 border-t border-200">
+                    {commentPost.map((post) => (
+                        <Contents
+                            key={post.postId}
+                            nickname={post.nickname}
+                            updateHour={post.updateHour}
+                            postId={post.postId}
+                            isLabel
+                        />
+                    ))}
+                </div>
             </div>
         </div>
     );
