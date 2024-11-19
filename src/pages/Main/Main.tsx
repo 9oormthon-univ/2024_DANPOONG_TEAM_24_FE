@@ -1,3 +1,4 @@
+import { useEffect } from 'react'
 import Header from '../../components/Header'
 import Footer from '../../components/Footer'
 import CarouselSlider from '../../components/Main/CarouselSlider'
@@ -13,8 +14,29 @@ import introRecipe from '../../assets/main/IntroRecipe.svg'
 import BestPostCard from '../../components/Main/BestPostCard'
 import BackRecipeCarouselSlider from '../../components/Main/BackRecipeCarouselSlider'
 import { Link } from 'react-router-dom'
+import Splash from '../Splash'
+import useAuthStore from '../../store/UseAuthStore'
 
 function Main() {
+  const { showSplash, setLoggedIn, setShowSplash } = useAuthStore()
+
+  useEffect(() => {
+    const loginStatus = localStorage.getItem('isLoggedIn')
+    if (loginStatus === 'true') {
+      setTimeout(() => {
+        setShowSplash(false) // 스플래시 2초 후 숨기기
+      }, 2000)
+      setLoggedIn(true) // 로그인 상태 설정
+    } else {
+      setShowSplash(true) // 스플래시 화면 유지
+    }
+  }, [setLoggedIn, setShowSplash])
+
+  if (showSplash) {
+    // 스플래시 화면 표시
+    return <Splash />
+  }
+
   const svgs = [
     { src: all, alt: 'All', description: '전체' },
     { src: korean, alt: 'Korean', description: '한식' },
