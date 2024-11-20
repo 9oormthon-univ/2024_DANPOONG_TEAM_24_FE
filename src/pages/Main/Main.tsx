@@ -16,9 +16,12 @@ import BackRecipeCarouselSlider from '../../components/Main/BackRecipeCarouselSl
 import { Link } from 'react-router-dom'
 import Splash from '../Splash'
 import useAuthStore from '../../store/UseAuthStore'
+import useListFilterOptionStore from '../../store/UseListFilterOptionStore'
 
 function Main() {
   const { showSplash, setLoggedIn, setShowSplash } = useAuthStore()
+  const { selectedFilterOption, setSelectedFilterOption } =
+    useListFilterOptionStore()
 
   useEffect(() => {
     const loginStatus = localStorage.getItem('isLoggedIn')
@@ -71,6 +74,11 @@ function Main() {
     },
   ]
 
+  const handleSvgClick = (description: string) => {
+    setSelectedFilterOption(description)
+    console.log(selectedFilterOption)
+  }
+
   return (
     <>
       <div className="flex flex-col items-center justify-center">
@@ -86,7 +94,10 @@ function Main() {
                   key={index}
                   className="mt-4 w-1/4 flex flex-col gap-[7px] justify-center items-center"
                 >
-                  <div className="p-2 w-[50px] h-[50px] bg-[#ffffff] flex justify-center border border-200 rounded-[5px] cursor-pointer">
+                  <div
+                    className="p-2 w-[50px] h-[50px] bg-[#ffffff] flex justify-center border border-200 rounded-[5px] cursor-pointer"
+                    onClick={() => handleSvgClick(svg.description)} // Set selected filter on click
+                  >
                     <img src={svg.src} alt={svg.alt} />
                   </div>
                   <div className="font-M00 text-sm leading-[135%]">
