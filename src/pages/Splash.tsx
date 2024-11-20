@@ -1,5 +1,6 @@
 import SocialKakao from '../utils/KakaoLogin'
 import useAuthStore from '../store/UseAuthStore'
+import logo from '../assets/splash/KakaoTalk_Video_2024-11-20-16-25-18.mp4'
 
 export default function Splash() {
   const { isLoggedIn } = useAuthStore()
