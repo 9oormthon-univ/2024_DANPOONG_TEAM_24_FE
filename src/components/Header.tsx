@@ -1,4 +1,3 @@
-import { useState, useRef, useEffect } from 'react'
 import Cn from '../utils/Cn'
 import logo from '../assets/common/Logo.svg'
 import logoText from '../assets/common/LogoText.svg'
@@ -7,65 +6,30 @@ import user from '../assets/common/User.svg'
 import search from '../assets/common/Search.svg'
 import { useNavigate } from 'react-router-dom'
 import useAddressStore from '../store/useAddressStore'
+import { useSearch } from '../hooks/UseSearch'
 
 function Header() {
   const navigation = useNavigate()
   const { getSelectedAddress } = useAddressStore()
 
-  const [searchResults, setSearchResults] = useState<any[]>([]) // 검색 결과 상태
-  const [searchText, setSearchText] = useState('') // 입력된 검색어
-  const [showResults, setShowResults] = useState(false) // 검색 결과 표시 여부
-
-  const ps = new kakao.maps.services.Places()
-  const resultsRef = useRef<HTMLDivElement | null>(null) // 검색 결과 리스트를 참조하는 ref
-
-  // 검색어 변경 시 처리
-  const handleSearchChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    const value = e.target.value
-    setSearchText(value)
-
-    if (value.trim() === '') {
-      setSearchResults([]) // 검색어가 비었을 때 결과 초기화
-      return
-    }
-
-    // 키워드 검색
-    ps.keywordSearch(value, placesSearchCB)
-    setShowResults(true) // 검색 결과 보이기
-  }
-
-  // 검색 결과 콜백
-  const placesSearchCB = (data: any[], status: any) => {
-    if (status === kakao.maps.services.Status.OK) {
-      setSearchResults(data) // 검색 결과 상태에 저장
-    }
-  }
+  // useSearch 커스텀 훅 사용
+  const {
+    searchText,
+    setSearchText,
+    searchResults,
+    showResults,
+    handleSearchChange,
+    resultsRef,
+    setShowResults,
+  } = useSearch()
 
   // 장소 클릭 시 처리
   const handlePlaceClick = (place: any) => {
+    window.open(place.place_url, '_blank', 'noopener,noreferrer')
     console.log('Selected place:', place)
+    setSearchText('')
     setShowResults(false) // 장소 클릭 시 검색 결과 닫기
   }
-
-  // 외부 클릭 시 검색 결과 숨기기
-  useEffect(() => {
-    const handleClickOutside = (event: MouseEvent) => {
-      if (
-        resultsRef.current &&
-        !resultsRef.current.contains(event.target as Node)
-      ) {
-        setSearchText('')
-        setShowResults(false) // 검색 결과 외부 클릭 시 닫기
-      }
-    }
-
-    document.addEventListener('mousedown', handleClickOutside)
-
-    // cleanup: 컴포넌트가 unmount되거나 효과가 재실행될 때 이벤트 리스너 제거
-    return () => {
-      document.removeEventListener('mousedown', handleClickOutside)
-    }
-  }, [])
 
   return (
     <>
