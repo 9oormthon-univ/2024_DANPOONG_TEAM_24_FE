@@ -16,6 +16,10 @@ const comments = [
 ]
 
 const Community: React.FC = () => {
+  localStorage.setItem(
+    'accessToken',
+    'eyJhbGciOiJIUzI1NiJ9.eyJlbWFpbCI6ImhhaWxjcnlwdGljQG5hdmVyLmNvbSIsImlhdCI6MTczMjExMDMwMiwiZXhwIjoxNzMyMTQxODM4fQ.J0K_pumRy4Ef9SuBGYew-8yJSCuHJLv3VuPwNbSZxFg'
+  )
   useEffect(() => {
     localStorage.setItem('category', '전체')
   }, [])
