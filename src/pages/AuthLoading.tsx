@@ -19,6 +19,13 @@ export default function AuthLoading() {
         .get(back + '/oauth', { params: { code } })
         .then((response) => {
           console.log('Response from server:', response.headers.authorization)
+
+          // accessToken을 localStorage에 저장
+          const accessToken = response.headers.authorization
+          if (accessToken) {
+            localStorage.setItem('accessToken', accessToken)
+          }
+
           // 전송 완료시 메인 페이지로 이동
           navigate('/')
         })
