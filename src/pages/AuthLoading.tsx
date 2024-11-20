@@ -4,7 +4,9 @@ import { useNavigate } from 'react-router-dom'
 
 export default function AuthLoading() {
   const navigate = useNavigate()
+  const back = 'https://api.ideabank.me/'
 
+  // TODO: apiconfig 반영해서 수정하기
   useEffect(() => {
     // 현재 url에서 인가코드 추출
     const urlParams = new URLSearchParams(window.location.search)
@@ -14,9 +16,9 @@ export default function AuthLoading() {
     // 인가코드 서버로 전송
     if (code) {
       axios
-        .post('https://api.ideabank.me/oauth', { code })
+        .get(back + '/oauth', { params: { code } })
         .then((response) => {
-          console.log('Response from server:', response.data)
+          console.log('Response from server:', response.headers.authorization)
           // 전송 완료시 메인 페이지로 이동
           navigate('/')
         })
