@@ -1,12 +1,11 @@
 import FooterOption from './FooterOption'
-import footerBack from '/src/assets/common/FooterBack.svg'
 
 function Footer() {
   return (
     <footer className="fixed bottom-0 z-10 w-[390px]">
       <div
         className="relative bg-cover bg-center h-[100px]"
-        style={{ backgroundImage: `url(${footerBack})` }}
+        style={{ backgroundImage: 'url(/FooterBack.svg)' }}
       >
         <div className="flex flex-row pt-4 justify-between relative z-10">
           <div className="pt-[11px] pb-[27px] pl-7 pr-[21px] w-full flex flex-row gap-[34px] items-center justify-center">
