@@ -13,15 +13,15 @@ import japanese from '../../assets/main/Japanese.svg'
 import introRecipe from '../../assets/main/IntroRecipe.svg'
 import BestPostCard from '../../components/Main/BestPostCard'
 import BackRecipeCarouselSlider from '../../components/Main/BackRecipeCarouselSlider'
-import { Link } from 'react-router-dom'
+import { Link, useNavigate } from 'react-router-dom'
 import Splash from '../Splash'
 import useAuthStore from '../../store/UseAuthStore'
 import useListFilterOptionStore from '../../store/UseListFilterOptionStore'
 
 function Main() {
+  const navigate = useNavigate()
   const { showSplash, setLoggedIn, setShowSplash } = useAuthStore()
-  const { selectedFilterOption, setSelectedFilterOption } =
-    useListFilterOptionStore()
+  const { setSelectedFilterOption } = useListFilterOptionStore()
 
   useEffect(() => {
     const loginStatus = localStorage.getItem('isLoggedIn')
@@ -76,7 +76,7 @@ function Main() {
 
   const handleSvgClick = (description: string) => {
     setSelectedFilterOption(description)
-    console.log(selectedFilterOption)
+    navigate('/around')
   }
 
   return (
@@ -96,7 +96,7 @@ function Main() {
                 >
                   <div
                     className="p-2 w-[50px] h-[50px] bg-[#ffffff] flex justify-center border border-200 rounded-[5px] cursor-pointer"
-                    onClick={() => handleSvgClick(svg.description)} // Set selected filter on click
+                    onClick={() => handleSvgClick(svg.description)}
                   >
                     <img src={svg.src} alt={svg.alt} />
                   </div>
