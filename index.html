@@ -5,15 +5,15 @@
     <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>이음</title>
-    <script>
-      const mapKey = import.meta.env.VITE_APP_KAKAO_MAP_KEY;
+    <script type="module">
+      const mapKey = import.meta.env.VITE_APP_KAKAO_MAP_KEY
 
-      const script = document.createElement('script');
-      script.type = 'text/javascript';
-      script.src = `https://dapi.kakao.com/v2/maps/sdk.js?appkey=${mapKey}&libraries=services`;
+      const script = document.createElement('script')
+      script.type = 'text/javascript'
+      script.src = `https://dapi.kakao.com/v2/maps/sdk.js?appkey=${mapKey}&libraries=services`
 
       // 스크립트를 head에 추가
-      document.head.appendChild(script);
+      document.head.appendChild(script)
     </script>
   </head>
   <body>
