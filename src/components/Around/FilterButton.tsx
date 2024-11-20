@@ -9,7 +9,7 @@ interface FilterButtonProps {
 const FilterButton = ({
   id,
   label,
-  selectedFilter,
+  //selectedFilter,
   onClick,
   selected, // 24/11/20 희진 추가
 }: FilterButtonProps) => {
