@@ -1,8 +1,8 @@
 import { useEffect } from 'react'
 import { useNavigate } from 'react-router-dom'
-import loading from '../assets/splash/loading.gif'
-import ieum from '../assets/splash/ieum.svg'
-import useAuth from '../hooks/Auth/UseAuth'
+import loading from '../../assets/splash/loading.gif'
+import ieum from '../../assets/splash/ieum.svg'
+import useAuth from '../../hooks/Auth/UseAuth'
 
 export default function AuthLoading() {
   const navigate = useNavigate()
