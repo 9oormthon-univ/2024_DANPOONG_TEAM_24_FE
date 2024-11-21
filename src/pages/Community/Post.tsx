@@ -9,14 +9,13 @@ import { categoryArr } from '../../utils/category'
 import findKeyByValue from '../../utils/findKeyByValue'
 
 const Post: React.FC = () => {
-  const { postId } = useParams<{ postId: string }>()
+  const { postId } = useParams<{ postId: string | undefined }>()
   const location = useLocation()
   const { contentCommentInfo, fetchGetContentsComments, isLoading } =
     useCommunity()
 
-  const categoryValue = location.state?.category || 'all' // 기본값 설정
-  // 한글 카테고리 이름 찾기
-  const category = findKeyByValue(categoryArr, categoryValue) || '전체' // 기본값 설정
+  const categoryValue = location.state?.category || 'all'
+  const category = findKeyByValue(categoryArr, categoryValue) || '전체'
 
   useEffect(() => {
     if (postId) {
@@ -29,11 +28,20 @@ const Post: React.FC = () => {
     return <div>로딩 중...</div>
   }
 
+  const handleLikeToggle = () => {
+    if (postId) {
+      fetchGetContentsComments(parseInt(postId, 10))
+    }
+  }
+
   return (
     <div className="flex flex-col items-center bg-white">
       <NaviBar subject={category} />
       <div className="flex flex-col border-t border-t-200 items-center">
-        <PostContent contentCommentInfo={contentCommentInfo} />
+        <PostContent
+          contentCommentInfo={contentCommentInfo}
+          onLikeToggle={handleLikeToggle} // onLikeToggle 전달
+        />
         <div className="w-full h-2 bg-[#D9D9D9] mb-[30px]" />
         <div className="flex flex-col gap-[10px]">
           {contentCommentInfo?.comments.map((comment, index) => (
@@ -48,7 +56,10 @@ const Post: React.FC = () => {
           ))}
           <div className="w-[358px] h-[94px]" />
         </div>
-        <CommentInput postId={postId ? parseInt(postId, 10) : 0} />
+        <CommentInput
+          postId={contentCommentInfo?.post_id ?? 0}
+          fetchGetContentsComments={fetchGetContentsComments}
+        />
       </div>
     </div>
   )

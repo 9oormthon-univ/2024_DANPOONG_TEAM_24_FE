@@ -6,11 +6,14 @@ import { getPostResponse } from '../../types/Community/PostResponse'
 
 interface PostContentProps {
   contentCommentInfo: getPostResponse | null
+  onLikeToggle: () => void // 새로운 prop 추가
 }
 
-const PostContent: React.FC<PostContentProps> = ({ contentCommentInfo }) => {
+const PostContent: React.FC<PostContentProps> = ({
+  contentCommentInfo,
+  onLikeToggle,
+}) => {
   if (!contentCommentInfo) {
-    // 로딩 스플래시 화면 넣을 예정!
     return <div>게시글을 불러오는 중입니다...</div>
   }
 
@@ -30,7 +33,11 @@ const PostContent: React.FC<PostContentProps> = ({ contentCommentInfo }) => {
         {contentCommentInfo.content}
       </div>
       <div className="flex h-[28px] justify-between items-center mt-[10px] mb-[21px]">
-        <LikeButton />
+        <LikeButton
+          isLike={contentCommentInfo.liked_by_me}
+          postId={contentCommentInfo.post_id}
+          onLikeToggle={onLikeToggle} // LikeButton에 onLikeToggle 전달
+        />
         <div className="flex flex-row items-center gap-[10px]">
           <CountComponent
             label="like"
