@@ -1,46 +1,57 @@
 import { useEffect } from 'react'
-import axios from 'axios'
 import { useNavigate } from 'react-router-dom'
+import loading from '../assets/splash/loading.gif'
+import ieum from '../assets/splash/ieum.svg'
+import useAuth from '../hooks/Auth/UseAuth'
 
 export default function AuthLoading() {
   const navigate = useNavigate()
-  const back = 'https://api.ideabank.me/'
+  const { isLoading, isError, errorMessage, accessToken } = useAuth()
 
-  // TODO: apiconfig 반영해서 수정하기
   useEffect(() => {
-    // 현재 url에서 인가코드 추출
-    const urlParams = new URLSearchParams(window.location.search)
-    const code = urlParams.get('code')
-    console.log(code)
-
-    // 인가코드 서버로 전송
-    if (code) {
-      axios
-        .get(back + '/oauth', { params: { code } })
-        .then((response) => {
-          console.log('Response from server:', response.headers.authorization)
-
-          // accessToken을 localStorage에 저장
-          const accessToken = response.headers.authorization
-          if (accessToken) {
-            localStorage.setItem('accessToken', accessToken)
-          }
-
-          // 전송 완료시 메인 페이지로 이동
-          navigate('/')
-        })
-        .catch((error) => {
-          console.error('Error sending code:', error)
-        })
+    if (accessToken) {
+      navigate('/') // 액세스 토큰이 있으면 메인 페이지로 이동
     }
-  }, [navigate])
+  }, [accessToken, navigate])
 
-  return (
-    <>
-      <div className="flex flex-col items-center justify-center">
-        <h1>로그인 성공</h1>
-        <h2>Loading...</h2>
+  if (isLoading) {
+    return (
+      <div className="flex flex-col h-screen bg-white items-center">
+        <div className="absolute bottom-0 flex flex-col items-center">
+          <div className="flex flex-col items-center gap-2">
+            <p className="font-B00 text-[26px] text-center text-800 leading-140 font-medium">
+              잠시만 기다려주세요
+            </p>
+            <p className="font-M00 text-base text-center text-400 leading-135 font-normal">
+              로그인 중이에요
+            </p>
+          </div>
+          <img
+            src={loading}
+            alt="loading"
+            className="w-[134px] h-[134px] mt-[45.12px] mb-[14px]"
+          />
+          <img src={ieum} alt="이음" className="mb-[-31.5px] z-10" />
+          <div className="w-[390px] h-[115px] bg-Main2"></div>
+        </div>
       </div>
-    </>
-  )
+    )
+  }
+
+  if (isError) {
+    return (
+      <div className="flex flex-col h-screen bg-white items-center">
+        <div className="absolute bottom-0 flex flex-col items-center">
+          <p className="font-B00 text-[26px] text-center text-800 leading-140 font-medium">
+            로그인 오류
+          </p>
+          <p className="font-M00 text-base text-center text-400 leading-135 font-normal">
+            {errorMessage}
+          </p>
+        </div>
+      </div>
+    )
+  }
+
+  return null
 }
