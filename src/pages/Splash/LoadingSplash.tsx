@@ -19,8 +19,8 @@ const LoadingSplash: React.FC = () => {
           alt="loading"
           className="w-[134px] h-[134px] mt-[45.12px] mb-[14px]"
         />
-        <img src={ieum} alt="이음" />
-        <div className="w-screen h-[137px] bg-Main2"></div>
+        <img src={ieum} alt="이음" className="mb-[-31.5px] z-10" />
+        <div className="w-[390px] h-[115px] bg-Main2"></div>
       </div>
     </div>
   )

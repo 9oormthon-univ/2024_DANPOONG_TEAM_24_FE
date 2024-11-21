@@ -35,7 +35,6 @@ const router = createBrowserRouter([
   { path: '/recipe', element: <Recipe /> },
   { path: '/recipeReturn', element: <RecipeReturn /> },
   { path: '/auth', element: <AuthLoading /> },
-  { path: '/preparing', element: <AuthLoading /> },
 ])
 
 createRoot(document.getElementById('root')!).render(
