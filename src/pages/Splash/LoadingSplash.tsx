@@ -7,7 +7,7 @@ const LoadingSplash: React.FC = () => {
     <div className="flex flex-col h-screen bg-white items-center">
       <div className="absolute bottom-0 flex flex-col items-center">
         <div className="flex flex-col items-center gap-2">
-          <p className="font-B00 text-[26px] text-center text-800 leading-140 font-normal">
+          <p className="font-B00 text-[26px] text-center text-800 leading-140 font-medium">
             잠시만 기다려주세요
           </p>
           <p className="font-M00 text-base text-center text-400 leading-135 font-normal">
