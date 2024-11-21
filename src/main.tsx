@@ -17,7 +17,7 @@ import LikePost from './pages/Mypage/LikePost.tsx'
 import ComingSoon from './pages/Mypage/ComingSoon.tsx'
 import Recipe from './pages/Recipe/Recipe.tsx'
 import RecipeReturn from './pages/Recipe/RecipeReturn.tsx'
-import AuthLoading from './pages/AuthLoading.tsx'
+import AuthLoading from './pages/Splash/AuthLoading.tsx'
 
 const router = createBrowserRouter([
   { path: '/', element: <Main /> },
