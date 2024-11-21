@@ -14,10 +14,11 @@ const Post: React.FC = () => {
 
   useEffect(() => {
     if (postId) {
-      fetchGetContentsComments(parseInt(postId, 10)) // postId를 숫자로 변환하여 호출
+      fetchGetContentsComments(parseInt(postId, 10))
     }
-  }, [postId]) // postId를 의존성으로 추가
+  }, [postId])
 
+  // 로딩 스플래시 화면 넣을 예정
   if (isLoading) {
     return <div>로딩 중...</div>
   }
@@ -28,14 +29,14 @@ const Post: React.FC = () => {
       <div className="flex flex-col border-t border-t-200 items-center">
         <PostContent contentCommentInfo={contentCommentInfo} />
         <div className="w-full h-2 bg-[#D9D9D9] mb-[30px]" />
-        {/* 댓글 나열 */}
         <div className="flex flex-col gap-[10px]">
           {contentCommentInfo?.comments.map((comment, index) => (
             <PostComment
               key={index}
-              nickname={comment.author} // 댓글 데이터에서 nickname 가져오기
-              updateHour={comment.created_at} // 댓글 데이터에서 updateHour 가져오기
-              comment={comment.content} // 댓글 데이터에서 content 가져오기
+              nickname={comment.author}
+              updateHour={comment.created_at}
+              comment={comment.content}
+              imgUrl={comment.author_profile_url || ''}
               isLastComment={index === contentCommentInfo.comments.length - 1}
             />
           ))}

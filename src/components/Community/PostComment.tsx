@@ -6,12 +6,14 @@ interface CommentProps {
   updateHour: string
   comment: string
   isLastComment?: boolean
+  imgUrl: string
 }
 const PostComment: React.FC<CommentProps> = ({
   nickname,
   updateHour,
   comment,
   isLastComment,
+  imgUrl,
 }) => {
   return (
     <div
@@ -19,7 +21,7 @@ const PostComment: React.FC<CommentProps> = ({
         isLastComment ? '' : 'border-b border-b-200'
       }`}
     >
-      <Profile nickname={nickname} updateHour={updateHour} />
+      <Profile nickname={nickname} updateHour={updateHour} imgUrl={imgUrl} />
       <div className="font-normal text-sm text-start text-800 font-R00 leading-135 whitespace-pre-wrap">
         {comment}
       </div>

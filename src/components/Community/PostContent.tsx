@@ -10,6 +10,7 @@ interface PostContentProps {
 
 const PostContent: React.FC<PostContentProps> = ({ contentCommentInfo }) => {
   if (!contentCommentInfo) {
+    // 로딩 스플래시 화면 넣을 예정!
     return <div>게시글을 불러오는 중입니다...</div>
   }
 
@@ -19,6 +20,7 @@ const PostContent: React.FC<PostContentProps> = ({ contentCommentInfo }) => {
         <Profile
           nickname={contentCommentInfo.author}
           updateHour={contentCommentInfo.created_at}
+          imgUrl={contentCommentInfo.author_profile_url}
         />
         <div className="text-800 text-base font-SB00 font-normal">
           {contentCommentInfo.title}
