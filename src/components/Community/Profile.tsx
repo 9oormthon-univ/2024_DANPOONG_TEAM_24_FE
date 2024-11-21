@@ -1,4 +1,5 @@
 import React from 'react'
+import nonProfile from '../../assets/nonProfile.svg'
 
 interface ProfileProps {
   nickname: string | null | undefined
@@ -9,7 +10,7 @@ const Profile: React.FC<ProfileProps> = ({ nickname, updateHour, imgUrl }) => {
   return (
     <div className="flex flex-row gap-[10px]">
       <img
-        src={imgUrl}
+        src={imgUrl && imgUrl !== '' ? imgUrl : nonProfile}
         alt="프로필이미지"
         className="w-[32px] h-[32px] rounded-full"
       />
