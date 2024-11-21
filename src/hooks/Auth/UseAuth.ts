@@ -20,7 +20,7 @@ const useAuth = () => {
         .get('https://api.ideabank.me/oauth', {
           params: {
             code,
-            redirect_url: redirectUrl, // 현재 주소를 redirect_url로 설정
+            redirect_uri: redirectUrl, // 현재 주소를 redirect_url로 설정
           },
         })
         .then((response) => {
