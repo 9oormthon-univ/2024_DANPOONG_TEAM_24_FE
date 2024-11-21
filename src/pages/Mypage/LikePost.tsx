@@ -18,6 +18,7 @@ const LikePost: React.FC = () => {
             <Contents
               key={post.postId}
               nickname={post.nickname}
+              title=""
               content="s"
               imgUrl=""
               category="recipe"
@@ -25,6 +26,7 @@ const LikePost: React.FC = () => {
               postId={post.postId}
               isLabel
               isLastComment={false}
+              likes={0}
             />
           ))}
         </div>

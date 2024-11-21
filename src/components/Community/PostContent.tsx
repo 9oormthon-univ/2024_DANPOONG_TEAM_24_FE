@@ -32,7 +32,6 @@ const PostContent: React.FC<PostContentProps> = ({ contentCommentInfo }) => {
       <div className="flex h-[28px] justify-between items-center mt-[10px] mb-[21px]">
         <LikeButton />
         <div className="flex flex-row items-center gap-[10px]">
-          <CountComponent label="view" count={contentCommentInfo.likes} />
           <CountComponent
             label="like"
             count={contentCommentInfo.like_user.length}

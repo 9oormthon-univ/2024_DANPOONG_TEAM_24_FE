@@ -38,11 +38,13 @@ const Community: React.FC = () => {
               <Contents
                 key={content.post_id}
                 nickname={content.author}
+                title={content.title}
                 content={content.content}
                 updateHour={content.created_at}
                 imgUrl={content.author_profile_url}
                 postId={content.post_id}
                 category={content.post_category}
+                likes={content.like_user.length}
                 isLabel
                 isLastComment={index === categoryCommentInfo?.data.length - 1}
               />

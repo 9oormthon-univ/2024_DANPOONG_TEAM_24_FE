@@ -7,23 +7,27 @@ import Label from './Label'
 interface ContentProps {
   nickname: string
   updateHour: string
+  title: string
   content: string
   postId: number
   isLabel: boolean
   isLastComment: boolean
   imgUrl: string
   category: string
+  likes: number
 }
 
 const Contents: React.FC<ContentProps> = ({
   nickname,
   updateHour,
+  title,
   content,
   postId,
   isLabel,
   isLastComment,
   imgUrl,
   category,
+  likes,
 }) => {
   const navigate = useNavigate()
 
@@ -36,22 +40,35 @@ const Contents: React.FC<ContentProps> = ({
   return (
     <div
       onClick={onClickPost}
-      className={`relative flex w-[358px] h-[144px] items-center justify-center bg-100 rounded-[12px] border border-200 ${
+      className={`relative flex w-[358px] h-[146px] items-center justify-center bg-100 rounded-[12px] border border-200 ${
         isLastComment ? 'mb-[103px]' : ''
       }`}
     >
-      <div className="flex flex-col w-[338px] h-[116px] gap-[10px]">
-        <Profile nickname={nickname} updateHour={updateHour} imgUrl={imgUrl} />
-        <p className="text-[14px] line-clamp-2 font-R00 font-normal leading-[18.9px] text-800">
-          {content}
-        </p>
-        <div className="flex flex-row justify-end items-center gap-[10px]">
-          <CountComponent label="view" count={17} />
-          <CountComponent label="like" count={17} />
-          <CountComponent label="comment" count={17} />
+      <div className="flex flex-col w-[338px] h-[122px]">
+        <div className="flex flex-col gap-4">
+          <div className="flex flex-row justify-between items-center">
+            <Profile
+              nickname={nickname}
+              updateHour={updateHour}
+              imgUrl={imgUrl}
+            />
+            {isLabel ? <Label category={category} /> : ''}
+          </div>
+
+          <div className="flex flex-col">
+            <p className="text-800 font-SB00 text-sm line-clamp-1 text-ellipsis">
+              {title}
+            </p>
+            <p className="text-[14px] line-clamp-1 text-ellipsis font-R00 font-normal leading-[18.9px] text-800">
+              {content}
+            </p>
+          </div>
         </div>
       </div>
-      {isLabel ? <Label category={category} /> : ''}
+      <div className="absolute left-[10px] bottom-3 flex flex-row justify-start items-center gap-[10px]">
+        <CountComponent label="like" count={likes} />
+        <CountComponent label="comment" count={17} />
+      </div>
     </div>
   )
 }
