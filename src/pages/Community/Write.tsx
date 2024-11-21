@@ -24,7 +24,6 @@ const Write: React.FC = () => {
           <TitleInput
             title={postInfo.title}
             onTitleChange={(title) => {
-              console.log('Title input:', title) // 입력 값 확인
               updatePostInfo('title', title)
             }}
           />
@@ -32,7 +31,6 @@ const Write: React.FC = () => {
         <ContentInput
           content={postInfo.content}
           onContentChange={(content) => {
-            console.log('Content input:', content) // 입력 값 확인
             updatePostInfo('content', content)
           }}
         />

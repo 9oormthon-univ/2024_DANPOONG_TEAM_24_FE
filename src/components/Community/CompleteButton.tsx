@@ -11,10 +11,9 @@ const CompleteButton: React.FC<CompleteButtonProps> = ({ postInfo }) => {
 
   const onClickMethod = async () => {
     if (postInfo.title && postInfo.content && postInfo.categoryName) {
-      console.log('Current postInfo before submission:', postInfo) // 현재 상태 확인
-      await fetchPostContents(postInfo) // 최신 상태를 사용하여 호출
+      await fetchPostContents(postInfo)
     } else {
-      alert('모든 필드를 입력해주세요.')
+      alert('모든 내용을 작성해주세요!')
     }
   }
 

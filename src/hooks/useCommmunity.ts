@@ -16,7 +16,6 @@ const useCommunity = () => {
   const updatePostInfo = (field: keyof postRequest, value: string) => {
     setPostInfo((prev) => {
       const newPostInfo = { ...prev, [field]: value }
-      console.log('Updated postInfo:', newPostInfo) // 상태 업데이트 확인
       return newPostInfo
     })
   }

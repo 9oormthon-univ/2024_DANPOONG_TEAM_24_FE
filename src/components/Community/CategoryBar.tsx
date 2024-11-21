@@ -36,18 +36,14 @@ const CategoryBar: React.FC<CategoryBarProps> = ({ onCategoryChange }) => {
   return (
     <div className={containerClasses}>
       <div className={buttonContainerClasses}>
-        {Object.keys(writeCategoryArr).map(
-          (
-            category // 객체의 키를 사용하여 맵핑
-          ) => (
-            <CategoryButton
-              key={category}
-              category={category}
-              isActive={activeCategory === category}
-              onClick={() => handleButtonClick(category)}
-            />
-          )
-        )}
+        {Object.keys(writeCategoryArr).map((category) => (
+          <CategoryButton
+            key={category}
+            category={category}
+            isActive={activeCategory === category}
+            onClick={() => handleButtonClick(category)}
+          />
+        ))}
       </div>
     </div>
   )
