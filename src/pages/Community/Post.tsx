@@ -7,6 +7,7 @@ import CommentInput from '../../components/Community/CommentInput'
 import useCommunity from '../../hooks/Community/useCommmunity'
 import { categoryArr } from '../../utils/category'
 import findKeyByValue from '../../utils/findKeyByValue'
+import LoadingSplash from '../Splash/LoadingSplash'
 
 const Post: React.FC = () => {
   const { postId } = useParams<{ postId: string | undefined }>()
@@ -23,9 +24,8 @@ const Post: React.FC = () => {
     }
   }, [postId])
 
-  // 로딩 스플래시 화면 넣을 예정
   if (isLoading) {
-    return <div>로딩 중...</div>
+    return <LoadingSplash />
   }
 
   const handleLikeToggle = () => {

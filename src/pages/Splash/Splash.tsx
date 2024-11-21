@@ -1,5 +1,5 @@
-import SocialKakao from '../utils/KakaoLogin'
-import useAuthStore from '../store/UseAuthStore'
+import SocialKakao from '../../utils/KakaoLogin'
+import useAuthStore from '../../store/UseAuthStore'
 
 export default function Splash() {
   const { isLoggedIn } = useAuthStore()

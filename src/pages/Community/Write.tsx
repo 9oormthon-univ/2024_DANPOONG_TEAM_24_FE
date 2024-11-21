@@ -6,12 +6,17 @@ import ContentInput from '../../components/Community/ContentInput'
 import CompleteButton from '../../components/Community/CompleteButton'
 import useCommunity from '../../hooks/Community/useCommmunity'
 import CategoryBar from '../../components/Community/CategoryBar'
+import LoadingSplash from '../Splash/LoadingSplash'
 
 const Write: React.FC = () => {
-  const { postInfo, updatePostInfo } = useCommunity()
+  const { postInfo, updatePostInfo, isLoading } = useCommunity()
 
   const handleCategoryChange = (category: string) => {
     updatePostInfo('categoryName', category)
+  }
+
+  if (isLoading) {
+    return <LoadingSplash />
   }
 
   return (
