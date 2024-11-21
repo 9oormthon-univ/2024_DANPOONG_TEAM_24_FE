@@ -1,43 +1,65 @@
-import React from 'react'
-// import { useParams } from 'react-router-dom'
+import React, { useEffect } from 'react'
+import { useParams, useLocation } from 'react-router-dom'
 import NaviBar from '../../components/Community/NaviBar'
 import PostContent from '../../components/Community/PostContent'
 import PostComment from '../../components/Community/PostComment'
 import CommentInput from '../../components/Community/CommentInput'
+import useCommunity from '../../hooks/Community/useCommmunity'
+import { categoryArr } from '../../utils/category'
+import findKeyByValue from '../../utils/findKeyByValue'
+import LoadingSplash from '../Splash/LoadingSplash'
 
 const Post: React.FC = () => {
-  // const { postId } = useParams()
-  const category = localStorage.getItem('category') || ''
+  const { postId } = useParams<{ postId: string | undefined }>()
+  const location = useLocation()
+  const { contentCommentInfo, fetchGetContentsComments, isLoading } =
+    useCommunity()
 
-  const comments = [
-    {
-      nickname: '익명의 카피바라',
-      updateHour: 1,
-      content: '우와 정말 감사해요',
-    },
-    { nickname: '익명의 카피바라', updateHour: 2, content: '짱짱' },
-  ]
+  const categoryValue = location.state?.category || 'all'
+  const category = findKeyByValue(categoryArr, categoryValue) || '전체'
+
+  useEffect(() => {
+    if (postId) {
+      fetchGetContentsComments(parseInt(postId, 10))
+    }
+  }, [postId])
+
+  if (isLoading) {
+    return <LoadingSplash />
+  }
+
+  const handleLikeToggle = () => {
+    if (postId) {
+      fetchGetContentsComments(parseInt(postId, 10))
+    }
+  }
 
   return (
     <div className="flex flex-col items-center bg-white">
       <NaviBar subject={category} />
       <div className="flex flex-col border-t border-t-200 items-center">
-        <PostContent />
+        <PostContent
+          contentCommentInfo={contentCommentInfo}
+          onLikeToggle={handleLikeToggle} // onLikeToggle 전달
+        />
         <div className="w-full h-2 bg-[#D9D9D9] mb-[30px]" />
-        {/* 댓글 나열 */}
         <div className="flex flex-col gap-[10px]">
-          {comments.map((comment, index) => (
+          {contentCommentInfo?.comments.map((comment, index) => (
             <PostComment
               key={index}
-              nickname={comment.nickname}
-              updateHour={comment.updateHour}
+              nickname={comment.author}
+              updateHour={comment.created_at}
               comment={comment.content}
-              isLastComment={index === comments.length - 1} // 마지막 댓글인지 확인
+              imgUrl={comment.author_profile_url || ''}
+              isLastComment={index === contentCommentInfo.comments.length - 1}
             />
           ))}
           <div className="w-[358px] h-[94px]" />
         </div>
-        <CommentInput />
+        <CommentInput
+          postId={contentCommentInfo?.post_id ?? 0}
+          fetchGetContentsComments={fetchGetContentsComments}
+        />
       </div>
     </div>
   )

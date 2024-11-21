@@ -26,6 +26,11 @@
   src: url('./assets/fonts/AppleSDGothicNeoL.ttf'), format('truetype');
 }
 
+@font-face {
+  font-family: 'AppleSDGothicNeoB00';
+  font-weight: regular;
+  src: url('./assets/fonts/AppleSDGothicNeoB.ttf'), format('truetype');
+}
 
 body {
   -ms-overflow-style: none;

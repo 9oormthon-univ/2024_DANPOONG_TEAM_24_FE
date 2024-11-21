@@ -11,14 +11,19 @@ import convenience from '../../assets/main/Convenience.svg'
 import bakery from '../../assets/main/Bakery.svg'
 import japanese from '../../assets/main/Japanese.svg'
 import introRecipe from '../../assets/main/IntroRecipe.svg'
-import BestPostCard from '../../components/Main/BestPostCard'
 import BackRecipeCarouselSlider from '../../components/Main/BackRecipeCarouselSlider'
-import { Link } from 'react-router-dom'
-import Splash from '../Splash'
+import { Link, useNavigate } from 'react-router-dom'
+import Splash from '../Splash/Splash'
 import useAuthStore from '../../store/UseAuthStore'
+import useListFilterOptionStore from '../../store/UseListFilterOptionStore'
+import Contents from '../../components/Community/Contents'
+import useCommunity from '../../hooks/Community/useCommmunity'
 
 function Main() {
+  const navigate = useNavigate()
   const { showSplash, setLoggedIn, setShowSplash } = useAuthStore()
+  const { setSelectedFilterOption } = useListFilterOptionStore()
+  const { popularInfo, fetchGetPopularList } = useCommunity()
 
   useEffect(() => {
     const loginStatus = localStorage.getItem('isLoggedIn')
@@ -31,6 +36,10 @@ function Main() {
       setShowSplash(true) // 스플래시 화면 유지
     }
   }, [setLoggedIn, setShowSplash])
+
+  useEffect(() => {
+    fetchGetPopularList()
+  }, [])
 
   if (showSplash) {
     // 스플래시 화면 표시
@@ -48,28 +57,10 @@ function Main() {
     { src: japanese, alt: 'Japanese', description: '일식' },
   ]
 
-  const bestPosts = [
-    {
-      contents:
-        '00님 편의점 레시피 시도했는데 맛있어요! 먹기 좋은 편의점 위치도 공유합니다',
-      writer: '익명의 카피바라',
-      updatedAt: '7시간 전',
-      category: '레시피 공유',
-      views: 17,
-      likes: 17,
-      comments: 17,
-    },
-    {
-      contents:
-        '01님 편의점 레시피 시도했는데 맛있어요! 먹기 좋은 편의점 위치도 공유합니다',
-      writer: '익명의 개똥벌레',
-      updatedAt: '7시간 전',
-      category: '일상',
-      views: 17,
-      likes: 17,
-      comments: 17,
-    },
-  ]
+  const handleSvgClick = (description: string) => {
+    setSelectedFilterOption(description)
+    navigate('/around')
+  }
 
   return (
     <>
@@ -86,7 +77,10 @@ function Main() {
                   key={index}
                   className="mt-4 w-1/4 flex flex-col gap-[7px] justify-center items-center"
                 >
-                  <div className="p-2 w-[50px] h-[50px] bg-[#ffffff] flex justify-center border border-200 rounded-[5px] cursor-pointer">
+                  <div
+                    className="p-2 w-[50px] h-[50px] bg-[#ffffff] flex justify-center border border-200 rounded-[5px] cursor-pointer"
+                    onClick={() => handleSvgClick(svg.description)}
+                  >
                     <img src={svg.src} alt={svg.alt} />
                   </div>
                   <div className="font-M00 text-sm leading-[135%]">
@@ -106,18 +100,23 @@ function Main() {
             </Link>
           </section>
           <section className="mt-[30px]">
-            <div className="px-[18px] font-M00 text-[18px]">요번주 인기글</div>
-            <div className="px-4">
-              {bestPosts.map((bestPost, index) => (
-                <BestPostCard
-                  key={index}
-                  contents={bestPost.contents}
-                  writer={bestPost.writer}
-                  updatedAt={bestPost.updatedAt}
-                  category={bestPost.category}
-                  views={bestPost.views}
-                  likes={bestPost.likes}
-                  comments={bestPost.comments}
+            <div className="px-[18px] font-M00 text-[18px] mb-5">
+              요번주 인기글
+            </div>
+            <div className="flex flex-col gap-[10px] items-center">
+              {popularInfo?.data.map((content) => (
+                <Contents
+                  key={content.post_id}
+                  nickname={content.author}
+                  title={content.title}
+                  content={content.content}
+                  updateHour={content.created_at}
+                  imgUrl={content.author_profile_url}
+                  postId={content.post_id}
+                  category={content.post_category}
+                  likes={content.like_user.length}
+                  comments={content.comment_count}
+                  isLabel
                 />
               ))}
             </div>

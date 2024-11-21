@@ -26,12 +26,15 @@ export default function BestPostCard({
   return (
     <>
       <div className="relative mt-[10px] px-[10px] py-4 bg-100 flex flex-col rounded-xl border border-200">
-        <div className="flex flex-row gap-[10px]">
-          <img src={preProfile} alt="pre profile img" />
-          <div className="flex flex-col">
-            <div className="font-SB00 text-[14px]">{writer}</div>
-            <div className="font-L00 text-xs text-C400">{updatedAt}</div>
+        <div className="flex justify-between items-center">
+          <div className="flex flex-row gap-[10px]">
+            <img src={preProfile} alt="pre profile img" />
+            <div className="flex flex-col">
+              <div className="font-SB00 text-[14px]">{writer}</div>
+              <div className="font-L00 text-xs text-C400">{updatedAt}</div>
+            </div>
           </div>
+          <Label category={category} />
         </div>
         <div className="pt-3 font-R00 text-[14px] leading-[135%]">
           {contents}
@@ -50,7 +53,6 @@ export default function BestPostCard({
             <div>{comments}</div>
           </div>
         </div>
-        <Label category={category} />
       </div>
     </>
   )
