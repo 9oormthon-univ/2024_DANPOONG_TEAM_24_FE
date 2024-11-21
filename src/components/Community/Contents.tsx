@@ -15,6 +15,7 @@ interface ContentProps {
   imgUrl: string
   category: string
   likes: number
+  comments: number
 }
 
 const Contents: React.FC<ContentProps> = ({
@@ -28,6 +29,7 @@ const Contents: React.FC<ContentProps> = ({
   imgUrl,
   category,
   likes,
+  comments,
 }) => {
   const navigate = useNavigate()
 
@@ -67,7 +69,7 @@ const Contents: React.FC<ContentProps> = ({
       </div>
       <div className="absolute left-[10px] bottom-3 flex flex-row justify-start items-center gap-[10px]">
         <CountComponent label="like" count={likes} />
-        <CountComponent label="comment" count={17} />
+        <CountComponent label="comment" count={comments} />
       </div>
     </div>
   )

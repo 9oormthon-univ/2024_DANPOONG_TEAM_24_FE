@@ -8,5 +8,6 @@ export interface contentResponse {
   likes: number
   like_user: string[]
   liked_by_me: boolean
+  comment_count: number
   post_category: string
 }

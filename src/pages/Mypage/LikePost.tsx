@@ -27,6 +27,7 @@ const LikePost: React.FC = () => {
               isLabel
               isLastComment={false}
               likes={0}
+              comments={0}
             />
           ))}
         </div>

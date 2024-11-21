@@ -8,6 +8,10 @@ import useCommunity from '../../hooks/Community/useCommmunity'
 import { categoryArr } from '../../utils/category'
 
 const Community: React.FC = () => {
+  localStorage.setItem(
+    'accessToken',
+    'eyJhbGciOiJIUzI1NiJ9.eyJlbWFpbCI6ImhhaWxjcnlwdGljQG5hdmVyLmNvbSIsImlhdCI6MTczMjE1ODM4NiwiZXhwIjoxNzM0NzUwMzg2fQ.n7hiWjh8QvKb-Ef4VQW6w3RFaowL4p5cDvtaYHkUXBc'
+  )
   const { fetchGetCategoryContents, categoryCommentInfo, isLoading } =
     useCommunity()
 
@@ -31,7 +35,7 @@ const Community: React.FC = () => {
       <Footer />
       <div className="relative w-screen md:w-[390px] flex flex-col items-center">
         <div className="flex flex-col w-full border-t border-t-200 mt-[10px] items-center">
-          <ScrollCategoryBar onCategoryChange={handleCategoryChange} />{' '}
+          <ScrollCategoryBar onCategoryChange={handleCategoryChange} />
           {/* 카테고리 변경 핸들러 전달 */}
           <div className="flex flex-col gap-[10px]">
             {categoryCommentInfo?.data.map((content, index) => (
@@ -45,6 +49,7 @@ const Community: React.FC = () => {
                 postId={content.post_id}
                 category={content.post_category}
                 likes={content.like_user.length}
+                comments={content.comment_count}
                 isLabel
                 isLastComment={index === categoryCommentInfo?.data.length - 1}
               />
