@@ -1,24 +1,35 @@
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import CategoryButton from './CategoryButton'
-import { categoryArr, writeCategoryArr } from '../../utils/category'
+import { categoryArr } from '../../utils/category'
 
-const ScrollCategoryBar: React.FC<{ aboutWrite?: boolean }> = ({
-  aboutWrite,
+interface ScrollCategoryBarProps {
+  onCategoryChange?: (category: string) => void
+}
+
+const ScrollCategoryBar: React.FC<ScrollCategoryBarProps> = ({
+  onCategoryChange,
 }) => {
-  const [activeCategory, setActiveCategory] = useState<string | null>(
-    aboutWrite ? null : '전체'
+  const [activeCategory, setActiveCategory] = useState<string>(
+    localStorage.getItem('category') || '전체'
   )
 
+  useEffect(() => {
+    localStorage.setItem('category', '전체')
+  }, [])
+
   const handleButtonClick = (category: string) => {
-    setActiveCategory(category)
-    localStorage.setItem('category', category)
+    setActiveCategory(category) // 상태 업데이트
+    localStorage.setItem('category', category) // 로컬 스토리지 업데이트
+    if (onCategoryChange) {
+      onCategoryChange(category) // 카테고리 변경 시 함수 호출
+    }
   }
 
   const containerClasses = [
     'overflow-x-auto',
     'scrollbar-hidden',
     'mt-[10px]',
-    aboutWrite ? 'pb-[10px]' : 'pb-[16px]',
+    'pb-[16px]',
   ].join(' ')
 
   const buttonContainerClasses = [
@@ -27,20 +38,18 @@ const ScrollCategoryBar: React.FC<{ aboutWrite?: boolean }> = ({
     'w-[358px]',
     'justify-start',
     'items-center',
-    aboutWrite ? 'gap-[6px]' : 'gap-2',
+    'gap-2',
     'whitespace-nowrap',
   ].join(' ')
-
-  const categories = aboutWrite ? writeCategoryArr : categoryArr
 
   return (
     <div className={containerClasses}>
       <div className={buttonContainerClasses}>
-        {categories.map((category) => (
+        {Object.keys(categoryArr).map((category) => (
           <CategoryButton
             key={category}
             category={category}
-            isActive={activeCategory === category}
+            isActive={activeCategory === category} // 활성화 상태 전달
             onClick={() => handleButtonClick(category)}
           />
         ))}
