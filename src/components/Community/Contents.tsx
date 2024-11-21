@@ -11,7 +11,7 @@ interface ContentProps {
   content: string
   postId: number
   isLabel: boolean
-  isLastComment: boolean
+  isLastComment?: boolean
   imgUrl: string
   category: string
   likes: number

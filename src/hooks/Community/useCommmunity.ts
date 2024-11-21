@@ -20,6 +20,9 @@ const useCommunity = () => {
   // 카테고리로 게시글 조회 response
   const [categoryCommentInfo, setCategoryCommentInfo] =
     useState<getCategoryContentResponse | null>(null)
+  // 인기글 리스트 조회 response
+  const [popularInfo, setPopularInfo] =
+    useState<getCategoryContentResponse | null>(null)
   const [isLoading, setIsLoading] = useState<boolean>(false)
   const [isError, setIsError] = useState<boolean>(false)
   const navigate = useNavigate()
@@ -92,6 +95,21 @@ const useCommunity = () => {
     }
   }
 
+  // 인기글 리스트 조회
+  const fetchGetPopularList = async () => {
+    try {
+      setIsLoading(true)
+      const response = await defaultAxios.get(`/posts/popular`)
+      console.log(response.data)
+      setPopularInfo(response.data)
+    } catch (error) {
+      setIsError(true)
+      console.error(error)
+    } finally {
+      setIsLoading(false)
+    }
+  }
+
   return {
     postInfo,
     setPostInfo,
@@ -104,6 +122,8 @@ const useCommunity = () => {
     contentCommentInfo,
     categoryCommentInfo,
     fetchPostLike,
+    fetchGetPopularList,
+    popularInfo,
   }
 }
 
