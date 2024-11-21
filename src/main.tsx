@@ -18,6 +18,7 @@ import ComingSoon from './pages/Mypage/ComingSoon.tsx'
 import Recipe from './pages/Recipe/Recipe.tsx'
 import RecipeReturn from './pages/Recipe/RecipeReturn.tsx'
 import AuthLoading from './pages/AuthLoading.tsx'
+import LoadingSplash from './pages/Splash/LoadingSplash.tsx'
 
 const router = createBrowserRouter([
   { path: '/', element: <Main /> },
@@ -35,6 +36,8 @@ const router = createBrowserRouter([
   { path: '/recipe', element: <Recipe /> },
   { path: '/recipeReturn', element: <RecipeReturn /> },
   { path: '/auth', element: <AuthLoading /> },
+  { path: '/loading', element: <LoadingSplash /> },
+  { path: '/preparing', element: <AuthLoading /> },
 ])
 
 createRoot(document.getElementById('root')!).render(

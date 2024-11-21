@@ -22,6 +22,7 @@ export default {
       M00: ['AppleSDGothicNeoM00'],
       R00: ['AppleSDGothicNeoR00'],
       L00: ['AppleSDGothicNeoL00'],
+      B00: ['AppleSDGothicNeoB00'],
     },
   },
   plugins: [],
