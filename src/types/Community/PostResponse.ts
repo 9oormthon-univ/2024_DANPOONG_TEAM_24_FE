@@ -1,4 +1,5 @@
 import { commentResponse } from './CommentResponse'
+import { contentResponse } from './ContentResponse'
 
 export interface getPostResponse {
   post_id: number
@@ -12,4 +13,9 @@ export interface getPostResponse {
   liked_by_me: boolean
   comments: commentResponse[]
   post_category: string
+}
+
+export interface getCategoryContentResponse {
+  code: number
+  data: contentResponse[]
 }

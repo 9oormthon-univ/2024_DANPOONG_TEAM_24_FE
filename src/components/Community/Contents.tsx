@@ -6,24 +6,30 @@ import Label from './Label'
 
 interface ContentProps {
   nickname: string
-  updateHour: number
+  updateHour: string
+  content: string
   postId: number
   isLabel: boolean
   isLastComment: boolean
+  imgUrl: string
+  category: string
 }
 
 const Contents: React.FC<ContentProps> = ({
   nickname,
   updateHour,
+  content,
   postId,
   isLabel,
   isLastComment,
+  imgUrl,
+  category,
 }) => {
   const navigate = useNavigate()
 
   const onClickPost = () => {
     navigate(`${postId}`, {
-      state: { nickname, updateHour },
+      state: { category },
     })
   }
 
@@ -35,11 +41,9 @@ const Contents: React.FC<ContentProps> = ({
       }`}
     >
       <div className="flex flex-col w-[338px] h-[116px] gap-[10px]">
-        <Profile nickname={nickname} updateHour={updateHour} />
+        <Profile nickname={nickname} updateHour={updateHour} imgUrl={imgUrl} />
         <p className="text-[14px] line-clamp-2 font-R00 font-normal leading-[18.9px] text-800">
-          00님 편의점 레시피 시도했는데 맛있어요! 먹기 좋은 편의점 위치도
-          공유합니다 00님 편의점 레시피 시도했는데 맛있어요! 먹기 좋은 편의점
-          위치도 공유합니다
+          {content}
         </p>
         <div className="flex flex-row justify-end items-center gap-[10px]">
           <CountComponent label="view" count={17} />
@@ -47,7 +51,7 @@ const Contents: React.FC<ContentProps> = ({
           <CountComponent label="comment" count={17} />
         </div>
       </div>
-      {isLabel ? <Label category="레시피 공유" /> : ''}
+      {isLabel ? <Label category={category} /> : ''}
     </div>
   )
 }

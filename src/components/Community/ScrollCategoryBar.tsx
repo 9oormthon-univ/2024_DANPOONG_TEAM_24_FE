@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import CategoryButton from './CategoryButton'
 import { categoryArr } from '../../utils/category'
 
@@ -9,13 +9,19 @@ interface ScrollCategoryBarProps {
 const ScrollCategoryBar: React.FC<ScrollCategoryBarProps> = ({
   onCategoryChange,
 }) => {
-  const [activeCategory, setActiveCategory] = useState<string | null>('전체')
+  const [activeCategory, setActiveCategory] = useState<string>(
+    localStorage.getItem('category') || '전체'
+  )
+
+  useEffect(() => {
+    localStorage.setItem('category', '전체')
+  }, [])
 
   const handleButtonClick = (category: string) => {
-    setActiveCategory(category)
-    localStorage.setItem('category', category)
+    setActiveCategory(category) // 상태 업데이트
+    localStorage.setItem('category', category) // 로컬 스토리지 업데이트
     if (onCategoryChange) {
-      onCategoryChange(category)
+      onCategoryChange(category) // 카테고리 변경 시 함수 호출
     }
   }
 
@@ -43,7 +49,7 @@ const ScrollCategoryBar: React.FC<ScrollCategoryBarProps> = ({
           <CategoryButton
             key={category}
             category={category}
-            isActive={activeCategory === category}
+            isActive={activeCategory === category} // 활성화 상태 전달
             onClick={() => handleButtonClick(category)}
           />
         ))}

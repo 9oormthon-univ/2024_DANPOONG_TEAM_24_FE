@@ -1,16 +1,22 @@
 import React, { useEffect } from 'react'
-import { useParams } from 'react-router-dom'
+import { useParams, useLocation } from 'react-router-dom'
 import NaviBar from '../../components/Community/NaviBar'
 import PostContent from '../../components/Community/PostContent'
 import PostComment from '../../components/Community/PostComment'
 import CommentInput from '../../components/Community/CommentInput'
 import useCommunity from '../../hooks/Community/useCommmunity'
+import { categoryArr } from '../../utils/category'
+import findKeyByValue from '../../utils/findKeyByValue'
 
 const Post: React.FC = () => {
   const { postId } = useParams<{ postId: string }>()
-  const category = localStorage.getItem('category') || ''
+  const location = useLocation()
   const { contentCommentInfo, fetchGetContentsComments, isLoading } =
     useCommunity()
+
+  const categoryValue = location.state?.category || 'all' // 기본값 설정
+  // 한글 카테고리 이름 찾기
+  const category = findKeyByValue(categoryArr, categoryValue) || '전체' // 기본값 설정
 
   useEffect(() => {
     if (postId) {
