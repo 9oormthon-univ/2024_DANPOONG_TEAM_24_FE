@@ -11,7 +11,7 @@ interface ContentProps {
   content: string
   postId: number
   isLabel: boolean
-  isLastComment: boolean
+  isLastComment?: boolean
   imgUrl: string
   category: string
   likes: number
@@ -34,7 +34,7 @@ const Contents: React.FC<ContentProps> = ({
   const navigate = useNavigate()
 
   const onClickPost = () => {
-    navigate(`${postId}`, {
+    navigate(`/community/${postId}`, {
       state: { category },
     })
   }

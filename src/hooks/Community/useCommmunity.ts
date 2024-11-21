@@ -20,6 +20,9 @@ const useCommunity = () => {
   // 카테고리로 게시글 조회 response
   const [categoryCommentInfo, setCategoryCommentInfo] =
     useState<getCategoryContentResponse | null>(null)
+  // 인기글 리스트 조회 response
+  const [popularInfo, setPopularInfo] =
+    useState<getCategoryContentResponse | null>(null)
   const [isLoading, setIsLoading] = useState<boolean>(false)
   const [isError, setIsError] = useState<boolean>(false)
   const navigate = useNavigate()
@@ -33,7 +36,6 @@ const useCommunity = () => {
 
   // 게시글 작성
   const fetchPostContents = async (currentPostInfo: postRequest) => {
-    console.log('Submitting postInfo:', currentPostInfo) // 제출할 상태 확인
     try {
       setIsLoading(true)
       const response = await defaultAxios.post('/posts', currentPostInfo)
@@ -78,6 +80,36 @@ const useCommunity = () => {
     }
   }
 
+  // 좋아요
+  const fetchPostLike = async (post_id: number) => {
+    console.log(post_id)
+    try {
+      setIsLoading(true)
+      const response = await defaultAxios.post(`/posts/${post_id}/like`)
+      console.log(response.data)
+    } catch (error) {
+      setIsError(true)
+      console.error(error)
+    } finally {
+      setIsLoading(false)
+    }
+  }
+
+  // 인기글 리스트 조회
+  const fetchGetPopularList = async () => {
+    try {
+      setIsLoading(true)
+      const response = await defaultAxios.get(`/posts/popular`)
+      console.log(response.data)
+      setPopularInfo(response.data)
+    } catch (error) {
+      setIsError(true)
+      console.error(error)
+    } finally {
+      setIsLoading(false)
+    }
+  }
+
   return {
     postInfo,
     setPostInfo,
@@ -89,6 +121,9 @@ const useCommunity = () => {
     fetchGetCategoryContents,
     contentCommentInfo,
     categoryCommentInfo,
+    fetchPostLike,
+    fetchGetPopularList,
+    popularInfo,
   }
 }
 

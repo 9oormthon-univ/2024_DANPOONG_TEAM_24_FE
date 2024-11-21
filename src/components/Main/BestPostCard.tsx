@@ -36,7 +36,6 @@ export default function BestPostCard({
           </div>
           <Label category={category} />
         </div>
-
         <div className="pt-3 font-R00 text-[14px] leading-[135%]">
           {contents}
         </div>

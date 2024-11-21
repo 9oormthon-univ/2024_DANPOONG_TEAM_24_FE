@@ -8,10 +8,6 @@ import useCommunity from '../../hooks/Community/useCommmunity'
 import { categoryArr } from '../../utils/category'
 
 const Community: React.FC = () => {
-  localStorage.setItem(
-    'accessToken',
-    'eyJhbGciOiJIUzI1NiJ9.eyJlbWFpbCI6ImhhaWxjcnlwdGljQG5hdmVyLmNvbSIsImlhdCI6MTczMjE1ODM4NiwiZXhwIjoxNzM0NzUwMzg2fQ.n7hiWjh8QvKb-Ef4VQW6w3RFaowL4p5cDvtaYHkUXBc'
-  )
   const { fetchGetCategoryContents, categoryCommentInfo, isLoading } =
     useCommunity()
 

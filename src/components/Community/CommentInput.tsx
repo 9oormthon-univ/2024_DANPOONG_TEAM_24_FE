@@ -4,9 +4,13 @@ import useComment from '../../hooks/Community/useComment'
 
 interface CommentInputProps {
   postId: number
+  fetchGetContentsComments: (postId: number) => void
 }
 
-const CommentInput: React.FC<CommentInputProps> = ({ postId }) => {
+const CommentInput: React.FC<CommentInputProps> = ({
+  postId,
+  fetchGetContentsComments,
+}) => {
   const { commentInfo, setCommentInfo, fetchPostComment } = useComment()
 
   const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -21,6 +25,7 @@ const CommentInput: React.FC<CommentInputProps> = ({ postId }) => {
     if (commentInfo.content.trim()) {
       await fetchPostComment(commentInfo)
       setCommentInfo({ postId: 0, content: '' })
+      fetchGetContentsComments(postId) // 댓글 추가 후 리렌더링
     }
   }
 
