@@ -13,14 +13,14 @@ const useAuth = () => {
     const urlParams = new URLSearchParams(window.location.search)
     const code = urlParams.get('code')
     const redirectUrl = window.location.origin + location.pathname // 현재 주소
-    alert(redirectUrl)
+    console.log(redirectUrl)
 
     if (code) {
       axios
         .get('https://api.ideabank.me/oauth', {
           params: {
             code,
-            redirect_url: redirectUrl, // 현재 주소를 redirect_url로 설정
+            redirect_uri: redirectUrl, // 현재 주소를 redirect_url로 설정
           },
         })
         .then((response) => {
