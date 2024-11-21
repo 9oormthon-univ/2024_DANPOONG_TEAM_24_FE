@@ -1,6 +1,5 @@
 import React from 'react'
 import commentIcon from '../../assets/community/comment.svg'
-import eyeIcon from '../../assets/community/eye.svg'
 import likeIcon from '../../assets/community/like.svg'
 
 const CountComponent: React.FC<{ label: string; count: number }> = ({
@@ -11,9 +10,6 @@ const CountComponent: React.FC<{ label: string; count: number }> = ({
   switch (label) {
     case 'like':
       iconSrc = likeIcon
-      break
-    case 'view':
-      iconSrc = eyeIcon
       break
     case 'comment':
       iconSrc = commentIcon

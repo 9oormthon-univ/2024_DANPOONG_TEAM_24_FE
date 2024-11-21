@@ -4,21 +4,30 @@ import Footer from '../../components/Footer'
 import ScrollCategoryBar from '../../components/Community/ScrollCategoryBar'
 import Contents from '../../components/Community/Contents'
 import WriteButton from '../../components/Community/WriteButton'
-
-const comments = [
-  { nickname: '익명의 카피바라', updateHour: 1, postId: 1 },
-  { nickname: '익명의 고양이', updateHour: 2, postId: 2 },
-  { nickname: '익명의 고양이', updateHour: 2, postId: 3 },
-  { nickname: '익명의 고양이', updateHour: 2, postId: 4 },
-  { nickname: '익명의 고양이', updateHour: 2, postId: 5 },
-  { nickname: '익명의 고양이', updateHour: 2, postId: 6 },
-  { nickname: '익명의 고양이', updateHour: 2, postId: 7 },
-]
+import useCommunity from '../../hooks/Community/useCommmunity'
+import { categoryArr } from '../../utils/category'
 
 const Community: React.FC = () => {
+  localStorage.setItem(
+    'accessToken',
+    'eyJhbGciOiJIUzI1NiJ9.eyJlbWFpbCI6ImhhaWxjcnlwdGljQG5hdmVyLmNvbSIsImlhdCI6MTczMjE1ODM4NiwiZXhwIjoxNzM0NzUwMzg2fQ.n7hiWjh8QvKb-Ef4VQW6w3RFaowL4p5cDvtaYHkUXBc'
+  )
+  const { fetchGetCategoryContents, categoryCommentInfo, isLoading } =
+    useCommunity()
+
   useEffect(() => {
-    localStorage.setItem('category', '전체')
+    const currentCategory = localStorage.getItem('category') || '전체'
+    fetchGetCategoryContents(categoryArr[currentCategory])
   }, [])
+
+  const handleCategoryChange = (category: string) => {
+    fetchGetCategoryContents(categoryArr[category])
+  }
+
+  // 로딩 스플래시 화면 추가 예정!
+  if (isLoading) {
+    return <div>로딩 중...</div>
+  }
 
   return (
     <div className="flex flex-col items-center bg-white">
@@ -26,16 +35,23 @@ const Community: React.FC = () => {
       <Footer />
       <div className="relative w-screen md:w-[390px] flex flex-col items-center">
         <div className="flex flex-col w-full border-t border-t-200 mt-[10px] items-center">
-          <ScrollCategoryBar />
+          <ScrollCategoryBar onCategoryChange={handleCategoryChange} />
+          {/* 카테고리 변경 핸들러 전달 */}
           <div className="flex flex-col gap-[10px]">
-            {comments.map((comment, index) => (
+            {categoryCommentInfo?.data.map((content, index) => (
               <Contents
-                key={comment.postId}
-                nickname={comment.nickname}
-                updateHour={comment.updateHour}
-                postId={comment.postId}
+                key={content.post_id}
+                nickname={content.author}
+                title={content.title}
+                content={content.content}
+                updateHour={content.created_at}
+                imgUrl={content.author_profile_url}
+                postId={content.post_id}
+                category={content.post_category}
+                likes={content.like_user.length}
+                comments={content.comment_count}
                 isLabel
-                isLastComment={index === comments.length - 1}
+                isLastComment={index === categoryCommentInfo?.data.length - 1}
               />
             ))}
           </div>
