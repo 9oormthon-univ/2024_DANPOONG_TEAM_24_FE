@@ -4,7 +4,7 @@ import useComment from '../../hooks/Community/useComment'
 
 interface CommentInputProps {
   postId: number
-  fetchGetContentsComments: (postId: number) => void // 타입 정의
+  fetchGetContentsComments: (postId: number) => void
 }
 
 const CommentInput: React.FC<CommentInputProps> = ({

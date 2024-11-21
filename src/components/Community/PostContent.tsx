@@ -6,7 +6,7 @@ import { getPostResponse } from '../../types/Community/PostResponse'
 
 interface PostContentProps {
   contentCommentInfo: getPostResponse | null
-  onLikeToggle: () => void // 새로운 prop 추가
+  onLikeToggle: () => void
 }
 
 const PostContent: React.FC<PostContentProps> = ({
@@ -36,7 +36,7 @@ const PostContent: React.FC<PostContentProps> = ({
         <LikeButton
           isLike={contentCommentInfo.liked_by_me}
           postId={contentCommentInfo.post_id}
-          onLikeToggle={onLikeToggle} // LikeButton에 onLikeToggle 전달
+          onLikeToggle={onLikeToggle}
         />
         <div className="flex flex-row items-center gap-[10px]">
           <CountComponent

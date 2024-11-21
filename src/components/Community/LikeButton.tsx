@@ -15,11 +15,12 @@ const LikeButton: React.FC<{
     setIsClick(isLike)
   }, [isLike])
 
+  // 공감하기 버튼 클릭 시, clikck state 변경 + 좋아요 api 호출 + fetchGetContentsComments 호출
   const handleClick = async () => {
     const newLikeState = !isClick
-    setIsClick(newLikeState) // 클릭 시 상태 변경
-    await fetchPostLike(postId) // API 호출
-    onLikeToggle() // 좋아요 상태 변경 시 호출
+    setIsClick(newLikeState)
+    await fetchPostLike(postId)
+    onLikeToggle()
   }
 
   return (
