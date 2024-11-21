@@ -12,10 +12,13 @@ const useAuth = () => {
   useEffect(() => {
     const urlParams = new URLSearchParams(window.location.search)
     const code = urlParams.get('code')
-    const redirectUrl = encodeURIComponent(
-      window.location.origin + location.pathname
-    ) // 현재 주소
-    alert(redirectUrl)
+    const redirectUrl = window.location.origin + location.pathname // 현재 주소
+
+    // 디버깅용 콘솔 로그
+    console.log('Redirect URL:', redirectUrl)
+    console.log('Location:', location)
+    console.log('Origin:', window.location.origin)
+    console.log('Pathname:', location.pathname)
 
     if (code) {
       axios
@@ -23,6 +26,12 @@ const useAuth = () => {
           params: {
             code,
             redirect_url: redirectUrl, // 현재 주소를 redirect_url로 설정
+          },
+          paramsSerializer: (params) => {
+            // 파라미터 직접 직렬화
+            return Object.entries(params)
+              .map(([key, value]) => `${key}=${value}`)
+              .join('&')
           },
         })
         .then((response) => {
@@ -36,6 +45,7 @@ const useAuth = () => {
         .catch((error) => {
           setIsError(true)
           setErrorMessage('Error sending code: ' + error.message)
+          console.error('Full error:', error.response)
         })
         .finally(() => {
           setIsLoading(false)
