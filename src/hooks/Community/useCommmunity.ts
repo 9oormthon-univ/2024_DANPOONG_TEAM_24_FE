@@ -1,6 +1,6 @@
 import { useState } from 'react'
-import { postRequest } from '../types/Community/PostRequest'
-import defaultAxios from '../api/defaultAxios'
+import { postRequest } from '../../types/Community/PostRequest'
+import defaultAxios from '../../api/defaultAxios'
 import { useNavigate } from 'react-router-dom'
 
 const useCommunity = () => {

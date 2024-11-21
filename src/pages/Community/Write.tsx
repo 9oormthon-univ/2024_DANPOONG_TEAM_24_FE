@@ -4,7 +4,7 @@ import Notice from '../../components/Community/Notice'
 import TitleInput from '../../components/Community/TitleInput'
 import ContentInput from '../../components/Community/ContentInput'
 import CompleteButton from '../../components/Community/CompleteButton'
-import useCommunity from '../../hooks/useCommmunity'
+import useCommunity from '../../hooks/Community/useCommmunity'
 import CategoryBar from '../../components/Community/CategoryBar'
 
 const Write: React.FC = () => {

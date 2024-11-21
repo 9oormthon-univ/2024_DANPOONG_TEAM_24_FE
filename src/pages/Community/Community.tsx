@@ -5,7 +5,7 @@ import ScrollCategoryBar from '../../components/Community/ScrollCategoryBar'
 import Contents from '../../components/Community/Contents'
 import WriteButton from '../../components/Community/WriteButton'
 
-const comments = [
+const contents = [
   { nickname: '익명의 카피바라', updateHour: 1, postId: 1 },
   { nickname: '익명의 고양이', updateHour: 2, postId: 2 },
   { nickname: '익명의 고양이', updateHour: 2, postId: 3 },
@@ -32,14 +32,14 @@ const Community: React.FC = () => {
         <div className="flex flex-col w-full border-t border-t-200 mt-[10px] items-center">
           <ScrollCategoryBar />
           <div className="flex flex-col gap-[10px]">
-            {comments.map((comment, index) => (
+            {contents.map((content, index) => (
               <Contents
-                key={comment.postId}
-                nickname={comment.nickname}
-                updateHour={comment.updateHour}
-                postId={comment.postId}
+                key={content.postId}
+                nickname={content.nickname}
+                updateHour={content.updateHour}
+                postId={content.postId}
                 isLabel
-                isLastComment={index === comments.length - 1}
+                isLastComment={index === contents.length - 1}
               />
             ))}
           </div>

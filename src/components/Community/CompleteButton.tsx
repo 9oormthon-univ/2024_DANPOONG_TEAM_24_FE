@@ -1,5 +1,5 @@
 import React from 'react'
-import useCommunity from '../../hooks/useCommmunity'
+import useCommunity from '../../hooks/Community/useCommmunity'
 import { postRequest } from '../../types/Community/PostRequest'
 
 interface CompleteButtonProps {

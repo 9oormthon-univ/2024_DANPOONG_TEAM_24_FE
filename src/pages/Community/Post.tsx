@@ -1,13 +1,15 @@
 import React from 'react'
-// import { useParams } from 'react-router-dom'
+import { useParams } from 'react-router-dom'
 import NaviBar from '../../components/Community/NaviBar'
 import PostContent from '../../components/Community/PostContent'
 import PostComment from '../../components/Community/PostComment'
 import CommentInput from '../../components/Community/CommentInput'
 
 const Post: React.FC = () => {
-  // const { postId } = useParams()
+  const { postId } = useParams<{ postId: string }>()
   const category = localStorage.getItem('category') || ''
+
+  const numericPostId = postId ? parseInt(postId, 10) : 0
 
   const comments = [
     {
@@ -37,7 +39,7 @@ const Post: React.FC = () => {
           ))}
           <div className="w-[358px] h-[94px]" />
         </div>
-        <CommentInput />
+        <CommentInput postId={numericPostId} />
       </div>
     </div>
   )
