@@ -6,6 +6,7 @@ import Contents from '../../components/Community/Contents'
 import WriteButton from '../../components/Community/WriteButton'
 import useCommunity from '../../hooks/Community/useCommmunity'
 import { categoryArr } from '../../utils/category'
+import LoadingSplash from '../Splash/LoadingSplash'
 
 const Community: React.FC = () => {
   const { fetchGetCategoryContents, categoryCommentInfo, isLoading } =
@@ -20,9 +21,8 @@ const Community: React.FC = () => {
     fetchGetCategoryContents(categoryArr[category])
   }
 
-  // 로딩 스플래시 화면 추가 예정!
   if (isLoading) {
-    return <div>로딩 중...</div>
+    return <LoadingSplash />
   }
 
   return (
