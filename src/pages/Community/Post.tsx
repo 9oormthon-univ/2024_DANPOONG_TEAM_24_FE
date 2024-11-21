@@ -1,45 +1,47 @@
-import React from 'react'
+import React, { useEffect } from 'react'
 import { useParams } from 'react-router-dom'
 import NaviBar from '../../components/Community/NaviBar'
 import PostContent from '../../components/Community/PostContent'
 import PostComment from '../../components/Community/PostComment'
 import CommentInput from '../../components/Community/CommentInput'
+import useCommunity from '../../hooks/Community/useCommmunity'
 
 const Post: React.FC = () => {
   const { postId } = useParams<{ postId: string }>()
   const category = localStorage.getItem('category') || ''
+  const { contentCommentInfo, fetchGetContentsComments, isLoading } =
+    useCommunity()
 
-  const numericPostId = postId ? parseInt(postId, 10) : 0
+  useEffect(() => {
+    if (postId) {
+      fetchGetContentsComments(parseInt(postId, 10)) // postId를 숫자로 변환하여 호출
+    }
+  }, [postId]) // postId를 의존성으로 추가
 
-  const comments = [
-    {
-      nickname: '익명의 카피바라',
-      updateHour: 1,
-      content: '우와 정말 감사해요',
-    },
-    { nickname: '익명의 카피바라', updateHour: 2, content: '짱짱' },
-  ]
+  if (isLoading) {
+    return <div>로딩 중...</div>
+  }
 
   return (
     <div className="flex flex-col items-center bg-white">
       <NaviBar subject={category} />
       <div className="flex flex-col border-t border-t-200 items-center">
-        <PostContent />
+        <PostContent contentCommentInfo={contentCommentInfo} />
         <div className="w-full h-2 bg-[#D9D9D9] mb-[30px]" />
         {/* 댓글 나열 */}
         <div className="flex flex-col gap-[10px]">
-          {comments.map((comment, index) => (
+          {contentCommentInfo?.comments.map((comment, index) => (
             <PostComment
               key={index}
-              nickname={comment.nickname}
-              updateHour={comment.updateHour}
-              comment={comment.content}
-              isLastComment={index === comments.length - 1} // 마지막 댓글인지 확인
+              nickname={comment.author} // 댓글 데이터에서 nickname 가져오기
+              updateHour={comment.created_at} // 댓글 데이터에서 updateHour 가져오기
+              comment={comment.content} // 댓글 데이터에서 content 가져오기
+              isLastComment={index === contentCommentInfo.comments.length - 1}
             />
           ))}
           <div className="w-[358px] h-[94px]" />
         </div>
-        <CommentInput postId={numericPostId} />
+        <CommentInput postId={postId ? parseInt(postId, 10) : 0} />
       </div>
     </div>
   )

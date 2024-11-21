@@ -11,6 +11,7 @@ const useComment = () => {
   const [isError, setIsError] = useState<boolean>(false)
   const [errorMessage, setErrorMessage] = useState<string>('')
 
+  // 댓글 달기
   const fetchPostComment = async (currentCommentInfo: CommentRequest) => {
     console.log('제출한 댓글 정보: ', currentCommentInfo)
     try {
@@ -28,6 +29,8 @@ const useComment = () => {
       setIsLoading(false)
     }
   }
+
+  // 댓글 삭제
 
   return {
     commentInfo,

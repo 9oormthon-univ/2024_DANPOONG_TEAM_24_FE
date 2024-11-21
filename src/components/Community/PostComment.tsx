@@ -3,7 +3,7 @@ import Profile from './Profile'
 
 interface CommentProps {
   nickname: string
-  updateHour: number
+  updateHour: string
   comment: string
   isLastComment?: boolean
 }

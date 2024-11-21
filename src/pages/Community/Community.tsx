@@ -18,7 +18,7 @@ const contents = [
 const Community: React.FC = () => {
   localStorage.setItem(
     'accessToken',
-    'eyJhbGciOiJIUzI1NiJ9.eyJlbWFpbCI6ImhhaWxjcnlwdGljQG5hdmVyLmNvbSIsImlhdCI6MTczMjExMDMwMiwiZXhwIjoxNzMyMTQxODM4fQ.J0K_pumRy4Ef9SuBGYew-8yJSCuHJLv3VuPwNbSZxFg'
+    'eyJhbGciOiJIUzI1NiJ9.eyJlbWFpbCI6ImhhaWxjcnlwdGljQG5hdmVyLmNvbSIsImlhdCI6MTczMjE1ODM4NiwiZXhwIjoxNzM0NzUwMzg2fQ.n7hiWjh8QvKb-Ef4VQW6w3RFaowL4p5cDvtaYHkUXBc'
   )
   useEffect(() => {
     localStorage.setItem('category', '전체')
