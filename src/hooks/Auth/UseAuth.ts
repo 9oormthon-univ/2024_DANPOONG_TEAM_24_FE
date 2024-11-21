@@ -12,7 +12,9 @@ const useAuth = () => {
   useEffect(() => {
     const urlParams = new URLSearchParams(window.location.search)
     const code = urlParams.get('code')
-    const redirectUrl = window.location.origin + location.pathname // 현재 주소
+    const redirectUrl = encodeURIComponent(
+      window.location.origin + location.pathname
+    ) // 현재 주소
     alert(redirectUrl)
 
     if (code) {
