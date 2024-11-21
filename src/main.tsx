@@ -14,10 +14,11 @@ import MyPage from './pages/Mypage/MyPage.tsx'
 import WrittenPost from './pages/Mypage/WrittenPost.tsx'
 import CommentPost from './pages/Mypage/CommentPost.tsx'
 import LikePost from './pages/Mypage/LikePost.tsx'
-import ComingSoon from './pages/Mypage/ComingSoon.tsx'
 import Recipe from './pages/Recipe/Recipe.tsx'
 import RecipeReturn from './pages/Recipe/RecipeReturn.tsx'
 import AuthLoading from './pages/Splash/AuthLoading.tsx'
+import PreparingSplash from './pages/Splash/PreparingSplash.tsx'
+
 
 const router = createBrowserRouter([
   { path: '/', element: <Main /> },
@@ -31,10 +32,10 @@ const router = createBrowserRouter([
   { path: '/mypage/writtenpost', element: <WrittenPost /> },
   { path: '/mypage/commentpost', element: <CommentPost /> },
   { path: '/mypage/likepost', element: <LikePost /> },
-  { path: '/mypage/comingsoon', element: <ComingSoon /> },
   { path: '/recipe', element: <Recipe /> },
   { path: '/recipeReturn', element: <RecipeReturn /> },
   { path: '/auth', element: <AuthLoading /> },
+  { path: '/preparingSplash', element: <PreparingSplash /> },
 ])
 
 createRoot(document.getElementById('root')!).render(

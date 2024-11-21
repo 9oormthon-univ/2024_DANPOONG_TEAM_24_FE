@@ -34,7 +34,7 @@ const Contents: React.FC<ContentProps> = ({
   const navigate = useNavigate()
 
   const onClickPost = () => {
-    navigate(`/community/${postId}`, {
+    navigate(`${postId}`, {
       state: { category },
     })
   }
