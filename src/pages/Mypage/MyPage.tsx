@@ -51,7 +51,8 @@ function MyPage() {
   }
 
   const handleLogout = () => {
-    navigate('/')
+    localStorage.clear()
+    location.reload()
   }
 
   return (

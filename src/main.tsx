@@ -3,6 +3,7 @@ import { StrictMode } from 'react'
 import { createRoot } from 'react-dom/client'
 import { createBrowserRouter, RouterProvider } from 'react-router-dom'
 
+import ProtectedRoute from './components/ProtectedRoute.tsx'
 import Main from './pages/Main/Main.tsx'
 import Information from './pages/Information.tsx'
 import Address from './pages/Main/Address.tsx'
@@ -19,21 +20,28 @@ import RecipeReturn from './pages/Recipe/RecipeReturn.tsx'
 import AuthLoading from './pages/Splash/AuthLoading.tsx'
 import PreparingSplash from './pages/Splash/PreparingSplash.tsx'
 
-
 const router = createBrowserRouter([
-  { path: '/', element: <Main /> },
-  { path: '/information', element: <Information /> },
-  { path: '/address', element: <Address /> },
-  { path: '/around', element: <Around /> },
-  { path: '/community', element: <Community /> },
-  { path: '/community/write', element: <Write /> },
-  { path: '/community/:postId', element: <Post /> },
-  { path: '/mypage', element: <MyPage /> },
-  { path: '/mypage/writtenpost', element: <WrittenPost /> },
-  { path: '/mypage/commentpost', element: <CommentPost /> },
-  { path: '/mypage/likepost', element: <LikePost /> },
-  { path: '/recipe', element: <Recipe /> },
-  { path: '/recipeReturn', element: <RecipeReturn /> },
+  {
+    path: '/',
+    element: <ProtectedRoute />,
+    children: [
+      { index: true, element: <Main /> }, // 메인 페이지
+      { path: 'information', element: <Information /> },
+      { path: 'address', element: <Address /> },
+      { path: 'around', element: <Around /> },
+      { path: 'community', element: <Community /> },
+      { path: 'community/write', element: <Write /> },
+      { path: 'community/:postId', element: <Post /> },
+      { path: 'mypage', element: <MyPage /> },
+      { path: 'mypage/writtenpost', element: <WrittenPost /> },
+      { path: 'mypage/commentpost', element: <CommentPost /> },
+      { path: 'mypage/likepost', element: <LikePost /> },
+
+      // 추후 서버에서 인증 인가 빼주시면 protected에서 뺄 예정입니다!
+      { path: 'recipe', element: <Recipe /> },
+      { path: 'recipeReturn', element: <RecipeReturn /> },
+    ],
+  },
   { path: '/auth', element: <AuthLoading /> },
   { path: '/preparingSplash', element: <PreparingSplash /> },
 ])

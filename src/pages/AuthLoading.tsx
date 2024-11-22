@@ -6,7 +6,6 @@ export default function AuthLoading() {
   const navigate = useNavigate()
   const back = 'https://api.ideabank.me/'
 
-  // TODO: apiconfig 반영해서 수정하기
   useEffect(() => {
     // 현재 url에서 인가코드 추출
     const urlParams = new URLSearchParams(window.location.search)
