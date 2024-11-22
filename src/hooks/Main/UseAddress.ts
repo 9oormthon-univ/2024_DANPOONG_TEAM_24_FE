@@ -90,6 +90,7 @@ export const useAddress = () => {
           }
         },
         (error) => {
+          console.log(error.message)
           setIsLoading(false)
           setErrorMessage('위치를 가져오는 데 실패했습니다. 권한을 확인하세요.')
         }
