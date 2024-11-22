@@ -34,7 +34,7 @@ function Header() {
   return (
     <>
       <header className="mt-7 ml-[17px] mr-[19px] w-[390px]">
-        <div className="flex px-4 gap-[94px]">
+        <div className="flex px-4 gap-[94px] justify-between">
           <div
             className="flex flex-row gap-[10px] items-center"
             onClick={() => navigation('/')}
@@ -45,7 +45,7 @@ function Header() {
           <div className="flex flex-row gap-[14.5px] items-center">
             <div className="flex gap-2 items-center">
               <div className="font-SB00 text-[16px] text-ellipsis line-clamp-1">
-                {getSelectedAddress()}
+                {getSelectedAddress() || '주소 설정하기'}
               </div>
               <img
                 src={arrow}

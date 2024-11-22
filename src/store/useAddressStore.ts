@@ -1,32 +1,47 @@
 import { create } from 'zustand'
 
+interface Address {
+  address: string
+  selected?: boolean
+  isCurrentLocation?: boolean
+}
+
 interface AddressStore {
-  addresses: { address: string; selected: boolean }[]
+  addresses: Address[]
   selectAddress: (index: number) => void
-  selectedAddress: string | null
-  getSelectedAddress: () => string | null // 외부에서 현재 선택된 주소를 가져오기 위한 메서드
+  addAddress: (address: string, isCurrentLocation?: boolean) => void
+  getSelectedAddress: () => string | undefined
 }
 
 const useAddressStore = create<AddressStore>((set, get) => ({
-  // 더미 주소 데이터입니다.
-  addresses: [
-    { address: '광진구 능동로 209', selected: true },
-    { address: '광진구 능동로 210', selected: false },
-  ],
-  selectedAddress: '광진구 능동로 209',
+  addresses: JSON.parse(localStorage.getItem('addresses') || '[]'),
 
-  selectAddress: (index) =>
+  // 현재 설정된 주소
+  selectAddress: (index) => {
     set((state) => {
-      const newAddresses = state.addresses.map((addr, i) => ({
-        ...addr,
-        selected: i === index,
-      }))
-      const newSelected = newAddresses[index].address
-      console.log('Selected Address:', newSelected) // 선택된 주소를 콘솔에 출력
-      return { addresses: newAddresses, selectedAddress: newSelected }
-    }),
+      const newAddresses = [...state.addresses]
+      newAddresses.forEach((item, idx) => {
+        item.selected = idx === index
+      })
+      return { addresses: newAddresses }
+    })
+  },
 
-  getSelectedAddress: () => get().selectedAddress, // 현재 선택된 주소 반환
+  // 새로운 받아온 주소가 추가된 주소 리스트
+  addAddress: (address, isCurrentLocation = false) => {
+    set((state) => {
+      const newAddress = { address, selected: false, isCurrentLocation }
+      const newAddresses = [...state.addresses, newAddress]
+      return { addresses: newAddresses }
+    })
+  },
+
+  // 현재 설정된 주소 반환
+  getSelectedAddress: () => {
+    const state = get()
+    const selectedAddress = state.addresses.find((address) => address.selected)
+    return selectedAddress ? selectedAddress.address : undefined
+  },
 }))
 
 export default useAddressStore
