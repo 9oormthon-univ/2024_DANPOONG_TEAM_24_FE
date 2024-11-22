@@ -1,11 +1,11 @@
 import { useState } from 'react'
 import defaultAxios from '../../api/defaultAxios'
-import profileResponse from '../../types/MyPage/ProfileResponse'
 import { getCategoryContentResponse } from '../../types/Community/PostResponse'
+import profile from '../../types/MyPage/ProfileResponse'
 
 const useMypage = () => {
   // 사용자 정보 response
-  const [profileInfo, setProfileInfo] = useState<profileResponse | null>(null)
+  const [profileInfo, setProfileInfo] = useState<profile | null>(null)
   // 특정 게시글 조회 response
   const [postInfo, setPostInfo] = useState<getCategoryContentResponse | null>(
     null
@@ -20,7 +20,7 @@ const useMypage = () => {
       setIsLoading(true)
       const response = await defaultAxios.get(`/user/info`)
       console.log(response.data)
-      setProfileInfo(response.data)
+      setProfileInfo(response.data.data)
     } catch (error) {
       setIsError(true)
       console.error(error)

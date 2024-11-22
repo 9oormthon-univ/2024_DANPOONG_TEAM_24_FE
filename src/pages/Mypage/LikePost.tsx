@@ -3,6 +3,7 @@ import Contents from '../../components/Community/Contents'
 import MyPageHeader from '../../components/MyPage/MyPageHeader'
 import { useLocation } from 'react-router-dom'
 import useMypage from '../../hooks/MyPage/useMyPage'
+import NoContents from '../../components/Community/NoContents'
 
 const LikePost: React.FC = () => {
   const { postInfo, fetchGetSpecPosts } = useMypage()
@@ -17,22 +18,26 @@ const LikePost: React.FC = () => {
       <div className="max-w-[390px]">
         <MyPageHeader title="좋아요 누른 글" />
         <div className="p-4 flex flex-col gap-4 border-t border-200">
-          {postInfo?.data.map((post) => (
-            <Contents
-              key={post.post_id}
-              nickname={post.author}
-              title={post.title}
-              content={post.content}
-              imgUrl={post.author_profile_url}
-              category={post.post_category}
-              updateHour={post.created_at}
-              postId={post.post_id}
-              isLabel
-              isLastComment={false}
-              likes={post.likes}
-              comments={post.comment_count}
-            />
-          ))}
+          {postInfo?.data.length === 0 ? (
+            <NoContents />
+          ) : (
+            postInfo?.data.map((post) => (
+              <Contents
+                key={post.post_id}
+                nickname={post.author}
+                title={post.title}
+                content={post.content}
+                imgUrl={post.author_profile_url}
+                category={post.post_category}
+                updateHour={post.created_at}
+                postId={post.post_id}
+                isLabel
+                isLastComment={false}
+                likes={post.likes}
+                comments={post.comment_count}
+              />
+            ))
+          )}
         </div>
       </div>
     </div>
