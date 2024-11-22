@@ -111,13 +111,25 @@ const KaKaoMap = () => {
         >
           <MapMarker position={userPosition} />
 
-          {places.map((place) => (
-            <MapMarker
-              key={place.storeId}
-              position={{ lat: place.latitude, lng: place.longitude }}
-              title={place.storeName}
-            />
-          ))}
+          {places.map((place) => {
+            // 카테고리 ID에 맞는 필터 항목 찾기
+            const category = Filter.find((f) => f.category_id === selectedCategoryId);
+
+            return (
+              <MapMarker
+                key={place.storeId}
+                position={{ lat: place.latitude, lng: place.longitude }}
+                title={place.storeName}
+                image={{
+                  src: category?.image || '/images/default.svg', // 카테고리 이미지, 없으면 기본 이미지
+                  size: {
+                    width: 32,
+                    height: 32,
+                  }
+                }}
+              />
+            );
+          })}
         </Map>
         <div
           ref={filterContainerRef}
