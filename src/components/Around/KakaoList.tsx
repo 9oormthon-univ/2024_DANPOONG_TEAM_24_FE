@@ -3,14 +3,15 @@ import FilterButton from './FilterButton'
 import Filter from './Filter'
 import useListFilterOptionStore from '../../store/UseListFilterOptionStore'
 import LoadingSplash from '../../pages/Splash/LoadingSplash'
+import defalutAxios from '../../api/defaultAxios'
 
 interface Place {
-  id: string
-  place_name: string
-  address_name: string
-  phone?: string
-  place_url: string
-  distance: string
+  storeId: string
+  storeName: string
+  roadAddress: string
+  latitude: number
+  longitude: number
+  distance: number 
 }
 
 const KakaoList = () => {
@@ -19,6 +20,9 @@ const KakaoList = () => {
     lng: number
   }>({ lat: 0, lng: 0 })
   const [places, setPlaces] = useState<Place[]>([])
+  const [loading, setLoading] = useState<boolean>(true)
+  const [selectedCategoryId, setSelectedCategoryId] = useState<number>(3)
+
   const [selectedFilter, setSelectedFilter] = useState<number | null>(1)
   // 24/11/20 희진 추가
   const { selectedFilterOption, setSelectedFilterOption } =
@@ -53,33 +57,57 @@ const KakaoList = () => {
     }
   }, [])
 
-  // 주변 음식점 검색
+  // 음식점 데이터 가져오기
   useEffect(() => {
-    if (userPosition.lat !== 0 && userPosition.lng !== 0) {
-      const { kakao } = window as any
-      if (!kakao || !kakao.maps) return
-
-      const placesService = new kakao.maps.services.Places()
-      const userLocation = new kakao.maps.LatLng(
-        userPosition.lat,
-        userPosition.lng
-      )
-
-      // 장소 검색 수행
-      placesService.categorySearch(
-        'FD6', // 카테고리 코드: 음식점
-        (result: Place[], status: any) => {
-          if (status === kakao.maps.services.Status.OK) {
-            setPlaces(result)
-          }
-        },
-        {
-          location: userLocation,
-          radius: 1000, // 검색 반경 1000m
+    const fetchStores = async () => {
+      try {
+        setLoading(true) // 로딩 상태 활성화
+        const response = await defalutAxios.get(
+          `/stores/category/${selectedCategoryId}`
+        )
+        if (response.data.code === 200) {
+          const updatedPlaces = response.data.data.map((place: Place) => ({
+            ...place,
+            distance: calculateDistance(
+              userPosition.lat,
+              userPosition.lng,
+              place.latitude,
+              place.longitude
+            ),
+          }));
+          setPlaces(updatedPlaces);
+        } else {
+          console.error('음식점 데이터를 가져오는데 실패했습니다:', response.data)
         }
-      )
+      } catch (error) {
+        console.error('음식점 데이터를 가져오는 중 에러 발생:', error)
+      } finally {
+        setLoading(false)
+      }
     }
-  }, [userPosition])
+
+    if (userPosition.lat !== 0 && userPosition.lng !== 0) {
+      fetchStores()
+    }
+  }, [userPosition, selectedCategoryId])
+
+  const calculateDistance = (lat1: number, lon1: number, lat2: number, lon2: number): number => {
+    const toRad = (value: number): number => (value * Math.PI) / 180; // 도(degree)에서 라디안(radian) 변환
+    const R = 6371e3; // 지구 반지름 (단위: m)
+  
+    const φ1 = toRad(lat1);
+    const φ2 = toRad(lat2);
+    const Δφ = toRad(lat2 - lat1);
+    const Δλ = toRad(lon2 - lon1);
+  
+    const a =
+      Math.sin(Δφ / 2) * Math.sin(Δφ / 2) +
+      Math.cos(φ1) * Math.cos(φ2) * Math.sin(Δλ / 2) * Math.sin(Δλ / 2);
+    const c = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1 - a));
+  
+    return R * c; // 거리 (단위: m)
+  };
+
 
   // 24/11/20 희진 추가
   // 페이지 로드 시 선택된 필터 버튼이 가운데로 오도록 처리
@@ -97,9 +125,10 @@ const KakaoList = () => {
   }, [selectedFilterOption]) // selectedFilterOption이 변경될 때마다 실행
 
   // 24/11/20 희진 변경
-  const handleFilterClick = (id: number, selected: string) => {
+  const handleFilterClick = (id: number, selected: string, categoryId?: number) => {
     setSelectedFilterOption(selected)
     setSelectedFilter(id === selectedFilter ? null : id)
+    setSelectedCategoryId(categoryId || 3)
   }
 
   const handlePlaceClick = (url: string) => {
@@ -108,56 +137,57 @@ const KakaoList = () => {
 
   return (
     <div className="mt-2 pb-24">
-      <div
-        ref={filterContainerRef}
-        className="[&::-webkit-scrollbar]:hidden mb-4 flex overflow-x-auto whitespace-nowrap space-x-2"
-      >
-        <div className="space-x-2">
-          {Filter.map((filter) => (
-            <FilterButton
-              key={filter.id}
-              id={filter.id}
-              label={filter.label}
-              category_id={filter.category_id ? filter.category_id : 0} // 24/11/22 희진 추가
-              selectedFilter={selectedFilter}
-              selected={selectedFilterOption === filter.label} // 24/11/20 희진 추가
-              onClick={() => handleFilterClick(filter.id, filter.label)} // 24/11/20 희진 변경
-            />
-          ))}
-        </div>
-      </div>
-      {places.length > 0 ? (
-        <ul className="space-y-2 overflow-visible">
-          {places.map((place) => (
-            <li
-              key={place.id}
-              className="p-2 border-b border-200 bg-white cursor-pointer flex justify-between items-center"
-              style={{ width: '390px', height: '120px' }}
-              onClick={() => handlePlaceClick(place.place_url)}
-            >
-              <div>
-                <p className="mb-0.5 text-xl font-M00">
-                  {place.place_name}{' '}
-                  <span className="text-sm text-point1">{place.distance}m</span>
-                </p>
-                <p className="mb-[12px] text-sm font-R00">
-                  {place.address_name}
-                </p>
-                {place.phone && (
-                  <p className="text-sm font-R00">{place.phone}</p>
-                )}
-              </div>
-              <div
-                className="w-24 h-24 rounded-xl"
-                style={{
-                  backgroundColor: '#d3d3d3',
-                }}
-              />
-            </li>
-          ))}
-        </ul>
+      {loading ? (
+        <LoadingSplash /> // 로딩 중일 때 로딩 스플래시 표시
       ) : (
-        <LoadingSplash />
+        <>
+          <div
+            ref={filterContainerRef}
+            className="[&::-webkit-scrollbar]:hidden mb-4 flex overflow-x-auto whitespace-nowrap space-x-2"
+          >
+            <div className="space-x-2">
+              {Filter.map((filter) => (
+                <FilterButton
+                  key={filter.id}
+                  id={filter.id}
+                  label={filter.label}
+                  category_id={filter.category_id ? filter.category_id : 0}
+                  selectedFilter={selectedFilter}
+                  selected={selectedFilterOption === filter.label}
+                  onClick={() =>
+                    handleFilterClick(filter.id, filter.label, filter.category_id)
+                  }
+                />
+              ))}
+            </div>
+          </div>
+          {places.length > 0 ? (
+            <ul className="space-y-2 overflow-visible">
+              {places.map((place) => (
+                <li
+                  key={place.storeId}
+                  className="p-2 border-b border-200 bg-white cursor-pointer flex justify-between items-center"
+                  style={{ width: '390px', height: '120px' }}
+                  onClick={() => handlePlaceClick(place.storeId)}
+                >
+                  <div>
+                    <p className="mb-0.5 text-xl font-M00">
+                      {place.storeName}{' '}
+                      <span className="text-sm text-point1">
+                        {place.distance
+                          ? `${Math.round(place.distance)}m`
+                          : '거리 정보 없음'}
+                      </span>
+                    </p>
+                    <p className="mb-[12px] text-sm font-R00">{place.roadAddress}</p>
+                  </div>
+                </li>
+              ))}
+            </ul>
+          ) : (
+            <p className="text-center">표시할 음식점이 없습니다.</p>
+          )}
+        </>
       )}
     </div>
   )
