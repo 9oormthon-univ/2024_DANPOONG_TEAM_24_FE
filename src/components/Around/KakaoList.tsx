@@ -2,6 +2,7 @@ import { useEffect, useState, useRef } from 'react'
 import FilterButton from './FilterButton'
 import Filter from './Filter'
 import useListFilterOptionStore from '../../store/UseListFilterOptionStore'
+import LoadingSplash from '../../pages/Splash/LoadingSplash'
 
 interface Place {
   id: string
@@ -156,7 +157,7 @@ const KakaoList = () => {
           ))}
         </ul>
       ) : (
-        <p className="text-800">음식점을 불러오는 중입니다...</p>
+        <LoadingSplash />
       )}
     </div>
   )
