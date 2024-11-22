@@ -15,6 +15,7 @@ export default {
         C400: '#74787E',
         Main: '#FDD835',
         Main2: '#FFF59D',
+        ToggleBorder: '#FFBC5F',
       },
     },
     fontFamily: {

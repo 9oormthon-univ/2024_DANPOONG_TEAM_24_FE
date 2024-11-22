@@ -1,32 +1,32 @@
-import { useNavigate } from 'react-router-dom';
-import Post from '../../assets/mypage/Post.svg';
-import Comment from '../../assets/mypage/Comment.svg';
-import Like from '../../assets/mypage/Like.svg';
-import Xbutton from '../../assets/mypage/Xbutton.svg';
+import { useNavigate } from 'react-router-dom'
+import Post from '../../assets/mypage/Post.svg'
+import Comment from '../../assets/mypage/Comment.svg'
+import Like from '../../assets/mypage/Like.svg'
+import Xbutton from '../../assets/mypage/Xbutton.svg'
 
 interface SvgItem {
-    src: string;
-    alt: string;
-    description: string;
-    path: string;
+    src: string
+    alt: string
+    description: string
+    path: string
 }
 
 function MyPage() {
-    const navigate = useNavigate();
+    const navigate = useNavigate()
 
     const svgs: SvgItem[] = [
         { src: Post, alt: 'Post', description: '작성한 글', path: '/mypage/writtenpost' },
         { src: Comment, alt: 'Comment', description: '댓글 단 글', path: '/mypage/commentpost' },
         { src: Like, alt: 'Like', description: '좋아요 누른 글', path: '/mypage/likepost' },
-    ];
+    ]
 
     const handleClick = () => {
-        navigate('/mypage/comingsoon');
-    };
+        navigate('/preparingSplash')
+    }
 
     const handleLogout = () => {
-        navigate('/'); 
-    };
+        navigate('/')
+    }
 
     return (
         <div className="flex flex-col items-center justify-center">
@@ -69,7 +69,7 @@ function MyPage() {
                 </div>
             </div>
         </div>
-    );
+    )
 }
 
-export default MyPage;
+export default MyPage
