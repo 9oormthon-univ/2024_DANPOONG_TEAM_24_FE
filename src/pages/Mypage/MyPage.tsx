@@ -3,16 +3,20 @@ import Post from '../../assets/mypage/Post.svg'
 import Comment from '../../assets/mypage/Comment.svg'
 import Like from '../../assets/mypage/Like.svg'
 import Xbutton from '../../assets/mypage/Xbutton.svg'
+import useMypage from '../../hooks/MyPage/useMyPage'
+import { useEffect } from 'react'
 
 interface SvgItem {
   src: string
   alt: string
   description: string
   path: string
+  category: string
 }
 
 function MyPage() {
   const navigate = useNavigate()
+  const { profileInfo, fetchGetProfile } = useMypage()
 
   const svgs: SvgItem[] = [
     {
@@ -20,20 +24,27 @@ function MyPage() {
       alt: 'Post',
       description: '작성한 글',
       path: '/mypage/writtenpost',
+      category: 'my_post',
     },
     {
       src: Comment,
       alt: 'Comment',
       description: '댓글 단 글',
       path: '/mypage/commentpost',
+      category: 'commented',
     },
     {
       src: Like,
       alt: 'Like',
       description: '좋아요 누른 글',
       path: '/mypage/likepost',
+      category: 'liked',
     },
   ]
+
+  useEffect(() => {
+    fetchGetProfile()
+  }, [])
 
   const handleClick = () => {
     navigate('/preparingSplash')
@@ -54,8 +65,12 @@ function MyPage() {
           </button>
         </div>
         <div className="border-t border-200 bg-Main w-full h-[212px] flex flex-col items-center justify-center">
-          <div className="w-[96px] h-[96px] rounded-full bg-200 mb-[16px]"></div>
-          <p className="font-SB00 mb-3">익명의 고슴도치</p>
+          <img
+            src={profileInfo?.data.profileUrl}
+            alt="프로필 사진"
+            className="w-[96px] h-[96px] rounded-full mb-[16px]"
+          />
+          <p className="font-SB00 mb-3">{profileInfo?.data.name}</p>
         </div>
         <p className="w-full px-4 pt-6 pb-2 font-SB00">활동내역</p>
         <div className="p-3 grid grid-cols-3 gap-3 h-36">
@@ -63,7 +78,9 @@ function MyPage() {
             <button
               key={index}
               className="p-3 bg-100 border border-200 rounded-lg flex flex-col justify-between h-full"
-              onClick={() => navigate(svg.path)}
+              onClick={() =>
+                navigate(svg.path, { state: { category: svg.category } })
+              }
             >
               <span className="font-SB00 text-sm text-left">
                 {svg.description}
