@@ -1,6 +1,7 @@
 interface FilterButtonProps {
   id: number
   label: string
+  category_id: number // 24/11/22 희진 추가
   selectedFilter: number | null
   onClick: (id: number) => void
   selected: boolean // 24/11/20 희진 추가: 선택된 요소인지 판별
@@ -9,6 +10,7 @@ interface FilterButtonProps {
 const FilterButton = ({
   id,
   label,
+  //category_id, // 24/11/22 희진 추가 api 연결시 사용 예정
   //selectedFilter,
   onClick,
   selected, // 24/11/20 희진 추가
