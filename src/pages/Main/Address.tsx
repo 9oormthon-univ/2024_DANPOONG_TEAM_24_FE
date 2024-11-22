@@ -8,13 +8,11 @@ import { useAddress } from '../../hooks/Main/UseAddress'
 import LoadingSplash from '../Splash/LoadingSplash'
 
 export default function Address() {
-  // useAddress 커스텀 훅 사용
   const { addresses, isLoading, handleSetCurrentLocation } = useAddress()
 
   return (
     <>
-      {isLoading && <LoadingSplash />}{' '}
-      {/* 로딩 중일 때 LoadingSplash 컴포넌트 표시 */}
+      {isLoading && <LoadingSplash />}
       <div className="flex flex-col items-center justify-center">
         <header>
           <div className="pt-7 pl-[17px] pr-[19px] pb-[6px] w-[390px]">
