@@ -5,30 +5,27 @@ import Footer from '../../components/Footer'
 import RecipeOption from '../../components/Recipe/RecipeOption'
 import Cn from '../../utils/Cn'
 import submit from '../../assets/recipe/Submit.svg'
+import { useRecipeOptions } from '../../hooks/Recipe/UseOption'
+import LoadingSplash from '../Splash/LoadingSplash'
 
 export default function Recipe() {
-  const [priceOptionData, setPriceOptionData] = useState([
-    { content: '8000원', isSelected: false },
-    { content: '9000원', isSelected: false },
-  ])
-  const [storeOptionData, setStoreOptionData] = useState([
-    { content: 'GS25', isSelected: false },
-    { content: 'CU', isSelected: false },
-    { content: '세븐일레븐', isSelected: false },
-  ])
-  const [keywordOptionData, setKeywordOptionData] = useState([
-    { content: '상큼한 비타민', isSelected: false },
-    { content: '에너지 넘치는 영양소', isSelected: false },
-    { content: '건강한 저당', isSelected: false },
-    { content: '아삭한 식이섬유', isSelected: false },
-    { content: '균형 잡힌 식단', isSelected: false },
-    { content: '가벼운 저칼로리', isSelected: false },
-  ])
-
   const [text, setText] = useState('') // 글자 상태
   const maxLength = 300 // 최대 글자수
-
   const navigate = useNavigate()
+
+  const {
+    priceOptionData,
+    storeOptionData,
+    keywordOptionData,
+    isLoading,
+    setPriceOptionData,
+    setStoreOptionData,
+    setKeywordOptionData,
+  } = useRecipeOptions()
+
+  if (isLoading) {
+    return <LoadingSplash />
+  }
 
   const handleSubmit = () => {
     // 필수 항목 검사
@@ -143,6 +140,7 @@ export default function Recipe() {
                   (필수)
                 </span>
               </div>
+
               <div className="font-L00 text-xs text-C400 leading-[140%]">
                 추천 키워드를 참고해 건강한 편의점 식사를 즐겨보세요
               </div>
