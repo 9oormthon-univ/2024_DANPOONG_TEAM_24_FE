@@ -7,7 +7,7 @@ interface Filter {
 // 24/11/22 희진 category_id 추가
 const Filter: Filter[] = [
   { id: 1, label: '전체', category_id: 3 },
-  { id: 2, label: '검증된 맛집' },
+  { id: 2, label: '검증된 맛집', category_id: 11 },
   { id: 3, label: '한식', category_id: 1 },
   { id: 4, label: '중식', category_id: 8 },
   { id: 5, label: '양식', category_id: 9 },

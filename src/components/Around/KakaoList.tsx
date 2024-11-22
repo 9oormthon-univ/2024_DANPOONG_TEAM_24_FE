@@ -11,16 +11,20 @@ interface Place {
   roadAddress: string
   latitude: number
   longitude: number
-  distance: number 
+  distance: number
 }
 
-const KakaoList = () => {
+interface KakaoListProps {
+  isLoading: boolean;
+  setIsLoading: (value: boolean) => void;
+}
+
+const KakaoList: React.FC<KakaoListProps> = ({ isLoading, setIsLoading }) => {
   const [userPosition, setUserPosition] = useState<{
     lat: number
     lng: number
   }>({ lat: 0, lng: 0 })
   const [places, setPlaces] = useState<Place[]>([])
-  const [loading, setLoading] = useState<boolean>(true)
   const [selectedCategoryId, setSelectedCategoryId] = useState<number>(3)
 
   const [selectedFilter, setSelectedFilter] = useState<number | null>(1)
@@ -61,10 +65,17 @@ const KakaoList = () => {
   useEffect(() => {
     const fetchStores = async () => {
       try {
-        setLoading(true) // 로딩 상태 활성화
-        const response = await defalutAxios.get(
-          `/stores/category/${selectedCategoryId}`
-        )
+        setIsLoading(true)
+        // 조건에 따라 URL 생성
+        const url =
+          selectedCategoryId === 3
+            ? `/stores?latitude=${userPosition.lat}&longitude=${userPosition.lng}` // 전체 카테고리
+            : selectedCategoryId === 11
+              ? `/stores?options=score>=4&latitude=${userPosition.lat}&longitude=${userPosition.lng}` // 검증된 맛집 카테고리
+              : `/stores/category/${selectedCategoryId}?latitude=${userPosition.lat}&longitude=${userPosition.lng}` // 나머지 카테고리
+
+        const response = await defalutAxios.get(url)
+
         if (response.data.code === 200) {
           const updatedPlaces = response.data.data.map((place: Place) => ({
             ...place,
@@ -75,14 +86,14 @@ const KakaoList = () => {
               place.longitude
             ),
           }));
-          setPlaces(updatedPlaces);
+          setPlaces(updatedPlaces)
         } else {
           console.error('음식점 데이터를 가져오는데 실패했습니다:', response.data)
         }
       } catch (error) {
         console.error('음식점 데이터를 가져오는 중 에러 발생:', error)
       } finally {
-        setLoading(false)
+        setIsLoading(false)
       }
     }
 
@@ -92,20 +103,20 @@ const KakaoList = () => {
   }, [userPosition, selectedCategoryId])
 
   const calculateDistance = (lat1: number, lon1: number, lat2: number, lon2: number): number => {
-    const toRad = (value: number): number => (value * Math.PI) / 180; // 도(degree)에서 라디안(radian) 변환
-    const R = 6371e3; // 지구 반지름 (단위: m)
-  
-    const φ1 = toRad(lat1);
-    const φ2 = toRad(lat2);
-    const Δφ = toRad(lat2 - lat1);
-    const Δλ = toRad(lon2 - lon1);
-  
+    const toRad = (value: number): number => (value * Math.PI) / 180 // 도(degree)에서 라디안(radian) 변환
+    const R = 6371e3 // 지구 반지름 (단위: m)
+
+    const φ1 = toRad(lat1)
+    const φ2 = toRad(lat2)
+    const Δφ = toRad(lat2 - lat1)
+    const Δλ = toRad(lon2 - lon1)
+
     const a =
       Math.sin(Δφ / 2) * Math.sin(Δφ / 2) +
-      Math.cos(φ1) * Math.cos(φ2) * Math.sin(Δλ / 2) * Math.sin(Δλ / 2);
-    const c = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1 - a));
-  
-    return R * c; // 거리 (단위: m)
+      Math.cos(φ1) * Math.cos(φ2) * Math.sin(Δλ / 2) * Math.sin(Δλ / 2)
+    const c = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1 - a))
+
+    return R * c // 거리 (단위: m)
   };
 
 
@@ -137,8 +148,8 @@ const KakaoList = () => {
 
   return (
     <div className="mt-2 pb-24">
-      {loading ? (
-        <LoadingSplash /> // 로딩 중일 때 로딩 스플래시 표시
+      {isLoading ? (
+        <LoadingSplash />
       ) : (
         <>
           <div
