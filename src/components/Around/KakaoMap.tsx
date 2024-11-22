@@ -96,6 +96,7 @@ const KaKaoMap = () => {
                 key={filter.id}
                 id={filter.id}
                 label={filter.label}
+                category_id={filter.category_id} // 24/11/22 희진 추가
                 selectedFilter={selectedFilter}
                 selected={selectedFilterOption === filter.label} // 24/11/20 희진 추가
                 onClick={() => handleFilterClick(filter.id, filter.label)} // 24/11/20 희진 추가
