@@ -3,7 +3,7 @@ import FilterButton from './FilterButton'
 import Filter from './Filter'
 import useListFilterOptionStore from '../../store/UseListFilterOptionStore'
 import LoadingSplash from '../../pages/Splash/LoadingSplash'
-import defalutAxios from '../../api/defaultAxios'
+import defaultAxios from '../../api/defaultAxios'
 
 interface Place {
   storeId: string
@@ -74,7 +74,7 @@ const KakaoList: React.FC<KakaoListProps> = ({ isLoading, setIsLoading }) => {
               ? `/stores?options=score>=4&latitude=${userPosition.lat}&longitude=${userPosition.lng}` // 검증된 맛집 카테고리
               : `/stores/category/${selectedCategoryId}?latitude=${userPosition.lat}&longitude=${userPosition.lng}` // 나머지 카테고리
 
-        const response = await defalutAxios.get(url)
+        const response = await defaultAxios.get(url)
 
         if (response.data.code === 200) {
           const updatedPlaces = response.data.data.map((place: Place) => ({
