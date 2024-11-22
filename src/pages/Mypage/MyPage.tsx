@@ -11,6 +11,7 @@ interface SvgItem {
   alt: string
   description: string
   path: string
+  category: string
 }
 
 function MyPage() {
@@ -23,18 +24,21 @@ function MyPage() {
       alt: 'Post',
       description: '작성한 글',
       path: '/mypage/writtenpost',
+      category: 'my_post',
     },
     {
       src: Comment,
       alt: 'Comment',
       description: '댓글 단 글',
       path: '/mypage/commentpost',
+      category: 'commented',
     },
     {
       src: Like,
       alt: 'Like',
       description: '좋아요 누른 글',
       path: '/mypage/likepost',
+      category: 'liked',
     },
   ]
 
@@ -73,7 +77,9 @@ function MyPage() {
             <button
               key={index}
               className="p-3 bg-100 border border-200 rounded-lg flex flex-col justify-between h-full"
-              onClick={() => navigate(svg.path)}
+              onClick={() =>
+                navigate(svg.path, { state: { category: svg.category } })
+              }
             >
               <span className="font-SB00 text-sm text-left">
                 {svg.description}
