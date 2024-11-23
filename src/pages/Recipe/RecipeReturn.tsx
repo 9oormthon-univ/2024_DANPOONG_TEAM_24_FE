@@ -13,7 +13,7 @@ export default function RecipeReturn() {
   const location = useLocation()
   const { profileInfo } = useMypage()
 
-  const { recipeResponse, loading, error, generateRecipe } = useGenerateRecipe()
+  const { recipeResponse, loading, generateRecipe } = useGenerateRecipe()
 
   // location.state에서 recipeOptions 가져오기
   const recipeOptions = location.state?.recipeOptions || []
