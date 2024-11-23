@@ -188,8 +188,8 @@ const KaKaoMap = () => {
               image={{
                 src: searchIcon, // 카테고리 이미지, 없으면 기본 이미지
                 size: {
-                  width: 36,
-                  height: 36,
+                  width: 52,
+                  height: 52,
                 },
               }}
               onClick={() => handleMarkerClick(selectedPlace.storeName)}
@@ -210,8 +210,8 @@ const KaKaoMap = () => {
                 image={{
                   src: category?.image || '/images/default.svg', // 카테고리 이미지, 없으면 기본 이미지
                   size: {
-                    width: 24,
-                    height: 24,
+                    width: 52,
+                    height: 52,
                   },
                 }}
                 onClick={() => handleMarkerClick(place.storeName)}
