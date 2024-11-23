@@ -6,10 +6,12 @@ import UserLocationButton from '../../assets/around/UserLocationButton.svg'
 import useListFilterOptionStore from '../../store/UseListFilterOptionStore'
 import defaultAxios from '../../api/defaultAxios'
 import useMapStore from '../../store/useMapStore'
+import useAddressStore from '../../store/useAddressStore'
 
 const KaKaoMap = () => {
   const mapRef = useRef<kakao.maps.Map | null>(null) // Map 객체를 참조하기 위한 useRef
   const { userPosition, setUserPosition, places, setPlaces } = useMapStore()
+  const getSelectedAddress = useAddressStore((state) => state.getSelectedAddress)
 
   const [selectedFilter, setSelectedFilter] = useState<number | null>(1)
   const [selectedCategoryId, setSelectedCategoryId] = useState<number>(3)
@@ -20,30 +22,28 @@ const KaKaoMap = () => {
   const filterContainerRef = useRef<HTMLDivElement | null>(null) // 필터 버튼 컨테이너를 참조하기 위한 useRef
 
   useEffect(() => {
-    if (navigator.geolocation) {
-      navigator.geolocation.getCurrentPosition(
-        (position) => {
+    const selectedAddress = getSelectedAddress()
+    if (selectedAddress) {
+      const geocoder = new kakao.maps.services.Geocoder()
+      geocoder.addressSearch(selectedAddress, (result, status) => {
+        if (status === kakao.maps.services.Status.OK) {
           const newPosition = {
-            lat: position.coords.latitude,
-            lng: position.coords.longitude,
+            lat: parseFloat(result[0].y),
+            lng: parseFloat(result[0].x),
           }
           setUserPosition(newPosition)
 
-          // 맵 객체가 있을 경우, 사용자의 위치로 이동
           if (mapRef.current) {
-            mapRef.current.panTo(
-              new kakao.maps.LatLng(newPosition.lat, newPosition.lng)
-            )
+            mapRef.current.panTo(new kakao.maps.LatLng(newPosition.lat, newPosition.lng))
           }
-        },
-        (error) => {
-          console.error('사용자 위치를 가져오는데 실패했습니다.', error)
+        } else {
+          console.error('주소 변환 실패:', status)
         }
-      )
+      })
     } else {
-      console.error('이 브라우저는 Geolocation을 지원하지 않습니다.')
+      alert('주소 설정을 완료 해주세요!')
     }
-  }, [])
+  }, [getSelectedAddress, setUserPosition])
 
   // 음식점 데이터 가져오기
   useEffect(() => {
@@ -123,8 +123,8 @@ const KaKaoMap = () => {
                 image={{
                   src: category?.image || '/images/default.svg', // 카테고리 이미지, 없으면 기본 이미지
                   size: {
-                    width: 32,
-                    height: 32,
+                    width: 24,
+                    height: 24,
                   }
                 }}
               />
