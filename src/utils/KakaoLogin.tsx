@@ -1,8 +1,10 @@
+import { useNavigate } from 'react-router-dom'
 import kakao from '../assets/splash/Kakao.svg'
 import useAuthStore from '../store/UseAuthStore'
 
 export default function SocialKakao() {
   const { setLoggedIn, setShowSplash } = useAuthStore()
+  const navigate = useNavigate()
 
   const Rest_api_key = import.meta.env.VITE_APP_KAKAO_LOGIN_REST_API_KEY //REST API KEY
   const redirect_uri = import.meta.env.VITE_APP_KAKAO_LOGIN_RETURN_URL //Redirect URI
@@ -16,8 +18,18 @@ export default function SocialKakao() {
   const simulateLoginSuccess = () => {
     setTimeout(() => {
       localStorage.setItem('isLoggedIn', 'true') // 로컬 스토리지에 로그인 상태 저장
+      localStorage.setItem(
+        'accessToken',
+        'eyJhbGciOiJIUzI1NiJ9.eyJlbWFpbCI6ImhlZWppbjA5NEBuYXZlci5jb20iLCJpYXQiOjE3MzIzNjA1MDcsImV4cCI6MTczMjM5MjA0M30.8DHE-npVT6NZU4yVReko3bb4oBgcnKZZCvGRYIsk5cM'
+      )
       setLoggedIn(true) // Zustand 상태 업데이트
       setShowSplash(false) // 스플래시 숨기기
+
+      // 상태 업데이트 후 라우팅
+      setTimeout(() => {
+        navigate('/') // 메인 페이지로 이동
+        location.reload()
+      }, 0)
     }, 2000)
   }
 

@@ -78,10 +78,7 @@ export default function Recipe() {
               </div>
             </div>
           </div>
-          <div className="pt-[17px] pl-4 font-M00 text-[18px]">
-            건강한 식사를 위한 나만의 레시피
-          </div>
-          <div className="mt-[30px] px-4 flex flex-col gap-[30px]">
+          <div className="mt-[14px] px-4 flex flex-col gap-[30px]">
             <div>
               <div className="font-M00 text-[16px] text-[#000000] leading-[135%]">
                 1. 금액을 골라주세요

@@ -115,7 +115,7 @@ function Main() {
           </section>
           <section className="mt-[30px]">
             <div className="px-[18px] font-M00 text-[18px] mb-5">
-              요번주 인기글
+              이번주 인기글
             </div>
             <div className="flex flex-col gap-[10px] items-center">
               {popularInfo?.data.map((content) => (
