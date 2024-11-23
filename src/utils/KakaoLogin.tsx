@@ -20,7 +20,7 @@ export default function SocialKakao() {
       localStorage.setItem('isLoggedIn', 'true') // 로컬 스토리지에 로그인 상태 저장
       localStorage.setItem(
         'accessToken',
-        'eyJhbGciOiJIUzI1NiJ9.eyJlbWFpbCI6ImhlZWppbjA5NEBuYXZlci5jb20iLCJpYXQiOjE3MzIzNjA1MDcsImV4cCI6MTczMjM5MjA0M30.8DHE-npVT6NZU4yVReko3bb4oBgcnKZZCvGRYIsk5cM'
+        'eyJhbGciOiJIUzI1NiJ9.eyJlbWFpbCI6ImhlZWppbjA5NEBuYXZlci5jb20iLCJpYXQiOjE3MzIzOTQ2NjIsImV4cCI6MTczMjQyNjE5OH0.m7WwKL2IrmdcSXA9lHAvnJyRC0CseRUSYpBwhlJ1HWk'
       )
       setLoggedIn(true) // Zustand 상태 업데이트
       setShowSplash(false) // 스플래시 숨기기

@@ -1,11 +1,12 @@
 import { useEffect, useState, useRef } from 'react'
+import { useNavigate } from 'react-router-dom'
 import FilterButton from './FilterButton'
 import Filter from './Filter'
 import useListFilterOptionStore from '../../store/UseListFilterOptionStore'
 import LoadingSplash from '../../pages/Splash/LoadingSplash'
 import defaultAxios from '../../api/defaultAxios'
 import useAddressStore from '../../store/useAddressStore'
-import defaultimg from '../../assets/around/DefaultImg.svg' 
+import defaultimg from '../../assets/around/DefaultImg.svg'
 import NoContents from '../Community/NoContents'
 
 interface Place {
@@ -20,8 +21,8 @@ interface Place {
 }
 
 interface KakaoListProps {
-  isLoading: boolean;
-  setIsLoading: (value: boolean) => void;
+  isLoading: boolean
+  setIsLoading: (value: boolean) => void
 }
 
 const KakaoList: React.FC<KakaoListProps> = ({ isLoading, setIsLoading }) => {
@@ -31,7 +32,9 @@ const KakaoList: React.FC<KakaoListProps> = ({ isLoading, setIsLoading }) => {
   }>({ lat: 0, lng: 0 })
   const [places, setPlaces] = useState<Place[]>([])
   const [selectedCategoryId, setSelectedCategoryId] = useState<number>(3)
-  const getSelectedAddress = useAddressStore((state) => state.getSelectedAddress)
+  const getSelectedAddress = useAddressStore(
+    (state) => state.getSelectedAddress
+  )
 
   const [selectedFilter, setSelectedFilter] = useState<number | null>(1)
   // 24/11/20 희진 추가
@@ -39,30 +42,33 @@ const KakaoList: React.FC<KakaoListProps> = ({ isLoading, setIsLoading }) => {
     useListFilterOptionStore()
   const filterContainerRef = useRef<HTMLDivElement | null>(null) // 필터 버튼 컨테이너를 참조하기 위한 useRef
 
+  const navigate = useNavigate()
+
   // 사용자 위치 가져오기
   useEffect(() => {
     if (!window.kakao || !window.kakao.maps) {
-      console.error('Kakao Maps API가 로드되지 않았습니다.');
-      return;
+      console.error('Kakao Maps API가 로드되지 않았습니다.')
+      return
     }
-    const selectedAddress = getSelectedAddress();
+    const selectedAddress = getSelectedAddress()
     if (selectedAddress) {
-      const geocoder = new kakao.maps.services.Geocoder();
+      const geocoder = new kakao.maps.services.Geocoder()
       geocoder.addressSearch(selectedAddress, (result, status) => {
         if (status === kakao.maps.services.Status.OK) {
           const newPosition = {
             lat: parseFloat(result[0].y),
             lng: parseFloat(result[0].x),
-          };
-          setUserPosition(newPosition);
+          }
+          setUserPosition(newPosition)
         } else {
-          console.error('주소 검색 실패:', status);
+          console.error('주소 검색 실패:', status)
         }
-      });
+      })
     } else {
-      alert('주소 설정을 완료 해주세요!');
+      alert('주소 설정을 완료해 주세요!')
+      navigate('/address')
     }
-  }, [getSelectedAddress]);
+  }, [getSelectedAddress])
 
   // 음식점 데이터 가져오기
   useEffect(() => {
@@ -74,8 +80,8 @@ const KakaoList: React.FC<KakaoListProps> = ({ isLoading, setIsLoading }) => {
           selectedCategoryId === 3
             ? `/stores?latitude=${userPosition.lat}&longitude=${userPosition.lng}` // 전체 카테고리
             : selectedCategoryId === 11
-              ? `/stores?options=score>=4&latitude=${userPosition.lat}&longitude=${userPosition.lng}` // 검증된 맛집 카테고리
-              : `/stores/category/${selectedCategoryId}?latitude=${userPosition.lat}&longitude=${userPosition.lng}` // 나머지 카테고리
+            ? `/stores?options=score>=4&latitude=${userPosition.lat}&longitude=${userPosition.lng}` // 검증된 맛집 카테고리
+            : `/stores/category/${selectedCategoryId}?latitude=${userPosition.lat}&longitude=${userPosition.lng}` // 나머지 카테고리
 
         const response = await defaultAxios.get(url)
 
@@ -88,10 +94,13 @@ const KakaoList: React.FC<KakaoListProps> = ({ isLoading, setIsLoading }) => {
               place.latitude,
               place.longitude
             ),
-          }));
+          }))
           setPlaces(updatedPlaces)
         } else {
-          console.error('음식점 데이터를 가져오는데 실패했습니다:', response.data)
+          console.error(
+            '음식점 데이터를 가져오는데 실패했습니다:',
+            response.data
+          )
         }
       } catch (error) {
         console.error('음식점 데이터를 가져오는 중 에러 발생:', error)
@@ -105,7 +114,12 @@ const KakaoList: React.FC<KakaoListProps> = ({ isLoading, setIsLoading }) => {
     }
   }, [userPosition, selectedCategoryId])
 
-  const calculateDistance = (lat1: number, lon1: number, lat2: number, lon2: number): number => {
+  const calculateDistance = (
+    lat1: number,
+    lon1: number,
+    lat2: number,
+    lon2: number
+  ): number => {
     const toRad = (value: number): number => (value * Math.PI) / 180 // 도(degree)에서 라디안(radian) 변환
     const R = 6371e3 // 지구 반지름 (단위: m)
 
@@ -120,8 +134,7 @@ const KakaoList: React.FC<KakaoListProps> = ({ isLoading, setIsLoading }) => {
     const c = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1 - a))
 
     return R * c // 거리 (단위: m)
-  };
-
+  }
 
   // 24/11/20 희진 추가
   // 페이지 로드 시 선택된 필터 버튼이 가운데로 오도록 처리
@@ -139,7 +152,11 @@ const KakaoList: React.FC<KakaoListProps> = ({ isLoading, setIsLoading }) => {
   }, [selectedFilterOption]) // selectedFilterOption이 변경될 때마다 실행
 
   // 24/11/20 희진 변경
-  const handleFilterClick = (id: number, selected: string, categoryId?: number) => {
+  const handleFilterClick = (
+    id: number,
+    selected: string,
+    categoryId?: number
+  ) => {
     setSelectedFilterOption(selected)
     setSelectedFilter(id === selectedFilter ? null : id)
     setSelectedCategoryId(categoryId || 3)
@@ -147,23 +164,23 @@ const KakaoList: React.FC<KakaoListProps> = ({ isLoading, setIsLoading }) => {
 
   const handlePlaceClick = (placeName: string) => {
     if (!window.kakao || !window.kakao.maps) {
-      console.error('Kakao Maps API가 로드되지 않았습니다.');
-      return;
+      console.error('Kakao Maps API가 로드되지 않았습니다.')
+      return
     }
 
-    const places = new kakao.maps.services.Places();
+    const places = new kakao.maps.services.Places()
     // 장소 검색 요청
     places.keywordSearch(placeName, (result, status) => {
       if (status === kakao.maps.services.Status.OK) {
-        const placeId = result[0].id; // 검색 결과의 첫 번째 장소 ID
-        const placeUrl = `https://place.map.kakao.com/${placeId}`;
-        window.open(placeUrl, '_blank', 'noopener,noreferrer'); // 카카오맵 상세 페이지로 이동
+        const placeId = result[0].id // 검색 결과의 첫 번째 장소 ID
+        const placeUrl = `https://place.map.kakao.com/${placeId}`
+        window.open(placeUrl, '_blank', 'noopener,noreferrer') // 카카오맵 상세 페이지로 이동
       } else {
-        console.error('카카오맵 장소 검색 실패:', status);
-        alert('해당 장소의 상세 정보를 찾을 수 없습니다.');
+        console.error('카카오맵 장소 검색 실패:', status)
+        alert('해당 장소의 상세 정보를 찾을 수 없습니다.')
       }
-    });
-  };
+    })
+  }
   return (
     <div className="mt-2 pb-24">
       <div
@@ -206,9 +223,13 @@ const KakaoList: React.FC<KakaoListProps> = ({ isLoading, setIsLoading }) => {
                       : '거리 정보 없음'}
                   </span>
                 </p>
-                <p className="mb-[12px] text-sm font-R00">{place.roadAddress}</p>
+                <p className="mb-[12px] text-sm font-R00">
+                  {place.roadAddress}
+                </p>
                 {place.phone && (
-                  <p className="text-sm font-R00 text-600">전화번호: {place.phone}</p>
+                  <p className="text-sm font-R00 text-600">
+                    전화번호: {place.phone}
+                  </p>
                 )}
               </div>
               <div className="w-24 h-24 rounded-md bg-cover bg-center ml-4">
