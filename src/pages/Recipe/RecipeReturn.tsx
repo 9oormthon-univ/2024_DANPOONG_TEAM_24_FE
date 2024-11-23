@@ -120,7 +120,10 @@ export default function RecipeReturn() {
           </div>
         </header>
         <section className="px-4">
-          <div className="relative flex justify-between mt-4 px-[14px] py-[16.5px] bg-Main2 border border-Main rounded-xl font-M00 text-[16px] text-nowrap text-[#000000] mb-[30px] z-20">
+          <div
+            className="relative flex justify-between mt-4 px-[14px] py-[16.5px] bg-Main2 border border-Main rounded-xl font-M00 text-[16px] text-nowrap text-[#000000] mb-[30px] z-20 cursor-pointer"
+            onClick={handleToggle}
+          >
             <div className="flex flex-row justify-center gap-[10px] ">
               <img src={requireCheck} alt="require check icon" />
               <div>요청 사항 확인하기</div>
@@ -128,8 +131,7 @@ export default function RecipeReturn() {
             <img
               src={downArrow}
               alt="toggle require field"
-              className={`cursor-pointer ${isToggled ? 'rotate-180' : ''}`} // 템플릿 리터럴로 클래스명 처리
-              onClick={handleToggle}
+              className={` ${isToggled ? 'rotate-180' : ''}`} // 템플릿 리터럴로 클래스명 처리
             />
           </div>
           {/* 요소 토글 */}
