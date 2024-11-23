@@ -1,5 +1,6 @@
 import { useState } from 'react'
 import defaultAxios from '../../api/defaultAxios'
+import { RecipeResponse } from '../../types/Recipe/RecipeResponse'
 
 export interface RecipeOption {
   display: string
@@ -9,9 +10,11 @@ export interface RecipeOption {
 export const useGenerateRecipe = () => {
   const [loading, setLoading] = useState(false)
   const [error, setError] = useState<string | null>(null)
-  const [recipeResponse, setRecipeResponse] = useState<string | null>(null)
+  const [recipeResponse, setRecipeResponse] = useState<RecipeResponse | null>(
+    null
+  )
 
-  const generateRecipe = async (options: RecipeOption[]) => {
+  const generateRecipe = async (options: RecipeOption[], text: string) => {
     setLoading(true)
     setError(null)
 
@@ -21,8 +24,8 @@ export const useGenerateRecipe = () => {
     }
 
     try {
-      const response = await defaultAxios.post(
-        '/recipes/generate',
+      const response = await defaultAxios.post<RecipeResponse>(
+        `/recipes/generate?${text}`,
         requestBody,
         {
           headers: {
@@ -31,8 +34,9 @@ export const useGenerateRecipe = () => {
         }
       )
 
-      if (response?.data?.data?.recipeResult) {
-        setRecipeResponse(response.data.data.recipeResult)
+      if (response.data) {
+        console.log('in hook:', response.data)
+        setRecipeResponse(response.data)
       } else {
         setError('응답 데이터 형식이 올바르지 않습니다.')
       }
