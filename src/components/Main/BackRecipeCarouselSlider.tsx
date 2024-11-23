@@ -20,7 +20,7 @@ export default class BackRecipeCarouselSlider extends Component<BackRecipeCarous
       slidesToShow: 2,
       slidesToScroll: 1,
       autoplay: true,
-      autoplaySpeed: 5000,
+      autoplaySpeed: 2000,
       cssEase: 'linear',
       variableWidth: true,
     }
