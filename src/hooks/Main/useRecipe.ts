@@ -13,7 +13,6 @@ const useRecipe = () => {
     try {
       setIsLoading(true)
       const response = await defaultAxios.get(`/recipes/recommendation`)
-      console.log(response.data)
       setRecipeList(response.data)
     } catch (error) {
       setIsError(true)
