@@ -85,7 +85,7 @@ function Header() {
             <img
               src={profileInfo?.profileUrl}
               alt="프로필 사진"
-              className="w-[28px] h-[28px] rounded-full cursor-pointer"
+              className="w-[28px] h-[28px] rounded-full cursor-pointer object-cover"
               onClick={() => navigation('/mypage')}
             />
           </div>
