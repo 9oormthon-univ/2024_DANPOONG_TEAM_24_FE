@@ -37,11 +37,10 @@ const router = createBrowserRouter([
       { path: 'mypage/commentpost', element: <CommentPost /> },
       { path: 'mypage/likepost', element: <LikePost /> },
 
-      // 추후 서버에서 인증 인가 빼주시면 protected에서 뺄 예정입니다!
-      { path: 'recipe', element: <Recipe /> },
-      { path: 'recipeReturn', element: <RecipeReturn /> },
     ],
   },
+  { path: 'recipe', element: <Recipe /> },
+  { path: 'recipeReturn', element: <RecipeReturn /> },
   { path: '/auth', element: <AuthLoading /> },
   { path: '/preparingSplash', element: <PreparingSplash /> },
 ])

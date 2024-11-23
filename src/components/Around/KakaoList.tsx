@@ -5,6 +5,7 @@ import useListFilterOptionStore from '../../store/UseListFilterOptionStore'
 import LoadingSplash from '../../pages/Splash/LoadingSplash'
 import defaultAxios from '../../api/defaultAxios'
 import useAddressStore from '../../store/useAddressStore'
+import defaultimg from '../../assets/around/DefaultImg.svg' 
 
 interface Place {
   storeId: string
@@ -13,6 +14,8 @@ interface Place {
   latitude: number
   longitude: number
   distance: number
+  phone: string
+  imageUrl: string
 }
 
 interface KakaoListProps {
@@ -141,10 +144,25 @@ const KakaoList: React.FC<KakaoListProps> = ({ isLoading, setIsLoading }) => {
     setSelectedCategoryId(categoryId || 3)
   }
 
-  const handlePlaceClick = (url: string) => {
-    window.open(url, '_blank', 'noopener,noreferrer')
-  }
+  const handlePlaceClick = (placeName: string) => {
+    if (!window.kakao || !window.kakao.maps) {
+      console.error('Kakao Maps API가 로드되지 않았습니다.');
+      return;
+    }
 
+    const places = new kakao.maps.services.Places();
+    // 장소 검색 요청
+    places.keywordSearch(placeName, (result, status) => {
+      if (status === kakao.maps.services.Status.OK) {
+        const placeId = result[0].id; // 검색 결과의 첫 번째 장소 ID
+        const placeUrl = `https://place.map.kakao.com/${placeId}`;
+        window.open(placeUrl, '_blank', 'noopener,noreferrer'); // 카카오맵 상세 페이지로 이동
+      } else {
+        console.error('카카오맵 장소 검색 실패:', status);
+        alert('해당 장소의 상세 정보를 찾을 수 없습니다.');
+      }
+    });
+  };
   return (
     <div className="mt-2 pb-24">
       {isLoading ? (
@@ -178,9 +196,9 @@ const KakaoList: React.FC<KakaoListProps> = ({ isLoading, setIsLoading }) => {
                   key={place.storeId}
                   className="p-2 border-b border-200 bg-white cursor-pointer flex justify-between items-center"
                   style={{ width: '390px', height: '120px' }}
-                  onClick={() => handlePlaceClick(place.storeId)}
+                  onClick={() => handlePlaceClick(place.storeName)}
                 >
-                  <div>
+                  <div className="flex-1">
                     <p className="mb-0.5 text-xl font-M00">
                       {place.storeName}{' '}
                       <span className="text-sm text-point1">
@@ -190,6 +208,16 @@ const KakaoList: React.FC<KakaoListProps> = ({ isLoading, setIsLoading }) => {
                       </span>
                     </p>
                     <p className="mb-[12px] text-sm font-R00">{place.roadAddress}</p>
+                    {place.phone && (
+                      <p className="text-sm font-R00 text-600">전화번호: {place.phone}</p>
+                    )}
+                  </div>
+                  <div className="w-24 h-24 rounded-md bg-cover bg-center ml-4">
+                    <img
+                    src={place.imageUrl || defaultimg} // 이미지가 없으면 기본 이미지 사용
+                    alt={place.storeName}
+                    className="w-full h-full rounded-md object-cover"
+                  />
                   </div>
                 </li>
               ))}
