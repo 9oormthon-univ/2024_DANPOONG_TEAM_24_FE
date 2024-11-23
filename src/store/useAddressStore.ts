@@ -1,32 +1,72 @@
 import { create } from 'zustand'
+import { persist } from 'zustand/middleware'
 
-interface AddressStore {
-  addresses: { address: string; selected: boolean }[]
-  selectAddress: (index: number) => void
-  selectedAddress: string | null
-  getSelectedAddress: () => string | null // 외부에서 현재 선택된 주소를 가져오기 위한 메서드
+interface Address {
+  address: string
+  selected?: boolean
+  isCurrentLocation?: boolean
+  coordinates?: {
+    latitude: number
+    longitude: number
+  }
 }
 
-const useAddressStore = create<AddressStore>((set, get) => ({
-  // 더미 주소 데이터입니다.
-  addresses: [
-    { address: '광진구 능동로 209', selected: true },
-    { address: '광진구 능동로 210', selected: false },
-  ],
-  selectedAddress: '광진구 능동로 209',
+interface AddressStore {
+  addresses: Address[]
+  selectAddress: (index: number) => void
+  addAddress: (
+    address: string,
+    isCurrentLocation?: boolean,
+    coordinates?: { latitude: number; longitude: number }
+  ) => void
+  getSelectedAddress: () => string | undefined
+}
 
-  selectAddress: (index) =>
-    set((state) => {
-      const newAddresses = state.addresses.map((addr, i) => ({
-        ...addr,
-        selected: i === index,
-      }))
-      const newSelected = newAddresses[index].address
-      console.log('Selected Address:', newSelected) // 선택된 주소를 콘솔에 출력
-      return { addresses: newAddresses, selectedAddress: newSelected }
+const useAddressStore = create<AddressStore>()(
+  persist(
+    (set, get) => ({
+      addresses: [],
+
+      // 현재 설정된 주소
+      selectAddress: (index) => {
+        set((state) => {
+          const newAddresses = [...state.addresses]
+          newAddresses.forEach((item, idx) => {
+            item.selected = idx === index
+          })
+          return { addresses: newAddresses }
+        })
+      },
+
+      // 새로운 받아온 주소가 추가된 주소 리스트
+      addAddress: (address: string, isCurrentLocation = false, coordinates) => {
+        set((state) => ({
+          addresses: [
+            ...state.addresses,
+            {
+              address,
+              selected: false,
+              isCurrentLocation,
+              coordinates, // 좌표 정보 저장
+            },
+          ],
+        }))
+      },
+
+      // 현재 설정된 주소 반환
+      getSelectedAddress: () => {
+        const state = get()
+        const selectedAddress = state.addresses.find(
+          (address) => address.selected
+        )
+        return selectedAddress ? selectedAddress.address : undefined
+      },
     }),
-
-  getSelectedAddress: () => get().selectedAddress, // 현재 선택된 주소 반환
-}))
+    {
+      name: 'selectedAddress', // 로컬스토리지 키 이름
+      partialize: (state) => ({ addresses: state.addresses }), // 저장할 상태만 선택
+    }
+  )
+)
 
 export default useAddressStore

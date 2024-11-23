@@ -5,30 +5,61 @@ import Footer from '../../components/Footer'
 import RecipeOption from '../../components/Recipe/RecipeOption'
 import Cn from '../../utils/Cn'
 import submit from '../../assets/recipe/Submit.svg'
+import { useRecipeOptions } from '../../hooks/Recipe/UseOption'
+import LoadingSplash from '../Splash/LoadingSplash'
 
 export default function Recipe() {
-  const [priceOptionData, setPriceOptionData] = useState([
-    { content: '8000원', isSelected: false },
-    { content: '9000원', isSelected: false },
-  ])
-  const [storeOptionData, setStoreOptionData] = useState([
-    { content: 'GS25', isSelected: false },
-    { content: 'CU', isSelected: false },
-    { content: '세븐일레븐', isSelected: false },
-  ])
-  const [keywordOptionData, setKeywordOptionData] = useState([
-    { content: '상큼한 비타민', isSelected: false },
-    { content: '에너지 넘치는 영양소', isSelected: false },
-    { content: '건강한 저당', isSelected: false },
-    { content: '아삭한 식이섬유', isSelected: false },
-    { content: '균형 잡힌 식단', isSelected: false },
-    { content: '가벼운 저칼로리', isSelected: false },
-  ])
-
   const [text, setText] = useState('') // 글자 상태
   const maxLength = 300 // 최대 글자수
-
   const navigate = useNavigate()
+
+  const {
+    priceOptionData,
+    storeOptionData,
+    keywordOptionData,
+    isLoading,
+    setPriceOptionData,
+    setStoreOptionData,
+    setKeywordOptionData,
+  } = useRecipeOptions()
+
+  if (isLoading) {
+    return <LoadingSplash />
+  }
+
+  // recipeOptions 동적 생성 함수
+  const createRecipeOptions = () => {
+    const selectedPrice = priceOptionData.find((option) => option.isSelected)
+    const selectedStore = storeOptionData.find((option) => option.isSelected)
+    const selectedKeyword = keywordOptionData.find(
+      (option) => option.isSelected
+    )
+
+    const recipeOptions = []
+
+    if (selectedPrice) {
+      recipeOptions.push({
+        display: '최대 금액 선택',
+        value: selectedPrice.content,
+      })
+    }
+
+    if (selectedStore) {
+      recipeOptions.push({
+        display: '편의점 선택',
+        value: selectedStore.content,
+      })
+    }
+
+    if (selectedKeyword) {
+      recipeOptions.push({
+        display: '키워드',
+        value: selectedKeyword.content,
+      })
+    }
+
+    return recipeOptions
+  }
 
   const handleSubmit = () => {
     // 필수 항목 검사
@@ -43,8 +74,12 @@ export default function Recipe() {
       return
     }
 
+    // recipeOptions 생성
+    const recipeOptions = createRecipeOptions()
+    console.log('Generated Recipe Options:', recipeOptions)
+
     // 모든 조건이 충족되었을 경우 이동
-    navigate('/recipeReturn')
+    navigate('/recipeReturn', { state: { recipeOptions, text } }) // 추가 요청사항도 함께 전달
   }
 
   // 상태 토글 함수
@@ -81,10 +116,7 @@ export default function Recipe() {
               </div>
             </div>
           </div>
-          <div className="pt-[17px] pl-4 font-M00 text-[18px]">
-            건강한 식사를 위한 나만의 레시피
-          </div>
-          <div className="mt-[30px] px-4 flex flex-col gap-[30px]">
+          <div className="mt-[14px] px-4 flex flex-col gap-[30px]">
             <div>
               <div className="font-M00 text-[16px] text-[#000000] leading-[135%]">
                 1. 금액을 골라주세요
@@ -143,6 +175,7 @@ export default function Recipe() {
                   (필수)
                 </span>
               </div>
+
               <div className="font-L00 text-xs text-C400 leading-[140%]">
                 추천 키워드를 참고해 건강한 편의점 식사를 즐겨보세요
               </div>

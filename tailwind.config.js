@@ -15,6 +15,10 @@ export default {
         C400: '#74787E',
         Main: '#FDD835',
         Main2: '#FFF59D',
+        ToggleBorder: '#FFBC5F',
+      },
+      backgroundImage: {
+        'profile-gradient': 'linear-gradient(180deg, #FFA7A4 0%, #FFEA8B 100%)',
       },
     },
     fontFamily: {

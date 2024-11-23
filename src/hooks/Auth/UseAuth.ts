@@ -1,19 +1,28 @@
 import { useState, useEffect } from 'react'
 import axios from 'axios'
+import { useLocation } from 'react-router-dom'
 
 const useAuth = () => {
   const [isLoading, setIsLoading] = useState(true)
   const [isError, setIsError] = useState(false)
   const [errorMessage, setErrorMessage] = useState('')
-  const [accessToken, setAccessToken] = useState(null)
+  const [accessToken, setAccessToken] = useState<string | null>(null)
+  const location = useLocation()
 
   useEffect(() => {
     const urlParams = new URLSearchParams(window.location.search)
     const code = urlParams.get('code')
+    const redirectUrl = window.location.origin + location.pathname // 현재 주소
+    console.log(redirectUrl)
 
     if (code) {
       axios
-        .get('https://api.ideabank.me/oauth', { params: { code } })
+        .get(import.meta.env.VITE_APP_API_BASE_URL + '/oauth', {
+          params: {
+            code,
+            redirect_uri: redirectUrl, // 현재 주소를 redirect_url로 설정
+          },
+        })
         .then((response) => {
           const token = response.headers.authorization
           if (token) {
@@ -34,7 +43,7 @@ const useAuth = () => {
       setErrorMessage('Authorization code missing in URL')
       setIsLoading(false)
     }
-  }, [])
+  }, [location])
 
   return {
     isLoading,
