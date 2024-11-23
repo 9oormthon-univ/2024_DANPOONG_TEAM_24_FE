@@ -1,5 +1,6 @@
-import React, { useEffect } from 'react'
-import { useLocation, useNavigate } from 'react-router-dom'
+import React, { useEffect, useState } from 'react'
+import { useLocation } from 'react-router-dom'
+import banner from '../../assets/community/community_banner.svg'
 import Header from '../../components/Header'
 import Footer from '../../components/Footer'
 import ScrollCategoryBar from '../../components/Community/ScrollCategoryBar'
@@ -14,22 +15,19 @@ const Community: React.FC = () => {
   const { fetchGetCategoryContents, categoryCommentInfo, isLoading } =
     useCommunity()
   const location = useLocation()
-  const navigate = useNavigate()
+  const queryParams = new URLSearchParams(location.search)
+  const [currentCategory, setCurrentCategory] = useState<string>('전체')
 
   useEffect(() => {
-    const queryParams = new URLSearchParams(location.search)
-    const currentCategory = queryParams.get('category')
-
-    if (!currentCategory) {
-      navigate('/community?category=전체')
-    } else {
-      fetchGetCategoryContents(categoryArr[currentCategory])
-    }
-  }, [location.search, navigate])
+    const categoryFromQuery = queryParams.get('category') || '전체'
+    setCurrentCategory(categoryFromQuery)
+    fetchGetCategoryContents(categoryArr[categoryFromQuery])
+  }, [location.search])
 
   const handleCategoryChange = (category: string) => {
     const newUrl = `?category=${category}`
     window.history.pushState({}, '', newUrl)
+    setCurrentCategory(category)
     fetchGetCategoryContents(categoryArr[category])
   }
 
@@ -44,7 +42,10 @@ const Community: React.FC = () => {
       <div className="relative w-screen md:w-[390px] flex flex-col items-center">
         <div className="flex flex-col w-full border-t border-t-200 mt-[10px] items-center">
           <ScrollCategoryBar onCategoryChange={handleCategoryChange} />
-          <div className="flex flex-col gap-[10px]">
+          {currentCategory === '전체' && (
+            <img src={banner} alt="커뮤니티 배너" className="mb-5" />
+          )}
+          <div className="flex flex-col gap-4">
             {categoryCommentInfo?.data.length === 0 ? (
               <NoContents subjectKey="my_post" />
             ) : (

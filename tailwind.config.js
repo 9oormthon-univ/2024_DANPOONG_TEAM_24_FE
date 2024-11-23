@@ -19,6 +19,8 @@ export default {
       },
       backgroundImage: {
         'profile-gradient': 'linear-gradient(180deg, #FFA7A4 0%, #FFEA8B 100%)',
+        'recipe-gradient':
+          'linear-gradient(108deg, #FFE58C -15.89%, #FDD835 31.16%, #F78951 68.45%, #F4635E 90.25%)',
       },
     },
     fontFamily: {
