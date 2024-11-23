@@ -36,6 +36,7 @@ const useCommunity = () => {
 
   // 게시글 작성
   const fetchPostContents = async (currentPostInfo: postRequest) => {
+    console.log(currentPostInfo)
     try {
       setIsLoading(true)
       await defaultAxios.post('/posts', currentPostInfo)
