@@ -36,10 +36,10 @@ const useCommunity = () => {
 
   // 게시글 작성
   const fetchPostContents = async (currentPostInfo: postRequest) => {
+    console.log(currentPostInfo)
     try {
       setIsLoading(true)
-      const response = await defaultAxios.post('/posts', currentPostInfo)
-      console.log(response.data)
+      await defaultAxios.post('/posts', currentPostInfo)
       navigate('/community')
     } catch (error) {
       setIsError(true)
@@ -54,7 +54,7 @@ const useCommunity = () => {
     try {
       setIsLoading(true)
       const response = await defaultAxios.get(`/posts/${post_id}`)
-      console.log(response.data)
+
       setContentCommentInfo(response.data.data)
     } catch (error) {
       setIsError(true)
@@ -66,11 +66,9 @@ const useCommunity = () => {
 
   // 카테고리 별 게시글 조회
   const fetchGetCategoryContents = async (category_name: string) => {
-    console.log(category_name)
     try {
       setIsLoading(true)
       const response = await defaultAxios.get(`/posts/find/${category_name}`)
-      console.log(response.data)
       setCategoryCommentInfo(response.data)
     } catch (error) {
       setIsError(true)
@@ -82,11 +80,9 @@ const useCommunity = () => {
 
   // 좋아요
   const fetchPostLike = async (post_id: number) => {
-    console.log(post_id)
     try {
       setIsLoading(true)
-      const response = await defaultAxios.post(`/posts/${post_id}/like`)
-      console.log(response.data)
+      await defaultAxios.post(`/posts/${post_id}/like`)
     } catch (error) {
       setIsError(true)
       console.error(error)
@@ -100,7 +96,6 @@ const useCommunity = () => {
     try {
       setIsLoading(true)
       const response = await defaultAxios.get(`/posts/popular`)
-      console.log(response.data)
       setPopularInfo(response.data)
     } catch (error) {
       setIsError(true)

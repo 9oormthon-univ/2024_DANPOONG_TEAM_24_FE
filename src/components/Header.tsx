@@ -7,10 +7,12 @@ import search from '../assets/common/Search.svg'
 import { useNavigate } from 'react-router-dom'
 import useAddressStore from '../store/useAddressStore'
 import { useSearch } from '../hooks/UseSearch'
+import useMapStore from '../store/useMapStore'
 
 function Header() {
   const navigation = useNavigate()
   const { getSelectedAddress } = useAddressStore()
+  const { setSelectedPlace } = useMapStore()
 
   // useSearch 커스텀 훅 사용
   const {
@@ -25,11 +27,30 @@ function Header() {
 
   // 장소 클릭 시 처리
   const handlePlaceClick = (place: any) => {
-    window.open(place.place_url, '_blank', 'noopener,noreferrer')
-    console.log('Selected place:', place)
-    console.log(place.x, place.y)
+    console.log('place:', place)
+    const selectedPlace = {
+      storeId: place.id,
+      storeName: place.place_name,
+      roadAddress: place.road_address_name,
+      latitude: parseFloat(place.y),
+      longitude: parseFloat(place.x),
+      store_url: place.place_url,
+    }
+
+    // 전역 상태 업데이트
+    setSelectedPlace(selectedPlace)
+
+    // 나머지 상태 업데이트
     setSearchText('')
     setShowResults(false) // 장소 클릭 시 검색 결과 닫기
+
+    // 페이지 이동
+    navigation('/around', {
+      state: {
+        isMapView: true,
+        selectedPlace, // 이제 생성된 selectedPlace 객체를 전달
+      },
+    })
   }
 
   return (
@@ -37,13 +58,13 @@ function Header() {
       <header className="mt-7 ml-[17px] mr-[19px] w-[390px]">
         <div className="flex px-4 gap-[94px] justify-between">
           <div
-            className="flex flex-row gap-[10px] items-center"
+            className="flex flex-row gap-[10px] items-center cursor-pointer"
             onClick={() => navigation('/')}
           >
             <img src={logo} alt="logoIcon" className="w-9 h-9" />
             <img src={logoText} alt="logoText" className="w-[37.33px] h-7" />
           </div>
-          <div className="flex flex-row gap-[14.5px] items-center">
+          <div className="flex flex-row gap-[10px] items-center">
             <div className="flex gap-2 items-center">
               <div className="font-SB00 text-[16px] text-ellipsis line-clamp-1">
                 {getSelectedAddress() || '주소 설정하기'}
@@ -58,7 +79,7 @@ function Header() {
             <img
               src={user}
               alt="userIcon"
-              className="w-[19px] h-[19px] cursor-pointer"
+              className="cursor-pointer"
               onClick={() => navigation('/mypage')}
             />
           </div>
@@ -92,7 +113,7 @@ function Header() {
         {showResults && searchResults.length > 0 && (
           <div
             ref={resultsRef} // 검색 결과 리스트에 ref 추가
-            className="absolute mx-4 mt-2 w-[358px] max-h-[200px] overflow-y-auto border border-200 bg-white z-10 shadow-lg rounded-lg"
+            className="absolute mx-4 mt-2 w-[358px] max-h-[200px] overflow-y-auto border border-200 bg-white z-20 shadow-lg rounded-lg"
           >
             {searchResults.map((place) => (
               <div

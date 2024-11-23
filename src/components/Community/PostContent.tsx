@@ -18,7 +18,7 @@ const PostContent: React.FC<PostContentProps> = ({
   }
 
   return (
-    <div className="flex flex-col justify-start px-4 pt-[39px]">
+    <div className="w-[390px] flex flex-col justify-start px-4 pt-[39px]">
       <div className="flex flex-col gap-[18px]">
         <Profile
           nickname={contentCommentInfo.author}

@@ -32,7 +32,7 @@ export default function CarouselSlide({ index }: carouselSlideProps) {
           <img
             src={imgSrc}
             alt={`Slide ${index}`}
-            className="w-full cursor-pointer"
+            className="px-4 w-full cursor-pointer"
           />
         </div>
       </Link>

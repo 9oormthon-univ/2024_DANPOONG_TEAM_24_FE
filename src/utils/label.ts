@@ -12,10 +12,6 @@ const label: Record<string, LabelStyle> = {
     label: '레시피 공유',
     style: 'bg-[#FFE1E1] border-[#FF6264] text-[#FF6264]',
   },
-  lifestyle: {
-    label: '일상',
-    style: 'bg-[#D5F2FF] border-[#0080DB] text-[#0080DB]',
-  },
 }
 
 export default label

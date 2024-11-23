@@ -19,7 +19,6 @@ const useMypage = () => {
     try {
       setIsLoading(true)
       const response = await defaultAxios.get(`/user/info`)
-      console.log(response.data)
       setProfileInfo(response.data.data)
     } catch (error) {
       setIsError(true)
@@ -34,7 +33,6 @@ const useMypage = () => {
     try {
       setIsLoading(true)
       const response = await defaultAxios.get(`/posts/get/${category}`)
-      console.log(response.data)
       setPostInfo(response.data)
     } catch (error) {
       setIsError(true)

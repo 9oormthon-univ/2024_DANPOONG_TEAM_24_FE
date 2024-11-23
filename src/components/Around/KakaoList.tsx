@@ -6,6 +6,7 @@ import LoadingSplash from '../../pages/Splash/LoadingSplash'
 import defaultAxios from '../../api/defaultAxios'
 import useAddressStore from '../../store/useAddressStore'
 import defaultimg from '../../assets/around/DefaultImg.svg' 
+import NoContents from '../Community/NoContents'
 
 interface Place {
   storeId: string
@@ -165,67 +166,63 @@ const KakaoList: React.FC<KakaoListProps> = ({ isLoading, setIsLoading }) => {
   };
   return (
     <div className="mt-2 pb-24">
+      <div
+        ref={filterContainerRef}
+        className="[&::-webkit-scrollbar]:hidden mb-4 flex overflow-x-auto whitespace-nowrap space-x-2"
+      >
+        <div className="space-x-2">
+          {Filter.map((filter) => (
+            <FilterButton
+              key={filter.id}
+              id={filter.id}
+              label={filter.label}
+              category_id={filter.category_id ? filter.category_id : 0}
+              selectedFilter={selectedFilter}
+              selected={selectedFilterOption === filter.label}
+              onClick={() =>
+                handleFilterClick(filter.id, filter.label, filter.category_id)
+              }
+            />
+          ))}
+        </div>
+      </div>
       {isLoading ? (
         <LoadingSplash />
-      ) : (
-        <>
-          <div
-            ref={filterContainerRef}
-            className="[&::-webkit-scrollbar]:hidden mb-4 flex overflow-x-auto whitespace-nowrap space-x-2"
-          >
-            <div className="space-x-2">
-              {Filter.map((filter) => (
-                <FilterButton
-                  key={filter.id}
-                  id={filter.id}
-                  label={filter.label}
-                  category_id={filter.category_id ? filter.category_id : 0}
-                  selectedFilter={selectedFilter}
-                  selected={selectedFilterOption === filter.label}
-                  onClick={() =>
-                    handleFilterClick(filter.id, filter.label, filter.category_id)
-                  }
+      ) : places.length > 0 ? (
+        <ul className="space-y-2 overflow-visible">
+          {places.map((place) => (
+            <li
+              key={place.storeId}
+              className="p-2 border-b border-200 bg-white cursor-pointer flex justify-between items-center"
+              style={{ width: '390px', height: '120px' }}
+              onClick={() => handlePlaceClick(place.storeName)}
+            >
+              <div className="flex-1">
+                <p className="mb-0.5 text-xl font-M00">
+                  {place.storeName}{' '}
+                  <span className="text-sm text-point1">
+                    {place.distance
+                      ? `${Math.round(place.distance)}m`
+                      : '거리 정보 없음'}
+                  </span>
+                </p>
+                <p className="mb-[12px] text-sm font-R00">{place.roadAddress}</p>
+                {place.phone && (
+                  <p className="text-sm font-R00 text-600">전화번호: {place.phone}</p>
+                )}
+              </div>
+              <div className="w-24 h-24 rounded-md bg-cover bg-center ml-4">
+                <img
+                  src={place.imageUrl || defaultimg} // 이미지가 없으면 기본 이미지 사용
+                  alt={place.storeName}
+                  className="w-full h-full rounded-md object-cover"
                 />
-              ))}
-            </div>
-          </div>
-          {places.length > 0 ? (
-            <ul className="space-y-2 overflow-visible">
-              {places.map((place) => (
-                <li
-                  key={place.storeId}
-                  className="p-2 border-b border-200 bg-white cursor-pointer flex justify-between items-center"
-                  style={{ width: '390px', height: '120px' }}
-                  onClick={() => handlePlaceClick(place.storeName)}
-                >
-                  <div className="flex-1">
-                    <p className="mb-0.5 text-xl font-M00">
-                      {place.storeName}{' '}
-                      <span className="text-sm text-point1">
-                        {place.distance
-                          ? `${Math.round(place.distance)}m`
-                          : '거리 정보 없음'}
-                      </span>
-                    </p>
-                    <p className="mb-[12px] text-sm font-R00">{place.roadAddress}</p>
-                    {place.phone && (
-                      <p className="text-sm font-R00 text-600">전화번호: {place.phone}</p>
-                    )}
-                  </div>
-                  <div className="w-24 h-24 rounded-md bg-cover bg-center ml-4">
-                    <img
-                    src={place.imageUrl || defaultimg} // 이미지가 없으면 기본 이미지 사용
-                    alt={place.storeName}
-                    className="w-full h-full rounded-md object-cover"
-                  />
-                  </div>
-                </li>
-              ))}
-            </ul>
-          ) : (
-            <p className="text-center">표시할 음식점이 없습니다.</p>
-          )}
-        </>
+              </div>
+            </li>
+          ))}
+        </ul>
+      ) : (
+        <NoContents subjectKey="store" />
       )}
     </div>
   )

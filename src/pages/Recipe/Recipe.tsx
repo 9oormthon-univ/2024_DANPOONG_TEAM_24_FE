@@ -4,7 +4,7 @@ import Header from '../../components/Header'
 import Footer from '../../components/Footer'
 import RecipeOption from '../../components/Recipe/RecipeOption'
 import Cn from '../../utils/Cn'
-import submit from '../../assets/recipe/Submit.svg'
+import AI from '../../assets/recipe/AI.svg'
 import { useRecipeOptions } from '../../hooks/Recipe/UseOption'
 import LoadingSplash from '../Splash/LoadingSplash'
 
@@ -89,11 +89,10 @@ export default function Recipe() {
     content: string
   ) => {
     setData((prev) =>
-      prev.map((item) =>
-        item.content === content
-          ? { ...item, isSelected: !item.isSelected } // 상태 반전
-          : item
-      )
+      prev.map((item) => ({
+        ...item,
+        isSelected: item.content === content, // 클릭된 항목만 true, 나머지는 false
+      }))
     )
   }
 
@@ -157,6 +156,7 @@ export default function Recipe() {
                     key={index}
                     content={store.content}
                     isSelected={store.isSelected}
+                    isStore={true}
                     onClick={() =>
                       toggleSelection(
                         storeOptionData,
@@ -204,7 +204,7 @@ export default function Recipe() {
                   (선택)
                 </span>
               </div>
-              <div className="mt-5 mb-[9px] flex flex-col gap-[9px]">
+              <div className="mt-5 mb-[90px] flex flex-col gap-[9px]">
                 <textarea
                   name="require"
                   id="Require recipe field"
@@ -222,11 +222,19 @@ export default function Recipe() {
                 </div>
               </div>
             </div>
-            <img
-              src={submit}
+            <button
               onClick={handleSubmit}
-              className="fixed bottom-[116px] self-end cursor-pointer"
-            />
+              style={{
+                background:
+                  'linear-gradient(108deg, #FFE58C -15.89%, #FDD835 31.16%, #F78951 68.45%, #F4635E 90.25%)',
+              }}
+              className="flex w-[358px] h-[60px] justify-center items-center gap-[10px] fixed rounded-xl bottom-[112.5px] border border-200 text-black cursor-pointer"
+            >
+              <img src={AI} alt="AI" />
+              <p className="text-lg font-SB00 font-normal leading-140">
+                AI로 레시피 만들기
+              </p>
+            </button>
           </div>
         </section>
         <Footer />
