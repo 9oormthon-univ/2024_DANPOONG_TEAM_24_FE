@@ -32,6 +32,7 @@ export const useRecipeOptions = () => {
         setPriceOptionData(
           priceData.map((option) => ({
             content: option.display,
+            value: option.value,
             isSelected: false, // 초기값은 선택되지 않음
           }))
         )
@@ -43,6 +44,7 @@ export const useRecipeOptions = () => {
         setStoreOptionData(
           storeData.map((option) => ({
             content: option.display,
+            value: option.value,
             isSelected: false, // 초기값은 선택되지 않음
           }))
         )
@@ -53,6 +55,7 @@ export const useRecipeOptions = () => {
         setKeywordOptionData(
           keywordData.map((option) => ({
             content: option.display,
+            value: option.value,
             isSelected: false, // 초기값은 선택되지 않음
           }))
         )

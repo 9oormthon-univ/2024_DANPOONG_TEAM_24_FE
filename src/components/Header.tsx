@@ -27,6 +27,7 @@ function Header() {
   const handlePlaceClick = (place: any) => {
     window.open(place.place_url, '_blank', 'noopener,noreferrer')
     console.log('Selected place:', place)
+    console.log(place.x, place.y)
     setSearchText('')
     setShowResults(false) // 장소 클릭 시 검색 결과 닫기
   }
