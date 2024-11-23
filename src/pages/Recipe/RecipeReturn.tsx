@@ -5,6 +5,7 @@ import restart from '../../assets/recipe/Restart.svg'
 import Cn from '../../utils/Cn'
 import { useGenerateRecipe } from '../../hooks/Recipe/UseGenerateRecipe'
 import useMypage from '../../hooks/MyPage/useMyPage'
+import LoadingSplash from '../Splash/LoadingSplash'
 
 export default function RecipeReturn() {
   const textareaRef = useRef<HTMLTextAreaElement>(null)
@@ -50,6 +51,10 @@ export default function RecipeReturn() {
     navigate('/')
   }
 
+  if (loading) {
+    return <LoadingSplash />
+  }
+
   return (
     <>
       <div className="flex flex-col items-center justify-center">
@@ -67,12 +72,7 @@ export default function RecipeReturn() {
         </header>
         <section className="px-4">
           <div className="pt-[14px] font-R00 text-lg text-[#000000] mb-4">
-            {loading
-              ? '레시피를 불러오는 중입니다...'
-              : error
-              ? `오류 발생: ${error}`
-              : `${profileInfo?.name || '사용자'}` +
-                '님을 위한 레시피를 준비했어요!'}
+            {profileInfo?.name || '사용자'}님을 위한 레시피를 준비했어요!
           </div>
           <textarea
             ref={textareaRef}
