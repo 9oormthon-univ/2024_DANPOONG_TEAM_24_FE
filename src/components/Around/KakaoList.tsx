@@ -65,7 +65,7 @@ const KakaoList: React.FC<KakaoListProps> = ({ isLoading, setIsLoading }) => {
         }
       })
     } else {
-      alert('주소 설정을 완료 해주세요!')
+      alert('주소 설정을 완료해 주세요!')
       navigate('/address')
     }
   }, [getSelectedAddress])

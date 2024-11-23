@@ -19,6 +19,7 @@ function Around() {
 
   // 뷰 전환 함수
   const toggleView = () => {
+    setSelectedPlace(null)
     setIsMapView(!isMapView)
   }
 

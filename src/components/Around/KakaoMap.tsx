@@ -1,4 +1,5 @@
 import { useEffect, useRef, useState } from 'react'
+import { useNavigate } from 'react-router-dom'
 import { Map, MapMarker } from 'react-kakao-maps-sdk'
 import FilterButton from './FilterButton'
 import Filter from './Filter'
@@ -30,6 +31,8 @@ const KaKaoMap = () => {
   const { selectedFilterOption, setSelectedFilterOption } =
     useListFilterOptionStore()
   const filterContainerRef = useRef<HTMLDivElement | null>(null) // 필터 버튼 컨테이너를 참조하기 위한 useRef
+
+  const navigate = useNavigate()
 
   const handleMarkerClick = (placeName: string) => {
     if (!window.kakao || !window.kakao.maps) {
@@ -74,7 +77,8 @@ const KaKaoMap = () => {
         }
       })
     } else {
-      alert('주소 설정을 완료 해주세요!')
+      alert('주소 설정을 완료해 주세요!')
+      navigate('/address')
     }
   }, [getSelectedAddress, setUserPosition, selectedPlace])
 
