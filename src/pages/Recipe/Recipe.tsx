@@ -157,6 +157,7 @@ export default function Recipe() {
                     key={index}
                     content={store.content}
                     isSelected={store.isSelected}
+                    isStore={true}
                     onClick={() =>
                       toggleSelection(
                         storeOptionData,
