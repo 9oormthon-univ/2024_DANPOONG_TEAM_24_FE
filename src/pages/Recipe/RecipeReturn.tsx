@@ -54,7 +54,7 @@ export default function RecipeReturn() {
         </header>
         <section className="px-4">
           <div className="pt-[14px] font-R00 text-lg text-[#000000] mb-4">
-            {profileInfo?.data.name || '사용자'}님을 위한 레시피를 준비했어요!
+            {profileInfo?.name || '사용자'}님을 위한 레시피를 준비했어요!
           </div>
           <textarea
             ref={textareaRef}
