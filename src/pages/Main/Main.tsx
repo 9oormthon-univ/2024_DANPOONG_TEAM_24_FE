@@ -20,12 +20,14 @@ import useAuthStore from '../../store/UseAuthStore'
 import useListFilterOptionStore from '../../store/UseListFilterOptionStore'
 import Contents from '../../components/Community/Contents'
 import useCommunity from '../../hooks/Community/useCommmunity'
+import useRecipe from '../../hooks/Main/useRecipe'
 
 function Main() {
   const navigate = useNavigate()
   const { showSplash, setLoggedIn, setShowSplash } = useAuthStore()
   const { setSelectedFilterOption } = useListFilterOptionStore()
   const { popularInfo, fetchGetPopularList } = useCommunity()
+  const { recipeList, fetchGetRecipeList } = useRecipe()
 
   useEffect(() => {
     const loginStatus = localStorage.getItem('isLoggedIn')
@@ -41,6 +43,7 @@ function Main() {
 
   useEffect(() => {
     fetchGetPopularList()
+    fetchGetRecipeList()
   }, [])
 
   if (showSplash) {
@@ -139,7 +142,7 @@ function Main() {
             <div className="px-[18px] mb-[10px] font-M00 text-[18px]">
               정부 추천 편의점 건강 레시피
             </div>
-            <BackRecipeCarouselSlider />
+            <BackRecipeCarouselSlider recipeList={recipeList?.data} />
           </section>
           <Footer />
         </div>
