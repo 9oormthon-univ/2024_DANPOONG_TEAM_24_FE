@@ -17,7 +17,7 @@ const useAuth = () => {
 
     if (code) {
       axios
-        .get('https://api.ideabank.me/oauth', {
+        .get('https://ideabank.me:3000/oauth', {
           params: {
             code,
             redirect_uri: redirectUrl, // 현재 주소를 redirect_url로 설정

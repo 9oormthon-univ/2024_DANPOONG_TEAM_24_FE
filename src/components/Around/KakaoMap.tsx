@@ -4,15 +4,17 @@ import FilterButton from './FilterButton'
 import Filter from './Filter'
 import UserLocationButton from '../../assets/around/UserLocationButton.svg'
 import useListFilterOptionStore from '../../store/UseListFilterOptionStore'
+import defaultAxios from '../../api/defaultAxios'
+import useMapStore from '../../store/useMapStore'
+import useAddressStore from '../../store/useAddressStore'
 
 const KaKaoMap = () => {
   const mapRef = useRef<kakao.maps.Map | null>(null) // Map 객체를 참조하기 위한 useRef
-  const [userPosition, setUserPosition] = useState({
-    lat: 33.450701,
-    lng: 126.570667,
-  })
-  const [mapCenter, setMapCenter] = useState(userPosition)
+  const { userPosition, setUserPosition, places, setPlaces } = useMapStore()
+  const getSelectedAddress = useAddressStore((state) => state.getSelectedAddress)
+
   const [selectedFilter, setSelectedFilter] = useState<number | null>(1)
+  const [selectedCategoryId, setSelectedCategoryId] = useState<number>(3)
 
   // 24/11/20 희진 추가
   const { selectedFilterOption, setSelectedFilterOption } =
@@ -20,31 +22,53 @@ const KaKaoMap = () => {
   const filterContainerRef = useRef<HTMLDivElement | null>(null) // 필터 버튼 컨테이너를 참조하기 위한 useRef
 
   useEffect(() => {
-    if (navigator.geolocation) {
-      navigator.geolocation.getCurrentPosition(
-        (position) => {
+    const selectedAddress = getSelectedAddress()
+    if (selectedAddress) {
+      const geocoder = new kakao.maps.services.Geocoder()
+      geocoder.addressSearch(selectedAddress, (result, status) => {
+        if (status === kakao.maps.services.Status.OK) {
           const newPosition = {
-            lat: position.coords.latitude,
-            lng: position.coords.longitude,
+            lat: parseFloat(result[0].y),
+            lng: parseFloat(result[0].x),
           }
           setUserPosition(newPosition)
-          setMapCenter(newPosition) // 초기 사용자 위치로 설정
 
-          // 맵 객체가 있을 경우, 사용자의 위치로 이동
           if (mapRef.current) {
-            mapRef.current.panTo(
-              new kakao.maps.LatLng(newPosition.lat, newPosition.lng)
-            )
+            mapRef.current.panTo(new kakao.maps.LatLng(newPosition.lat, newPosition.lng))
           }
-        },
-        (error) => {
-          console.error('사용자 위치를 가져오는데 실패했습니다.', error)
+        } else {
+          console.error('주소 변환 실패:', status)
         }
-      )
+      })
     } else {
-      console.error('이 브라우저는 Geolocation을 지원하지 않습니다.')
+      alert('주소 설정을 완료 해주세요!')
     }
-  }, [])
+  }, [getSelectedAddress, setUserPosition])
+
+  // 음식점 데이터 가져오기
+  useEffect(() => {
+    const fetchStores = async () => {
+      try {
+        const url =
+          selectedCategoryId === 3
+            ? `/stores?latitude=${userPosition.lat}&longitude=${userPosition.lng}` // 전체 카테고리
+            : selectedCategoryId === 11
+              ? `/stores?options=score>=4&latitude=${userPosition.lat}&longitude=${userPosition.lng}` // 검증된 맛집 카테고리
+              : `/stores/category/${selectedCategoryId}?latitude=${userPosition.lat}&longitude=${userPosition.lng}` // 나머지 카테고리
+
+        const response = await defaultAxios.get(url)
+        if (response.data.code === 200) {
+          setPlaces(response.data.data)
+        } else {
+          console.error('음식점 데이터를 가져오는데 실패했습니다:', response.data)
+        }
+      } catch (error) {
+        console.error('음식점 데이터를 가져오는 중 에러 발생:', error)
+      }
+    }
+
+    fetchStores();
+  }, [userPosition, selectedCategoryId, selectedFilter, setPlaces]);
 
   // 24/11/20 희진 추가
   // 페이지 로드 시 선택된 필터 버튼이 가운데로 오도록 처리
@@ -62,9 +86,10 @@ const KaKaoMap = () => {
   }, [selectedFilterOption]) // selectedFilterOption이 변경될 때마다 실행
 
   // 24/11/20 희진 변경
-  const handleFilterClick = (id: number, selected: string) => {
+  const handleFilterClick = (id: number, selected: string, categoryId?: number) => {
     setSelectedFilterOption(selected)
     setSelectedFilter(id === selectedFilter ? null : id)
+    setSelectedCategoryId(categoryId || 3)
   }
 
   const resetMapToUserLocation = () => {
@@ -79,12 +104,32 @@ const KaKaoMap = () => {
     <div className="relative">
       <div id="map" className="max-w-[390px]">
         <Map
-          center={mapCenter}
+          center={userPosition}
           style={{ width: '100%', height: '80vh' }}
           level={3}
           ref={mapRef} // Map 객체에 ref 연결
         >
-          <MapMarker position={userPosition}></MapMarker>
+          <MapMarker position={userPosition} />
+
+          {places.map((place) => {
+            // 카테고리 ID에 맞는 필터 항목 찾기
+            const category = Filter.find((f) => f.category_id === selectedCategoryId);
+
+            return (
+              <MapMarker
+                key={place.storeId}
+                position={{ lat: place.latitude, lng: place.longitude }}
+                title={place.storeName}
+                image={{
+                  src: category?.image || '/images/default.svg', // 카테고리 이미지, 없으면 기본 이미지
+                  size: {
+                    width: 24,
+                    height: 24,
+                  }
+                }}
+              />
+            );
+          })}
         </Map>
         <div
           ref={filterContainerRef}
@@ -99,7 +144,7 @@ const KaKaoMap = () => {
                 category_id={filter.category_id ? filter.category_id : 0} // 24/11/22 희진 추가
                 selectedFilter={selectedFilter}
                 selected={selectedFilterOption === filter.label} // 24/11/20 희진 추가
-                onClick={() => handleFilterClick(filter.id, filter.label)} // 24/11/20 희진 추가
+                onClick={() => handleFilterClick(filter.id, filter.label, filter.category_id)} // 24/11/20 희진 추가
               />
             ))}
           </div>
