@@ -36,7 +36,6 @@ const router = createBrowserRouter([
       { path: 'mypage/writtenpost', element: <WrittenPost /> },
       { path: 'mypage/commentpost', element: <CommentPost /> },
       { path: 'mypage/likepost', element: <LikePost /> },
-
     ],
   },
   { path: 'recipe', element: <Recipe /> },

@@ -13,12 +13,9 @@ const useComment = () => {
 
   // 댓글 달기
   const fetchPostComment = async (currentCommentInfo: CommentRequest) => {
-    console.log('제출한 댓글 정보: ', currentCommentInfo)
     try {
       setIsLoading(true)
-      const response = await defaultAxios.post('/comment', currentCommentInfo)
-      console.log(response.data)
-
+      await defaultAxios.post('/comment', currentCommentInfo)
       setCommentInfo({ postId: 0, content: '' })
       setIsError(false)
     } catch (error) {
@@ -29,8 +26,6 @@ const useComment = () => {
       setIsLoading(false)
     }
   }
-
-  // 댓글 삭제
 
   return {
     commentInfo,
