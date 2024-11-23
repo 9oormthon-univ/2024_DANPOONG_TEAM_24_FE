@@ -27,6 +27,40 @@ export default function Recipe() {
     return <LoadingSplash />
   }
 
+  // recipeOptions 동적 생성 함수
+  const createRecipeOptions = () => {
+    const selectedPrice = priceOptionData.find((option) => option.isSelected)
+    const selectedStore = storeOptionData.find((option) => option.isSelected)
+    const selectedKeyword = keywordOptionData.find(
+      (option) => option.isSelected
+    )
+
+    const recipeOptions = []
+
+    if (selectedPrice) {
+      recipeOptions.push({
+        display: '최대 금액 선택',
+        value: selectedPrice.content,
+      })
+    }
+
+    if (selectedStore) {
+      recipeOptions.push({
+        display: '편의점 선택',
+        value: selectedStore.content,
+      })
+    }
+
+    if (selectedKeyword) {
+      recipeOptions.push({
+        display: '키워드',
+        value: selectedKeyword.content,
+      })
+    }
+
+    return recipeOptions
+  }
+
   const handleSubmit = () => {
     // 필수 항목 검사
     const isPriceSelected = priceOptionData.some((option) => option.isSelected)
@@ -40,8 +74,12 @@ export default function Recipe() {
       return
     }
 
+    // recipeOptions 생성
+    const recipeOptions = createRecipeOptions()
+    console.log('Generated Recipe Options:', recipeOptions)
+
     // 모든 조건이 충족되었을 경우 이동
-    navigate('/recipeReturn')
+    navigate('/recipeReturn', { state: { recipeOptions, text } }) // 추가 요청사항도 함께 전달
   }
 
   // 상태 토글 함수
