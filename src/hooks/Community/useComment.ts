@@ -27,8 +27,6 @@ const useComment = () => {
     }
   }
 
-  // 댓글 삭제
-
   return {
     commentInfo,
     setCommentInfo,
