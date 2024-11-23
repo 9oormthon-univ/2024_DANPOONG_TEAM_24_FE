@@ -11,6 +11,7 @@ import chef from '../../assets/recipe/Chef.svg'
 import RecipeItem from '../../components/Recipe/RecipeItem'
 import price from '../../assets/recipe/Price.svg'
 import { parseRecipeItems } from '../../utils/SplitRecipeResponse'
+import RecipeOption from '../../components/Recipe/RecipeOption'
 
 export default function RecipeReturn() {
   const textareaRef = useRef<HTMLDivElement>(null)
@@ -37,6 +38,8 @@ export default function RecipeReturn() {
 
   const [items, setItems] = useState<RecipeItemProps[]>([])
 
+  const [isToggled, setIsToggled] = useState(false)
+
   // 컴포넌트 마운트 시 레시피 요청 및 높이 조절
   useEffect(() => {
     if (recipeOptions.length > 0) {
@@ -49,18 +52,27 @@ export default function RecipeReturn() {
   // recipeResponse 업데이트 시 높이 조절 및 콘솔 출력
   useEffect(() => {
     if (recipeResponse && textareaRef.current) {
-      textareaRef.current.style.height = 'auto'
-      textareaRef.current.style.height = `${textareaRef.current.scrollHeight}px`
+      const textarea = textareaRef.current
+
+      // 높이 초기화
+      textarea.style.height = 'auto'
+
+      // 스크롤 높이로 조정
+      const newHeight = `${textarea.scrollHeight}px`
+      textarea.style.height = newHeight
+
       console.log('레시피 : ', recipeResponse)
 
+      // 파싱 작업
       const parsedSentences = parseRecipeParagraphs(
         recipeResponse.data.recipeParagraphs
       )
-      setSentences(parsedSentences) // 상태로 업데이트
+      setSentences(parsedSentences)
 
       const recipeItems = parseRecipeItems(parsedSentences.recommendedItems)
       console.log('test:', parsedSentences.recommendedItems)
       setItems(recipeItems)
+
       console.log('문장으로 분리된 데이터:', parsedSentences)
     }
   }, [recipeResponse])
@@ -84,6 +96,10 @@ export default function RecipeReturn() {
     })
   }
 
+  const handleToggle = () => {
+    setIsToggled((prev) => !prev)
+  }
+
   if (loading) {
     return <LoadingSplash />
   }
@@ -104,13 +120,38 @@ export default function RecipeReturn() {
           </div>
         </header>
         <section className="px-4">
-          <div className="flex justify-between mt-4 px-[14px] py-[16.5px] bg-Main2 border border-Main rounded-xl font-M00 text-[16px] text-nowrap text-[#000000] mb-4">
+          <div
+            className="relative flex justify-between mt-4 px-[14px] py-[16.5px] bg-Main2 border border-Main rounded-xl font-M00 text-[16px] text-nowrap text-[#000000] mb-[30px] z-20 cursor-pointer"
+            onClick={handleToggle}
+          >
             <div className="flex flex-row justify-center gap-[10px] ">
               <img src={requireCheck} alt="require check icon" />
               <div>요청 사항 확인하기</div>
             </div>
-            <img src={downArrow} alt="toggle require field" />
+            <img
+              src={downArrow}
+              alt="toggle require field"
+              className={` ${isToggled ? 'rotate-180' : ''}`} // 템플릿 리터럴로 클래스명 처리
+            />
           </div>
+          {/* 요소 토글 */}
+          {isToggled && ( // isToggled가 true일 때만 렌더링
+            <div className="w-[358px] bg-100 rounded-b-xl -mt-[40px] pb-3 z-0 mb-[30px]">
+              <div className="px-5 pt-5 w-full inline-flex flex-wrap gap-[10px]">
+                <RecipeOption
+                  content={recipeResponse?.data.selectedCost || ''}
+                />
+                <RecipeOption
+                  content={recipeResponse?.data.selectedConvenienceStore || ''}
+                  isStore={true}
+                />
+                <RecipeOption
+                  content={recipeResponse?.data.koreanKeyword || ''}
+                  isKeyword={true}
+                />
+              </div>
+            </div>
+          )}
 
           <div className="flex px-[20px] py-[10px] gap-[10px] mb-5 w-[358px] bg-100 border border-200 rounded-[5px] font-M00 text-[14px] leading-[135%]">
             <img src={chef} alt="chef hat" className="self-start" />

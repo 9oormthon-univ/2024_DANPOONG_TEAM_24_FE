@@ -89,11 +89,10 @@ export default function Recipe() {
     content: string
   ) => {
     setData((prev) =>
-      prev.map((item) =>
-        item.content === content
-          ? { ...item, isSelected: !item.isSelected } // 상태 반전
-          : item
-      )
+      prev.map((item) => ({
+        ...item,
+        isSelected: item.content === content, // 클릭된 항목만 true, 나머지는 false
+      }))
     )
   }
 
