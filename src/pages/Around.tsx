@@ -26,7 +26,7 @@ function Around() {
   useEffect(() => {
     if (selectedPlace) {
       setSelectedPlace(selectedPlace)
-      setIsMapView(!isMapView)
+      setIsMapView(isMapView)
     }
 
     return () => {
