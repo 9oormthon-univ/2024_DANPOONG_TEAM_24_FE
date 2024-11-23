@@ -14,5 +14,6 @@ export interface RecipeResponse {
     recipeParagraphs: string[] // 레시피 문단 배열
     koreanKeyword: string // 한글 키워드
     selectedCost?: string
+    selectedConvenienceStore: string
   }
 }
