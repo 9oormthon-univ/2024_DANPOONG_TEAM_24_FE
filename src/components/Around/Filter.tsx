@@ -1,13 +1,13 @@
-import all from '../../assets/main/All.svg'
-import korean from '../../assets/main/Korean.svg'
-import chinese from '../../assets/main/Chinese.svg'
-import western from '../../assets/main/Western.svg'
-import bunsic from '../../assets/main/Bunsik.svg'
-import fastfood from '../../assets/main/Fastfood.svg'
-import convenience from '../../assets/main/Convenience.svg'
-import japanese from '../../assets/main/Japanese.svg'
-import cafe from '../../assets/main/Cafe.svg'
-import etc from '../../assets/main/Etc.svg'
+import all from '../../assets/around/All.svg'
+import korean from '../../assets/around/Korean.svg'
+import chinese from '../../assets/around/Chinese.svg'
+import western from '../../assets/around/Western.svg'
+import bunsic from '../../assets/around/Bunsik.svg'
+import fastfood from '../../assets/around/Fastfood.svg'
+import convenience from '../../assets/around/Convenience.svg'
+import japanese from '../../assets/around/Japanese.svg'
+import cafe from '../../assets/around/Cafe.svg'
+import etc from '../../assets/around/Etc.svg'
 
 interface Filter {
   id: number
