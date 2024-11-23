@@ -7,7 +7,7 @@ import useListFilterOptionStore from '../../store/UseListFilterOptionStore'
 import defaultAxios from '../../api/defaultAxios'
 import useMapStore from '../../store/useMapStore'
 import useAddressStore from '../../store/useAddressStore'
-import defaultImg from '../../assets/main/All.svg'
+import searchIcon from '../../assets/around/SearchLocation.svg'
 
 const KaKaoMap = () => {
   const mapRef = useRef<kakao.maps.Map | null>(null) // Map 객체를 참조하기 위한 useRef
@@ -80,7 +80,7 @@ const KaKaoMap = () => {
 
   // 음식점 데이터 가져오기
   useEffect(() => {
-    let ignore = false;
+    let ignore = false
     const fetchStores = async () => {
       try {
         const url =
@@ -90,7 +90,7 @@ const KaKaoMap = () => {
             ? `/stores?options=score>=4&latitude=${userPosition.lat}&longitude=${userPosition.lng}` // 검증된 맛집 카테고리
             : `/stores/category/${selectedCategoryId}?latitude=${userPosition.lat}&longitude=${userPosition.lng}` // 나머지 카테고리
 
-        const response = await defaultAxios.get(url)     
+        const response = await defaultAxios.get(url)
         if (response.data.code === 200 && !ignore) {
           setPlaces(response.data.data) // ignore가 false일 때만 상태 업데이트
         } else if (!ignore) {
@@ -101,7 +101,7 @@ const KaKaoMap = () => {
         }
       } catch (error) {
         if (!ignore) {
-          console.error('음식점 데이터를 가져오는 중 에러 발생:', error);
+          console.error('음식점 데이터를 가져오는 중 에러 발생:', error)
         }
       }
     }
@@ -186,10 +186,10 @@ const KaKaoMap = () => {
               }}
               title={selectedPlace.storeName}
               image={{
-                src: defaultImg, // 카테고리 이미지, 없으면 기본 이미지
+                src: searchIcon, // 카테고리 이미지, 없으면 기본 이미지
                 size: {
-                  width: 24,
-                  height: 24,
+                  width: 36,
+                  height: 36,
                 },
               }}
               onClick={() => handleMarkerClick(selectedPlace.storeName)}
