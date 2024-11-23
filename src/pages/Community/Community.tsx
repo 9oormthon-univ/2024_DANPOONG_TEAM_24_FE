@@ -36,7 +36,7 @@ const Community: React.FC = () => {
           {/* 카테고리 변경 핸들러 전달 */}
           <div className="flex flex-col gap-[10px]">
             {categoryCommentInfo?.data.length === 0 ? (
-              <NoContents />
+              <NoContents subjectKey="my_post" />
             ) : (
               categoryCommentInfo?.data.map((content, index) => (
                 <Contents

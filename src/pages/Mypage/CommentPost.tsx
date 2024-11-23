@@ -19,7 +19,7 @@ const CommentPost: React.FC = () => {
         <MyPageHeader title="댓글 단 글" />
         <div className="p-4 flex flex-col gap-4 border-t border-200">
           {postInfo?.data.length === 0 ? (
-            <NoContents />
+            <NoContents subjectKey={location.state.category} />
           ) : (
             postInfo?.data.map((post) => (
               <Contents
