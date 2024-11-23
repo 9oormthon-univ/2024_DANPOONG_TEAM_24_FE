@@ -64,11 +64,11 @@ function MyPage() {
             <img src={Xbutton} alt="Close" />
           </button>
         </div>
-        <div className="border-t border-200 bg-Main w-full h-[212px] flex flex-col items-center justify-center">
+        <div className="w-full h-[212px] flex flex-col items-center justify-center rounded-b-[30px] bg-profile-gradient">
           <img
             src={profileInfo?.profileUrl}
             alt="프로필 사진"
-            className="w-[96px] h-[96px] rounded-full mb-[16px]"
+            className="w-[96px] h-[96px] rounded-full mb-[16px] border-[5px] border-500"
           />
           <p className="font-SB00 mb-3">{profileInfo?.name}</p>
         </div>

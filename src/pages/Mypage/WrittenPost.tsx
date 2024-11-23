@@ -19,7 +19,7 @@ const WrittenPost: React.FC = () => {
         <MyPageHeader title="작성한 글" />
         <div className="p-4 flex flex-col gap-4 border-t border-200">
           {postInfo?.data.length === 0 ? (
-            <NoContents />
+            <NoContents subjectKey={location.state.category} />
           ) : (
             postInfo?.data.map((post) => (
               <Contents
