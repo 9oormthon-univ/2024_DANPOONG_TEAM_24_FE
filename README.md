@@ -3,7 +3,7 @@
 **이음**은 매일 어떤 식사를 할지 고민하는 결식 아동들을 건강하고 따뜻한 한 끼로 이어주는 서비스 입니다.
 <br />
 <br />
-![alt text](image.png)
+![image](https://github.com/user-attachments/assets/002cfbcb-91e7-42cd-9ddf-2737788ccb1c)
 <br />
 <br />
 
@@ -65,20 +65,17 @@
 <br />
 
 # 🛠️ Tech
-
-| 역할 | 종류 |
-
-
 [![Tech](https://skillicons.dev/icons?i=ts,react,tailwind,vercel)](https://skillicons.dev)
 <br />
 <br />
 
 # ☀️ 서비스 소개
 
-![alt text](image-1.png)
+![image](https://github.com/user-attachments/assets/31ddc8d8-6218-4c73-9bda-e780582a33a9)
 <br />
 <br />
 
 # ☀️ 기능 소개
 
-![alt text](image-2.png)
+![image](https://github.com/user-attachments/assets/5887dea3-4703-470a-8521-92a0a12f4947)
+
