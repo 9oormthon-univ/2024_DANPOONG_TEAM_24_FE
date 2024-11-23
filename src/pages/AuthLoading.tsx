@@ -4,7 +4,7 @@ import { useNavigate } from 'react-router-dom'
 
 export default function AuthLoading() {
   const navigate = useNavigate()
-  const back = 'https://api.ideabank.me/'
+  const back = 'https://ideabank.me:3000/'
 
   useEffect(() => {
     // 현재 url에서 인가코드 추출

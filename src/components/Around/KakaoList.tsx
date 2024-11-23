@@ -4,6 +4,7 @@ import Filter from './Filter'
 import useListFilterOptionStore from '../../store/UseListFilterOptionStore'
 import LoadingSplash from '../../pages/Splash/LoadingSplash'
 import defaultAxios from '../../api/defaultAxios'
+import useAddressStore from '../../store/useAddressStore'
 
 interface Place {
   storeId: string
@@ -26,6 +27,7 @@ const KakaoList: React.FC<KakaoListProps> = ({ isLoading, setIsLoading }) => {
   }>({ lat: 0, lng: 0 })
   const [places, setPlaces] = useState<Place[]>([])
   const [selectedCategoryId, setSelectedCategoryId] = useState<number>(3)
+  const getSelectedAddress = useAddressStore((state) => state.getSelectedAddress)
 
   const [selectedFilter, setSelectedFilter] = useState<number | null>(1)
   // 24/11/20 희진 추가
@@ -35,31 +37,28 @@ const KakaoList: React.FC<KakaoListProps> = ({ isLoading, setIsLoading }) => {
 
   // 사용자 위치 가져오기
   useEffect(() => {
-    if (navigator.geolocation) {
-      navigator.geolocation.getCurrentPosition(
-        (position) => {
-          setUserPosition({
-            lat: position.coords.latitude,
-            lng: position.coords.longitude,
-          })
-        },
-        (error) => {
-          console.error('사용자 위치를 가져오는데 실패했습니다:', error)
-          alert(
-            '위치 정보를 가져오는데 실패했습니다. 위치 서비스가 활성화되었는지 확인하세요.'
-          )
-        },
-        {
-          enableHighAccuracy: true,
-          timeout: 10000, // 10초 후 타임아웃
-          maximumAge: 0, // 항상 최신 위치를 가져옴
-        }
-      )
-    } else {
-      console.error('이 브라우저는 Geolocation을 지원하지 않습니다.')
-      alert('이 브라우저는 위치 정보를 지원하지 않습니다.')
+    if (!window.kakao || !window.kakao.maps) {
+      console.error('Kakao Maps API가 로드되지 않았습니다.');
+      return;
     }
-  }, [])
+    const selectedAddress = getSelectedAddress();
+    if (selectedAddress) {
+      const geocoder = new kakao.maps.services.Geocoder();
+      geocoder.addressSearch(selectedAddress, (result, status) => {
+        if (status === kakao.maps.services.Status.OK) {
+          const newPosition = {
+            lat: parseFloat(result[0].y),
+            lng: parseFloat(result[0].x),
+          };
+          setUserPosition(newPosition);
+        } else {
+          console.error('주소 검색 실패:', status);
+        }
+      });
+    } else {
+      alert('주소 설정을 완료 해주세요!');
+    }
+  }, [getSelectedAddress]);
 
   // 음식점 데이터 가져오기
   useEffect(() => {
