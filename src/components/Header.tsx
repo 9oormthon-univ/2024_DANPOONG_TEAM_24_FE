@@ -1,18 +1,20 @@
+import { useEffect } from 'react'
 import Cn from '../utils/Cn'
 import logo from '../assets/common/Logo.svg'
 import logoText from '../assets/common/LogoText.svg'
 import arrow from '../assets/common/Arrow.svg'
-import user from '../assets/common/User.svg'
 import search from '../assets/common/Search.svg'
 import { useNavigate } from 'react-router-dom'
 import useAddressStore from '../store/useAddressStore'
 import { useSearch } from '../hooks/UseSearch'
 import useMapStore from '../store/useMapStore'
+import useMypage from '../hooks/MyPage/useMyPage'
 
 function Header() {
   const navigation = useNavigate()
   const { getSelectedAddress } = useAddressStore()
   const { setSelectedPlace } = useMapStore()
+  const { profileInfo, fetchGetProfile } = useMypage()
 
   // useSearch 커스텀 훅 사용
   const {
@@ -53,6 +55,10 @@ function Header() {
     })
   }
 
+  useEffect(() => {
+    fetchGetProfile()
+  }, [])
+
   return (
     <>
       <header className="mt-7 ml-[17px] mr-[19px] w-[390px]">
@@ -64,7 +70,7 @@ function Header() {
             <img src={logo} alt="logoIcon" className="w-9 h-9" />
             <img src={logoText} alt="logoText" className="w-[37.33px] h-7" />
           </div>
-          <div className="flex flex-row gap-[10px] items-center">
+          <div className="flex flex-row gap-[10px] items-center justify-center">
             <div className="flex gap-2 items-center">
               <div className="font-SB00 text-[16px] text-ellipsis line-clamp-1">
                 {getSelectedAddress() || '주소 설정하기'}
@@ -77,9 +83,9 @@ function Header() {
               />
             </div>
             <img
-              src={user}
-              alt="userIcon"
-              className="cursor-pointer"
+              src={profileInfo?.profileUrl}
+              alt="프로필 사진"
+              className="w-[28px] h-[28px] rounded-full cursor-pointer"
               onClick={() => navigation('/mypage')}
             />
           </div>
