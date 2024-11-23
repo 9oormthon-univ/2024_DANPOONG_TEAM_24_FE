@@ -1,50 +1,84 @@
-# React + TypeScript + Vite
+# ☀️ 결식아동을 따뜻한 한 끼로 이어주다.
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+**이음**은 매일 어떤 식사를 할지 고민하는 결식 아동들을 건강하고 따뜻한 한 끼로 이어주는 서비스 입니다.
+<br />
+<br />
+![alt text](image.png)
+<br />
+<br />
 
-Currently, two official plugins are available:
+# 👩🏻‍💻 Developer
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react/README.md) uses [Babel](https://babeljs.io/) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+<div align="center">
+  <table>
+    <thead>
+      <tr>
+        <th><center>FE</center></th>
+        <th><center>FE</center></th>
+        <th><center>FE</center></th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td align="center">박희진</td>
+        <td align="center">이지희</td>
+        <td align="center">김도윤</td>
+      </tr>
+      <tr>
+        <td align="center">경기대학교</td>
+        <td align="center">동국대학교</td>
+        <td align="center">세종대학교</td>
+      </tr>
+      <tr>
+        <td align="center">
+          <a href="https://github.com/gmlwlsdl">@gmlwlsdl</a>
+        </td>
+        <td align="center">
+          <a href="https://github.com/munjji">@munjji</a>
+        </td>
+        <td align="center">
+          <a href="https://github.com/doyun5565">@doyun5565</a>
+        </td>
+      </tr>
+      <tr>
+        <td align="center">
+          <a href="https://github.com/gmlwlsdl">
+            <img src="https://avatars.githubusercontent.com/gmlwlsdl" width="100px" alt="_" />
+          </a>
+        </td>
+        <td align="center">
+          <a href="https://github.com/munjji">
+            <img src="https://avatars.githubusercontent.com/munjji" width="100px" alt="_" />
+          </a>
+        </td>
+        <td align="center">
+          <a href="https://github.com/doyun5565">
+            <img src="https://avatars.githubusercontent.com/doyun5565" width="100px" alt="_" />
+          </a>
+        </td>
+      </tr>
+    </tbody>
+  </table>
+</div>
 
-## Expanding the ESLint configuration
+<br />
+<br />
 
-If you are developing a production application, we recommend updating the configuration to enable type aware lint rules:
+# 🛠️ Tech
 
-- Configure the top-level `parserOptions` property like this:
+| 역할 | 종류 |
 
-```js
-export default tseslint.config({
-  languageOptions: {
-    // other options...
-    parserOptions: {
-      project: ['./tsconfig.node.json', './tsconfig.app.json'],
-      tsconfigRootDir: import.meta.dirname,
-    },
-  },
-})
-```
 
-- Replace `tseslint.configs.recommended` to `tseslint.configs.recommendedTypeChecked` or `tseslint.configs.strictTypeChecked`
-- Optionally add `...tseslint.configs.stylisticTypeChecked`
-- Install [eslint-plugin-react](https://github.com/jsx-eslint/eslint-plugin-react) and update the config:
+[![Tech](https://skillicons.dev/icons?i=ts,react,tailwind,vercel)](https://skillicons.dev)
+<br />
+<br />
 
-```js
-// eslint.config.js
-import react from 'eslint-plugin-react'
+# ☀️ 서비스 소개
 
-export default tseslint.config({
-  // Set the react version
-  settings: { react: { version: '18.3' } },
-  plugins: {
-    // Add the react plugin
-    react,
-  },
-  rules: {
-    // other rules...
-    // Enable its recommended rules
-    ...react.configs.recommended.rules,
-    ...react.configs['jsx-runtime'].rules,
-  },
-})
-```
+![alt text](image-1.png)
+<br />
+<br />
+
+# ☀️ 기능 소개
+
+![alt text](image-2.png)

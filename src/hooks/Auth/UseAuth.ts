@@ -17,7 +17,7 @@ const useAuth = () => {
 
     if (code) {
       axios
-        .get('https://api.ideabank.me/oauth', {
+        .get(import.meta.env.VITE_APP_API_BASE_URL + '/oauth', {
           params: {
             code,
             redirect_uri: redirectUrl, // 현재 주소를 redirect_url로 설정

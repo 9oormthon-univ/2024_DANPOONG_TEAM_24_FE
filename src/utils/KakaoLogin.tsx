@@ -16,6 +16,7 @@ export default function SocialKakao() {
   const simulateLoginSuccess = () => {
     setTimeout(() => {
       localStorage.setItem('isLoggedIn', 'true') // 로컬 스토리지에 로그인 상태 저장
+      localStorage.setItem('accessToken', 'test') // 로컬 스토리지에 로그인 상태 저장
       setLoggedIn(true) // Zustand 상태 업데이트
       setShowSplash(false) // 스플래시 숨기기
     }, 2000)
