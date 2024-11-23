@@ -31,7 +31,7 @@ export default function AddressCard({
         }}
       />
       <div
-        className={`font-SB00 text-[16px] ${
+        className={`font-SB00 text-[14px] ${
           selected ? 'text-800' : 'text-400'
         }`}
       >
