@@ -186,6 +186,7 @@ const KaKaoMap = () => {
                   height: 24,
                 },
               }}
+              onClick={() => handleMarkerClick(selectedPlace.storeName)}
             />
           )}
 

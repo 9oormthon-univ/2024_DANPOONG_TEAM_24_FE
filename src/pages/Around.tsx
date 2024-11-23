@@ -26,7 +26,13 @@ function Around() {
   useEffect(() => {
     if (selectedPlace) {
       setSelectedPlace(selectedPlace)
-      setIsMapView(isMapView)
+      if (isMapView) {
+        return
+      } else {
+        console.log(selectedPlace)
+        window.open(selectedPlace.store_url)
+        setIsMapView(!isMapView)
+      }
     }
 
     return () => {
