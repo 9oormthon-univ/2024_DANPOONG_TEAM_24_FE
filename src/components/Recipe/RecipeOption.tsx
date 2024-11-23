@@ -14,6 +14,7 @@ interface RecipeOptionProps {
   onClick?: () => void
   isKeyword?: boolean
   isStore?: boolean
+  isReturn?: boolean
 }
 
 interface RecipeIcons {
@@ -32,6 +33,7 @@ export default function RecipeOption({
   content,
   onClick,
   isStore,
+  isReturn,
 }: RecipeOptionProps) {
   const getLogo = () => {
     switch (content) {
@@ -64,8 +66,11 @@ export default function RecipeOption({
       className={`flex items-center rounded-[20px] cursor-pointer px-[10px] py-2 ${
         isSelected
           ? 'bg-Main2 border border-Main'
-          : 'hover:bg-gray-50 border border-200'
+          : !isReturn
+          ? 'hover:bg-gray-50 border border-200'
+          : ''
       }
+      ${isReturn ? 'bg-white' : ''}
         `}
     >
       {isStore ? (
