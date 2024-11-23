@@ -14,7 +14,7 @@ export default function BackRecipeCarouselSlide({
           <img
             src={recipe.imageUrl}
             alt={recipe.recipeName}
-            className="w-[169px] h-[130px] cursor-pointer"
+            className="w-[169px] h-[130px] cursor-pointer rounded-t-lg"
           />
           <div className="py-[10px] w-[169px] h-[54px] flex flex-row gap-[70px] bg-100 rounded-b-lg border border-200">
             <div className="pl-[13px]">
