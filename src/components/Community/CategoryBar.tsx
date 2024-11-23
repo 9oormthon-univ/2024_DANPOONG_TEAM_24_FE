@@ -1,18 +1,31 @@
-import React, { useState } from 'react'
+import React, { useState, useEffect } from 'react'
 import CategoryButton from './CategoryButton'
 import { writeCategoryArr } from '../../utils/category'
 
 interface CategoryBarProps {
   onCategoryChange?: (category: string) => void
+  isShared?: boolean
 }
 
-const CategoryBar: React.FC<CategoryBarProps> = ({ onCategoryChange }) => {
+const CategoryBar: React.FC<CategoryBarProps> = ({
+  onCategoryChange,
+  isShared,
+}) => {
   const [activeCategory, setActiveCategory] = useState<string | null>(null)
+
+  useEffect(() => {
+    if (isShared) {
+      setActiveCategory('레시피 공유')
+      if (onCategoryChange) {
+        onCategoryChange(writeCategoryArr['레시피 공유'])
+      }
+    }
+  }, [isShared])
 
   const handleButtonClick = (category: string) => {
     setActiveCategory(category)
     if (onCategoryChange) {
-      onCategoryChange(writeCategoryArr[category]) // 선택한 카테고리의 value를 전달
+      onCategoryChange(writeCategoryArr[category])
     }
   }
 
