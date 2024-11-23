@@ -232,7 +232,9 @@ export default function Recipe() {
               className="flex w-[358px] h-[60px] justify-center items-center gap-[10px] fixed rounded-xl bottom-[112.5px] border border-200 text-black cursor-pointer"
             >
               <img src={AI} alt="AI" />
-              <p>AI로 레시피 만들기</p>
+              <p className="text-lg font-SB00 font-normal leading-140">
+                AI로 레시피 만들기
+              </p>
             </button>
           </div>
         </section>
