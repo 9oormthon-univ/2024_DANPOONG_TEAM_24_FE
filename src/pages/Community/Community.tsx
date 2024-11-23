@@ -1,5 +1,6 @@
 import React, { useEffect } from 'react'
 import { useLocation, useNavigate } from 'react-router-dom'
+import banner from '../../assets/community/community_banner.svg'
 import Header from '../../components/Header'
 import Footer from '../../components/Footer'
 import ScrollCategoryBar from '../../components/Community/ScrollCategoryBar'
@@ -44,7 +45,8 @@ const Community: React.FC = () => {
       <div className="relative w-screen md:w-[390px] flex flex-col items-center">
         <div className="flex flex-col w-full border-t border-t-200 mt-[10px] items-center">
           <ScrollCategoryBar onCategoryChange={handleCategoryChange} />
-          <div className="flex flex-col gap-[10px]">
+          <img src={banner} alt="커뮤니티 배너" className="mb-5" />
+          <div className="flex flex-col gap-4">
             {categoryCommentInfo?.data.length === 0 ? (
               <NoContents subjectKey="my_post" />
             ) : (
