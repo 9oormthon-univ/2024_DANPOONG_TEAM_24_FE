@@ -27,12 +27,14 @@ function Header() {
 
   // 장소 클릭 시 처리
   const handlePlaceClick = (place: any) => {
+    console.log('place:', place)
     const selectedPlace = {
       storeId: place.id,
       storeName: place.place_name,
       roadAddress: place.road_address_name,
       latitude: parseFloat(place.y),
       longitude: parseFloat(place.x),
+      store_url: place.place_url,
     }
 
     // 전역 상태 업데이트
