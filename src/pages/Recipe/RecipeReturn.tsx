@@ -1,4 +1,4 @@
-import { useEffect, useRef, useState } from 'react'
+import { useEffect, useState } from 'react'
 import { Link, useNavigate, useLocation } from 'react-router-dom'
 import arrow from '../../assets/common/Arrow.svg'
 import restart from '../../assets/recipe/Restart.svg'
@@ -14,7 +14,6 @@ import { parseRecipeItems } from '../../utils/SplitRecipeResponse'
 import RecipeOption from '../../components/Recipe/RecipeOption'
 
 export default function RecipeReturn() {
-  const textareaRef = useRef<HTMLDivElement>(null)
   const navigate = useNavigate()
   const location = useLocation()
 
@@ -39,6 +38,16 @@ export default function RecipeReturn() {
   const [items, setItems] = useState<RecipeItemProps[]>([])
 
   const [isToggled, setIsToggled] = useState(false)
+  const [retryCount, setRetryCount] = useState(0)
+  const MAX_RETRIES = 3
+
+  const requestNewRecipe = () => {
+    if (recipeOptions.length > 0) {
+      generateRecipe(recipeOptions, text)
+    } else {
+      console.error('Recipe options not provided')
+    }
+  }
 
   // 컴포넌트 마운트 시 레시피 요청 및 높이 조절
   useEffect(() => {
@@ -51,16 +60,7 @@ export default function RecipeReturn() {
 
   // recipeResponse 업데이트 시 높이 조절 및 콘솔 출력
   useEffect(() => {
-    if (recipeResponse && textareaRef.current) {
-      const textarea = textareaRef.current
-
-      // 높이 초기화
-      textarea.style.height = 'auto'
-
-      // 스크롤 높이로 조정
-      const newHeight = `${textarea.scrollHeight}px`
-      textarea.style.height = newHeight
-
+    if (recipeResponse) {
       console.log('레시피 : ', recipeResponse)
 
       // 파싱 작업
@@ -72,6 +72,25 @@ export default function RecipeReturn() {
       const recipeItems = parseRecipeItems(parsedSentences.recommendedItems)
       console.log('test:', parsedSentences.recommendedItems)
       setItems(recipeItems)
+      const hasInvalidItems = recipeItems.some(
+        (item) =>
+          item.name === '알 수 없는 아이템' ||
+          item.price === '가격 정보 없음' ||
+          item.description === '설명 없음'
+      )
+
+      if (hasInvalidItems && retryCount < MAX_RETRIES) {
+        console.log(
+          `레시피 다시 받아오는 중... (${retryCount + 1}/${MAX_RETRIES})`
+        )
+        setRetryCount((prev) => prev + 1)
+        requestNewRecipe()
+      } else if (hasInvalidItems) {
+        console.log('최대 시도 횟수에 도달했습니다.')
+      } else {
+        // 유효한 응답을 받았으면 재시도 카운트 리셋
+        setRetryCount(0)
+      }
 
       console.log('문장으로 분리된 데이터:', parsedSentences)
     }
@@ -155,7 +174,9 @@ export default function RecipeReturn() {
 
           <div className="flex px-[20px] py-[10px] gap-[10px] mb-5 w-[358px] bg-100 border border-200 rounded-[5px] font-M00 text-[14px] leading-[135%]">
             <img src={chef} alt="chef hat" className="self-start" />
-            <div ref={textareaRef}>{sentences?.recommendation}</div>
+            <div className="font-M00 text-[14px] leading-[135%] whitespace-pre-wrap break-words min-h-fit">
+              {sentences?.recommendation}
+            </div>
           </div>
 
           <div className="flex flex-col gap-[10px]">
