@@ -90,12 +90,14 @@ const KaKaoMap = () => {
             ? `/stores?options=score>=4&latitude=${userPosition.lat}&longitude=${userPosition.lng}` // 검증된 맛집 카테고리
             : `/stores/category/${selectedCategoryId}?latitude=${userPosition.lat}&longitude=${userPosition.lng}` // 나머지 카테고리
 
-        const response = await defaultAxios.get(url);
-        
+        const response = await defaultAxios.get(url)     
         if (response.data.code === 200 && !ignore) {
-          setPlaces(response.data.data); // ignore가 false일 때만 상태 업데이트
+          setPlaces(response.data.data) // ignore가 false일 때만 상태 업데이트
         } else if (!ignore) {
-          console.error('음식점 데이터를 가져오는데 실패했습니다:', response.data);
+          console.error(
+            '음식점 데이터를 가져오는데 실패했습니다:',
+            response.data
+          )
         }
       } catch (error) {
         if (!ignore) {
