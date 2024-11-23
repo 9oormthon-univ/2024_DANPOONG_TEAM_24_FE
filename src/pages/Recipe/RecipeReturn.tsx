@@ -1,16 +1,21 @@
 import { useEffect, useRef } from 'react'
-import { Link } from 'react-router-dom'
-import { useNavigate } from 'react-router-dom'
+import { Link, useNavigate, useLocation } from 'react-router-dom'
 import arrow from '../../assets/common/Arrow.svg'
 import restart from '../../assets/recipe/Restart.svg'
 import Cn from '../../utils/Cn'
+import { useGenerateRecipe } from '../../hooks/Recipe/UseGenerateRecipe'
 import useMypage from '../../hooks/MyPage/useMyPage'
 
 export default function RecipeReturn() {
   const textareaRef = useRef<HTMLTextAreaElement>(null)
   const navigate = useNavigate()
+  const location = useLocation()
+  const { profileInfo } = useMypage()
 
-  const { profileInfo, fetchGetProfile } = useMypage()
+  const { recipeResponse, loading, error, generateRecipe } = useGenerateRecipe()
+
+  // location.state에서 recipeOptions 가져오기
+  const recipeOptions = location.state?.recipeOptions || []
 
   // textarea 높이 자동 조절 함수
   const adjustHeight = () => {
@@ -21,16 +26,24 @@ export default function RecipeReturn() {
     }
   }
 
-  // 컴포넌트 마운트 시 높이 조절
+  // 컴포넌트 마운트 시 레시피 요청 및 높이 조절
+  useEffect(() => {
+    if (recipeOptions.length > 0) {
+      generateRecipe(recipeOptions)
+    } else {
+      console.error('Recipe options not provided')
+    }
+  }, [recipeOptions])
+
+  // textarea 높이 조절
   useEffect(() => {
     adjustHeight()
-    fetchGetProfile()
-  }, [])
+  }, [recipeResponse])
 
   const handleRestart = () => {
-    // 데이터 다시 받는 로직 추가해야 함
-    navigate(-1)
-    //navigate('/recipeReturn')
+    if (recipeOptions.length > 0) {
+      generateRecipe(recipeOptions)
+    }
   }
 
   const handleDone = () => {
@@ -54,32 +67,18 @@ export default function RecipeReturn() {
         </header>
         <section className="px-4">
           <div className="pt-[14px] font-R00 text-lg text-[#000000] mb-4">
-            {profileInfo?.name || '사용자'}님을 위한 레시피를 준비했어요!
+            {loading
+              ? '레시피를 불러오는 중입니다...'
+              : error
+              ? `오류 발생: ${error}`
+              : `${profileInfo?.name || '사용자'}` +
+                '님을 위한 레시피를 준비했어요!'}
           </div>
           <textarea
             ref={textareaRef}
             name="return"
             id="return recipe"
-            value={`GS25에서 9,000원으로 건강한 식사를 구성하기 위해 다음과 같은 제품들을 추천해요. 
-            
- 리얼프라이스 슬라이스 닭가슴살 갈릭맛 
-    가격: 약 2,300원 
-    특징: 하림에서 제조한 국내산 닭가슴살로, 부드럽고 촉촉한 식감이 특징입니다.
-    네이버 블로그 
-            
-샐러드를 만드는 사람들 치킨 앤 에그 콥 샐러드 
-    가격: 약 4,100원 
-    특징: 신선한 채소와 함께 치킨, 계란 등이 포함된 샐러드로, 한 끼 식사로 적합합니다. 
-    네이버 블로그 
-
-리얼프라이스 플레인 요거트 
-    가격: 약 1,500원 
-    특징: 무가당 플레인 요거트로, 샐러드 드레싱 대용이나 디저트로 활용할 수 있습니다. 
-총합: 약 7,900원 
-                
-추천 식사 구성: 
-    메인: '리얼프라이스 슬라이스 닭가슴살 갈릭맛'을 '샐러드를 만드는 사람들 치킨 앤 에그 콥 샐러드'에 추가하여 단백질을 보충하고 포만감을 높입니다.
-    사이드: '리얼프라이스 플레인 요거트'를 샐러드 드레싱으로 활용하거나 식사 후 디저트로 섭취합니다.`}
+            value={recipeResponse || ''}
             readOnly
             className={Cn(
               'px-[10px] py-[62.5px] mb-[130px] w-[358px] bg-100 border border-200 rounded-[5px]',

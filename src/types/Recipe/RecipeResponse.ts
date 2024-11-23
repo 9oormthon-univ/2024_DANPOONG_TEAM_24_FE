@@ -8,6 +8,9 @@ export interface recipeOptionResponse {
 }
 
 // gpt 응답
-export interface recipeResponse {
-  recipe_result: string
+export interface RecipeResponse {
+  code: number
+  data: {
+    recipeResult: string
+  }
 }
