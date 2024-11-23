@@ -6,6 +6,7 @@ import LoadingSplash from '../../pages/Splash/LoadingSplash'
 import defaultAxios from '../../api/defaultAxios'
 import useAddressStore from '../../store/useAddressStore'
 import defaultimg from '../../assets/around/DefaultImg.svg' 
+import NoContents from '../Community/NoContents'
 
 interface Place {
   storeId: string
@@ -223,7 +224,7 @@ const KakaoList: React.FC<KakaoListProps> = ({ isLoading, setIsLoading }) => {
               ))}
             </ul>
           ) : (
-            <p className="text-center">표시할 음식점이 없습니다.</p>
+            <NoContents subjectKey="store" />
           )}
         </>
       )}

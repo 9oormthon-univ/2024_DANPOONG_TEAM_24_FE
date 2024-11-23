@@ -26,7 +26,7 @@ const KaKaoMap = () => {
       console.error('Kakao Maps API가 로드되지 않았습니다.');
       return;
     }
-  
+
     const places = new kakao.maps.services.Places();
     // 장소 검색 요청
     places.keywordSearch(placeName, (result, status) => {
@@ -40,7 +40,7 @@ const KaKaoMap = () => {
       }
     });
   };
-  
+
   useEffect(() => {
     const selectedAddress = getSelectedAddress()
     if (selectedAddress) {
@@ -67,27 +67,35 @@ const KaKaoMap = () => {
 
   // 음식점 데이터 가져오기
   useEffect(() => {
+    let ignore = false;
     const fetchStores = async () => {
       try {
         const url =
           selectedCategoryId === 3
-            ? `/stores?latitude=${userPosition.lat}&longitude=${userPosition.lng}` // 전체 카테고리
+            ? `/stores?latitude=${userPosition.lat}&longitude=${userPosition.lng}`
             : selectedCategoryId === 11
-              ? `/stores?options=score>=4&latitude=${userPosition.lat}&longitude=${userPosition.lng}` // 검증된 맛집 카테고리
-              : `/stores/category/${selectedCategoryId}?latitude=${userPosition.lat}&longitude=${userPosition.lng}` // 나머지 카테고리
+              ? `/stores?options=score>=4&latitude=${userPosition.lat}&longitude=${userPosition.lng}`
+              : `/stores/category/${selectedCategoryId}?latitude=${userPosition.lat}&longitude=${userPosition.lng}`;
 
-        const response = await defaultAxios.get(url)
-        if (response.data.code === 200) {
-          setPlaces(response.data.data)
-        } else {
-          console.error('음식점 데이터를 가져오는데 실패했습니다:', response.data)
+        const response = await defaultAxios.get(url);
+        
+        if (response.data.code === 200 && !ignore) {
+          setPlaces(response.data.data); // ignore가 false일 때만 상태 업데이트
+        } else if (!ignore) {
+          console.error('음식점 데이터를 가져오는데 실패했습니다:', response.data);
         }
       } catch (error) {
-        console.error('음식점 데이터를 가져오는 중 에러 발생:', error)
+        if (!ignore) {
+          console.error('음식점 데이터를 가져오는 중 에러 발생:', error);
+        }
       }
-    }
+    };
 
     fetchStores();
+
+    return () => {
+      ignore = true;
+    };
   }, [userPosition, selectedCategoryId, selectedFilter, setPlaces]);
 
   // 24/11/20 희진 추가
