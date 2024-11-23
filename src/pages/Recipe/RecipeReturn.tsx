@@ -79,7 +79,7 @@ export default function RecipeReturn() {
     navigate('/community/write', {
       state: {
         title: sentences?.recommendation || '',
-        contents: sentences?.recommendedItems || [],
+        contents: (sentences?.recommendedItems || []).join('\n'),
       },
     })
   }
@@ -133,17 +133,13 @@ export default function RecipeReturn() {
             <div>{recipeResponse?.data.selectedCost}</div>
           </div>
 
-          <div className="pt-[14px] pb-[34px] fixed flex bottom-0 gap-5 bg-white">
-            <button
-              onClick={handleRestart}
-              className="flex items-center gap-[px] px-[27px] py-[18px] bg-200 border border-200 rounded-xl"
-            >
+          <div className="pt-[14px] pb-[34px] fixed flex bottom-0 gap-[10px] bg-white">
+            <button onClick={handleRestart}>
               <img src={restart} alt="restart" />
-              <div className="font-SB00 text-lg">초기화</div>
             </button>
             <button
               onClick={handleDone}
-              className="flex w-[211.29px] py-[18px] justify-center bg-Main rounded-xl"
+              className="flex px-[36.5px] py-[17.5px] justify-center bg-Main rounded-xl"
             >
               <div className="font-SB00 text-lg text-[#000000] text-nowrap">
                 완료하기
@@ -151,7 +147,7 @@ export default function RecipeReturn() {
             </button>
             <button
               onClick={handlePost}
-              className="flex w-[211.29px] py-[18px] justify-center bg-Main rounded-xl"
+              className="flex px-[11px] py-[17.5px] justify-center bg-200 rounded-xl"
             >
               <div className="font-SB00 text-lg text-[#000000] text-nowrap">
                 게시판 공유하기
