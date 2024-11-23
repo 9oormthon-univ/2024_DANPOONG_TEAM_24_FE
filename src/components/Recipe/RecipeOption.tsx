@@ -1,6 +1,6 @@
 import gs25 from '../../assets/recipe/GS25.svg'
 import cu from '../../assets/recipe/CU.svg'
-import sevenEleven from '../../assets/recipe/7Eleven.svg'
+import sevenEleven from '../../assets/recipe/SEVENELEVEN.svg'
 
 interface RecipeOptionProps {
   isSelected?: boolean
