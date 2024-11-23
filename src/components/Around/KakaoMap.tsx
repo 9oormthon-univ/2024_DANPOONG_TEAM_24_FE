@@ -21,6 +21,26 @@ const KaKaoMap = () => {
     useListFilterOptionStore()
   const filterContainerRef = useRef<HTMLDivElement | null>(null) // 필터 버튼 컨테이너를 참조하기 위한 useRef
 
+  const handleMarkerClick = (placeName: string) => {
+    if (!window.kakao || !window.kakao.maps) {
+      console.error('Kakao Maps API가 로드되지 않았습니다.');
+      return;
+    }
+  
+    const places = new kakao.maps.services.Places();
+    // 장소 검색 요청
+    places.keywordSearch(placeName, (result, status) => {
+      if (status === kakao.maps.services.Status.OK) {
+        const placeId = result[0].id; // 검색 결과의 첫 번째 장소 ID
+        const placeUrl = `https://place.map.kakao.com/${placeId}`;
+        window.open(placeUrl, '_blank', 'noopener,noreferrer'); // 카카오맵 상세 페이지로 이동
+      } else {
+        console.error('카카오맵 장소 검색 실패:', status);
+        alert('해당 장소의 상세 정보를 찾을 수 없습니다.');
+      }
+    });
+  };
+  
   useEffect(() => {
     const selectedAddress = getSelectedAddress()
     if (selectedAddress) {
@@ -127,6 +147,7 @@ const KaKaoMap = () => {
                     height: 24,
                   }
                 }}
+                onClick={() => handleMarkerClick(place.storeName)}
               />
             );
           })}
