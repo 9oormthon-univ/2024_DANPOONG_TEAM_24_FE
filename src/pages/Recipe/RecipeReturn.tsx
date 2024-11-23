@@ -79,7 +79,11 @@ export default function RecipeReturn() {
           item.description === '설명 없음'
       )
 
-      if (hasInvalidItems && retryCount < MAX_RETRIES) {
+      if (
+        hasInvalidItems &&
+        retryCount < MAX_RETRIES &&
+        parsedSentences.recommendedItems.length === 0
+      ) {
         console.log(
           `레시피 다시 받아오는 중... (${retryCount + 1}/${MAX_RETRIES})`
         )
@@ -155,24 +159,27 @@ export default function RecipeReturn() {
           </div>
           {/* 요소 토글 */}
           {isToggled && ( // isToggled가 true일 때만 렌더링
-            <div className="w-[358px] bg-100 rounded-b-xl -mt-[40px] pb-3 z-0 mb-[30px]">
+            <div className="w-[358px] bg-100 border border-200 rounded-b-xl -mt-[40px] pb-3 z-0 mb-[30px]">
               <div className="px-5 pt-5 w-full inline-flex flex-wrap gap-[10px]">
                 <RecipeOption
                   content={recipeResponse?.data.selectedCost || ''}
+                  isReturn={true}
                 />
                 <RecipeOption
                   content={recipeResponse?.data.selectedConvenienceStore || ''}
                   isStore={true}
+                  isReturn={true}
                 />
                 <RecipeOption
                   content={recipeResponse?.data.koreanKeyword || ''}
                   isKeyword={true}
+                  isReturn={true}
                 />
               </div>
             </div>
           )}
 
-          <div className="flex px-[20px] py-[10px] gap-[10px] mb-5 w-[358px] bg-100 border border-200 rounded-[5px] font-M00 text-[14px] leading-[135%]">
+          <div className="flex px-[20px] py-[10px] gap-[10px] mb-5 w-[358px] bg-100  rounded-[5px] font-M00 text-[14px] leading-[135%]">
             <img src={chef} alt="chef hat" className="self-start" />
             <div className="font-M00 text-[14px] leading-[135%] whitespace-pre-wrap break-words min-h-fit">
               {sentences?.recommendation}
