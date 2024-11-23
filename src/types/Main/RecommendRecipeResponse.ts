@@ -3,8 +3,8 @@ export interface recommendRecipeResponse {
   recipeId: number
   recipeName: string
   description?: string
-  image_url: string
-  video_url: string
+  imageUrl: string
+  videoUrl: string
 }
 
 // 추천 레시피 리스트 응답

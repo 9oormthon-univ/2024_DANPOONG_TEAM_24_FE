@@ -9,10 +9,10 @@ export default function BackRecipeCarouselSlide({
 }: BackRecipeCarouselSlideProps) {
   return (
     <>
-      <Link to={recipe.video_url}>
+      <Link to={recipe.videoUrl}>
         <div className={'mr-[10px]'}>
           <img
-            src={recipe.image_url}
+            src={recipe.imageUrl}
             alt={recipe.recipeName}
             className="w-[169px] h-[130px] cursor-pointer"
           />
