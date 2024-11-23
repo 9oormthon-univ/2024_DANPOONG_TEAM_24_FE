@@ -11,7 +11,7 @@ export default function RecipeReturn() {
   const textareaRef = useRef<HTMLTextAreaElement>(null)
   const navigate = useNavigate()
   const location = useLocation()
-  const { profileInfo } = useMypage()
+  const { profileInfo, fetchGetProfile } = useMypage()
 
   const { recipeResponse, loading, generateRecipe } = useGenerateRecipe()
 
@@ -38,6 +38,7 @@ export default function RecipeReturn() {
 
   // textarea 높이 조절
   useEffect(() => {
+    fetchGetProfile()
     adjustHeight()
   }, [recipeResponse])
 
