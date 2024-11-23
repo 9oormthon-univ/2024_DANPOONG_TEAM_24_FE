@@ -66,11 +66,11 @@ function MyPage() {
         </div>
         <div className="border-t border-200 bg-Main w-full h-[212px] flex flex-col items-center justify-center">
           <img
-            src={profileInfo?.data.profileUrl}
+            src={profileInfo?.profileUrl}
             alt="프로필 사진"
             className="w-[96px] h-[96px] rounded-full mb-[16px]"
           />
-          <p className="font-SB00 mb-3">{profileInfo?.data.name}</p>
+          <p className="font-SB00 mb-3">{profileInfo?.name}</p>
         </div>
         <p className="w-full px-4 pt-6 pb-2 font-SB00">활동내역</p>
         <div className="p-3 grid grid-cols-3 gap-3 h-36">
