@@ -59,6 +59,7 @@ export default function RecipeReturn() {
       setSentences(parsedSentences) // 상태로 업데이트
 
       const recipeItems = parseRecipeItems(parsedSentences.recommendedItems)
+      console.log('test:', parsedSentences.recommendedItems)
       setItems(recipeItems)
       console.log('문장으로 분리된 데이터:', parsedSentences)
     }
@@ -72,6 +73,15 @@ export default function RecipeReturn() {
 
   const handleDone = () => {
     navigate('/')
+  }
+
+  const handlePost = () => {
+    navigate('/community/write', {
+      state: {
+        title: sentences?.recommendation || '',
+        contents: sentences?.recommendedItems || [],
+      },
+    })
   }
 
   if (loading) {
@@ -137,6 +147,14 @@ export default function RecipeReturn() {
             >
               <div className="font-SB00 text-lg text-[#000000] text-nowrap">
                 완료하기
+              </div>
+            </button>
+            <button
+              onClick={handlePost}
+              className="flex w-[211.29px] py-[18px] justify-center bg-Main rounded-xl"
+            >
+              <div className="font-SB00 text-lg text-[#000000] text-nowrap">
+                게시판 공유하기
               </div>
             </button>
           </div>
