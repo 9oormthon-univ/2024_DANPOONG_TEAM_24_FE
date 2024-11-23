@@ -4,7 +4,7 @@ import { useNavigate } from 'react-router-dom'
 
 export default function AuthLoading() {
   const navigate = useNavigate()
-  const back = 'https://ideabank.me:3000/'
+  const back = import.meta.env.VITE_APP_API_BASE_URL
 
   useEffect(() => {
     // 현재 url에서 인가코드 추출

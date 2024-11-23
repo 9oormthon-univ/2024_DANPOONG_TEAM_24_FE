@@ -4,10 +4,13 @@ import { useNavigate } from 'react-router-dom'
 import arrow from '../../assets/common/Arrow.svg'
 import restart from '../../assets/recipe/Restart.svg'
 import Cn from '../../utils/Cn'
+import useMypage from '../../hooks/MyPage/useMyPage'
 
 export default function RecipeReturn() {
   const textareaRef = useRef<HTMLTextAreaElement>(null)
   const navigate = useNavigate()
+
+  const { profileInfo, fetchGetProfile } = useMypage()
 
   // textarea 높이 자동 조절 함수
   const adjustHeight = () => {
@@ -21,11 +24,13 @@ export default function RecipeReturn() {
   // 컴포넌트 마운트 시 높이 조절
   useEffect(() => {
     adjustHeight()
+    fetchGetProfile()
   }, [])
 
   const handleRestart = () => {
     // 데이터 다시 받는 로직 추가해야 함
-    navigate('/recipeReturn')
+    navigate(-1)
+    //navigate('/recipeReturn')
   }
 
   const handleDone = () => {
@@ -49,7 +54,7 @@ export default function RecipeReturn() {
         </header>
         <section className="px-4">
           <div className="pt-[14px] font-R00 text-lg text-[#000000] mb-4">
-            00님을 위한 레시피를 준비했어요!
+            {profileInfo?.name || '사용자'}님을 위한 레시피를 준비했어요!
           </div>
           <textarea
             ref={textareaRef}
@@ -77,14 +82,14 @@ export default function RecipeReturn() {
     사이드: '리얼프라이스 플레인 요거트'를 샐러드 드레싱으로 활용하거나 식사 후 디저트로 섭취합니다.`}
             readOnly
             className={Cn(
-              'px-[10px] py-[20px] mb-[130px] w-[358px] bg-100 border border-200 rounded-[5px]',
+              'px-[10px] py-[62.5px] mb-[130px] w-[358px] bg-100 border border-200 rounded-[5px]',
               'resize-none font-M00 text-[14px] leading-[135%] focus:outline-none'
             )}
           />
           <div className="pt-[14px] pb-[34px] fixed flex bottom-0 gap-5 bg-white">
             <button
               onClick={handleRestart}
-              className="flex items-center gap-[px] px-[27px] py-[18px] border border-200 rounded-xl"
+              className="flex items-center gap-[px] px-[27px] py-[18px] bg-200 border border-200 rounded-xl"
             >
               <img src={restart} alt="restart" />
               <div className="font-SB00 text-lg">초기화</div>
