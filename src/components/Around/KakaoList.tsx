@@ -3,8 +3,6 @@ import { useNavigate } from 'react-router-dom'
 import FilterButton from './FilterButton'
 import Filter from './Filter'
 import useListFilterOptionStore from '../../store/UseListFilterOptionStore'
-//import LoadingSplash from '../../pages/Splash/LoadingSplash'
-import Loading from './Loading'
 import defaultAxios from '../../api/defaultAxios'
 import useAddressStore from '../../store/useAddressStore'
 import defaultimg from '../../assets/around/DefaultImg.svg'
@@ -22,11 +20,10 @@ interface Place {
 }
 
 interface KakaoListProps {
-  isLoading: boolean
   setIsLoading: (value: boolean) => void
 }
 
-const KakaoList: React.FC<KakaoListProps> = ({ isLoading, setIsLoading }) => {
+const KakaoList: React.FC<KakaoListProps> = ({ setIsLoading }) => {
   const [userPosition, setUserPosition] = useState<{
     lat: number
     lng: number
@@ -204,9 +201,7 @@ const KakaoList: React.FC<KakaoListProps> = ({ isLoading, setIsLoading }) => {
           ))}
         </div>
       </div>
-      {isLoading ? (
-        <Loading />
-      ) : places.length > 0 ? (
+      {places.length > 0 ? (
         <ul className="space-y-2 overflow-visible">
           {places.map((place) => (
             <li

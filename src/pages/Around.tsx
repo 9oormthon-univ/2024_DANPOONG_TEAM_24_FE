@@ -47,11 +47,7 @@ function Around() {
       <Header />
       <section className="w-full mt-[7.49px] flex flex-col items-center">
         <div className="w-full max-w-[390px] mx-auto">
-          {isMapView ? (
-            <KakaoMap />
-          ) : (
-            <KakaoList isLoading={isLoading} setIsLoading={setIsLoading} />
-          )}
+          {isMapView ? <KakaoMap /> : <KakaoList setIsLoading={setIsLoading} />}
         </div>
         {!isLoading && ( // 로딩 중일 때 버튼 숨김
           <div className="fixed bottom-40 z-50">
