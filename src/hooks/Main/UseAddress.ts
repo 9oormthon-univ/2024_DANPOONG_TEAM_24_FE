@@ -169,33 +169,49 @@ export const useAddress = () => {
       return
     }
 
-    setIsLoading(true)
-    navigator.geolocation.getCurrentPosition(
-      async (position) => {
-        const latitude = position.coords.latitude
-        const longitude = position.coords.longitude
+    setIsLoading(true) // 로딩 상태를 먼저 true로 설정
 
-        const roadAddressName = await getRoadAddressName(latitude, longitude)
+    try {
+      await new Promise<void>((resolve, reject) => {
+        navigator.geolocation.getCurrentPosition(
+          async (position) => {
+            const latitude = position.coords.latitude
+            const longitude = position.coords.longitude
 
-        // 주소 기반 중복 체크
-        const isDuplicate = addresses.some(
-          (item) => item.address === roadAddressName
+            const roadAddressName = await getRoadAddressName(
+              latitude,
+              longitude
+            )
+
+            // 주소 기반 중복 체크
+            const isDuplicate = addresses.some(
+              (item) => item.address === roadAddressName
+            )
+
+            if (isDuplicate) {
+              alert('현재 위치와 동일한 주소가 이미 저장되어 있어요!')
+              resolve()
+              return
+            }
+
+            await addNewLocation(latitude, longitude)
+            resolve()
+          },
+          (error) => {
+            console.error(error.message)
+            setErrorMessage(
+              '위치를 가져오는 데 실패했습니다. 권한을 확인하세요.'
+            )
+            reject(error)
+          },
+          { enableHighAccuracy: true }
         )
-
-        if (isDuplicate) {
-          alert('현재 위치와 동일한 주소가 이미 저장되어 있어요!')
-          return
-        }
-
-        await addNewLocation(latitude, longitude)
-      },
-      (error) => {
-        console.error(error.message)
-        setErrorMessage('위치를 가져오는 데 실패했습니다. 권한을 확인하세요.')
-      },
-      { enableHighAccuracy: true }
-    )
-    setIsLoading(false)
+      })
+    } catch (error) {
+      // 에러 처리
+    } finally {
+      setIsLoading(false)
+    }
   }
 
   return {
