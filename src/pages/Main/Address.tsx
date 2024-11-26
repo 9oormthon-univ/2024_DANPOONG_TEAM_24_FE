@@ -40,42 +40,6 @@ export default function Address() {
     fetchAddressList()
   }, [])
 
-  // 카카오 장소 검색 함수 (복합 검색)
-  const searchPlaces = () => {
-    // 카카오 지도 API가 로드되지 않았을 경우 early return
-    if (!window.kakao || !window.kakao.maps || !window.kakao.maps.services) {
-      console.error('Kakao maps API not loaded')
-      return
-    }
-
-    const places = new window.kakao.maps.services.Places()
-
-    // 키워드 검색, 지번 주소, 도로명 주소 모두 검색 가능
-    places.keywordSearch(
-      searchTerm,
-      (result: Place[], status: string, pagination: any) => {
-        if (status === window.kakao.maps.services.Status.OK) {
-          // 도로명 주소와 지번 주소 모두 보여주기
-          const formattedResults = result.map((place) => ({
-            ...place,
-            display_address: place.road_address_name || place.address_name,
-          }))
-
-          setSearchResults(formattedResults)
-          setShowResults(true)
-        } else {
-          setSearchResults([])
-          setShowResults(false)
-        }
-      },
-      {
-        size: 5, // 최대 5개 결과만 가져오기
-        // 검색 옵션: 전체 영역에서 검색
-        location: new window.kakao.maps.LatLng(37.566826, 126.9786567), // 서울 중심 좌표
-      }
-    )
-  }
-
   // 검색어 정제 함수 추가
   const sanitizeSearchTerm = (term: string) => {
     // 특수 문자 제거, 여러 공백 제거, 양쪽 공백 트림
