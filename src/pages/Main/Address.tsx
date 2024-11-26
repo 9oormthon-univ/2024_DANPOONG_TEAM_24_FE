@@ -1,3 +1,4 @@
+import { useEffect } from 'react'
 import { Link } from 'react-router-dom'
 import Cn from '../../utils/Cn'
 import search from '../../assets/common/Search.svg'
@@ -9,7 +10,12 @@ import LoadingSplash from '../Splash/LoadingSplash'
 import NoContents from '../../components/Community/NoContents'
 
 export default function Address() {
-  const { addresses, isLoading, handleSetCurrentLocation } = useAddress()
+  const { addresses, isLoading, handleSetCurrentLocation, fetchAddressList } =
+    useAddress()
+
+  useEffect(() => {
+    fetchAddressList()
+  }, [])
 
   return (
     <>

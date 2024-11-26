@@ -62,14 +62,16 @@ function Header() {
   }, [])
 
   useEffect(() => {
-    fetchAddressList()
-    if (addresses.length > 0) {
-      const firstAddress = addresses[0]
-      if (!getSelectedAddress()) {
-        selectAddress(firstAddress.id) // 첫 번째 주소를 선택
+    const initializeAddresses = async () => {
+      await fetchAddressList() // 주소 리스트 가져오기
+      const firstAddress = addresses[0] // 첫 번째 주소 가져오기
+      if (!getSelectedAddress() && firstAddress) {
+        selectAddress(firstAddress.id) // 첫 번째 주소 선택
       }
     }
-  }, [addresses, selectAddress, getSelectedAddress])
+
+    initializeAddresses()
+  }, []) // 의존성 배열을 비워서 처음에 한 번만 실행
 
   const selectedAddress = getSelectedAddress()
 
