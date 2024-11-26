@@ -87,7 +87,10 @@ function Header() {
             <img src={logoText} alt="logoText" className="w-[37.33px] h-7" />
           </div>
           <div className="flex flex-row gap-[10px] items-center justify-center">
-            <div className="flex gap-2 items-center">
+            <div
+              onClick={() => navigation('/address')}
+              className="flex gap-2 items-center"
+            >
               <div className="font-SB00 text-[16px] text-ellipsis line-clamp-1">
                 {selectedAddress || '주소 설정하기'}
               </div>
@@ -95,7 +98,6 @@ function Header() {
                 src={arrow}
                 alt="Arrow"
                 className="w-4 h-[6px] cursor-pointer"
-                onClick={() => navigation('/address')}
               />
             </div>
             <img
