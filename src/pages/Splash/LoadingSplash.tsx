@@ -5,8 +5,8 @@ const LoadingSplash: React.FC = () => {
   return (
     <div className="flex flex-col bg-white items-center h-screen">
       <div className="flex flex-col items-center my-[218px]">
-        <div className="flex flex-col items-center gap-2">
-          <p className="font-B00 text-[26px] text-center text-800 leading-140 font-medium">
+        <div className="flex flex-col items-center gap-1">
+          <p className="font-B00 text-[22px] text-center text-800 leading-140 font-normal">
             잠시만 기다려주세요
           </p>
           <p className="font-M00 text-base text-center text-400 leading-135 font-normal">
