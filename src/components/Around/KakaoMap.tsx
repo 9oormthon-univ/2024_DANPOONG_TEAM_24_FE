@@ -227,7 +227,7 @@ const KaKaoMap = () => {
           ref={filterContainerRef}
           className="[&::-webkit-scrollbar]:hidden absolute top-2 left-0 right-0 overflow-x-auto whitespace-nowrap z-10"
         >
-          <div className="inline-flex space-x-2">
+          <div className="px-4 inline-flex space-x-2">
             {Filter.map((filter) => (
               <FilterButton
                 key={filter.id}

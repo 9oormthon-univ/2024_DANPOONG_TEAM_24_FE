@@ -45,7 +45,7 @@ function Around() {
   return (
     <div className="flex flex-col items-center">
       <Header />
-      <section className="w-full mt-[7.49px] flex flex-col items-center">
+      <section className="w-[390px] mt-[7.49px] flex flex-col items-center bg-100">
         <div className="w-full max-w-[390px] mx-auto">
           {isMapView ? <KakaoMap /> : <KakaoList setIsLoading={setIsLoading} />}
         </div>
