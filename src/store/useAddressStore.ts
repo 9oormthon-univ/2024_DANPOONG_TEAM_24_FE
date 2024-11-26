@@ -39,28 +39,16 @@ const useAddressStore = create<AddressStore>()(
       // 외부 데이터를 받아 상태 업데이트
       setAddresses: (addresses) => {
         set((state) => {
-          // 현재 선택된 주소 찾기
-          const currentSelectedAddress = state.addresses.find(
-            (addr) => addr.selected
-          )
+          // 이미 선택된 데이터가 있는지 확인
+          const currentSelected = state.addresses.find((addr) => addr.selected)
 
-          // 새로운 주소 목록에 선택된 주소 상태 적용
-          const updatedAddresses = addresses.map((newAddr) => {
-            // 만약 현재 선택된 주소와 ID가 같다면 selected 상태 유지
-            if (
-              currentSelectedAddress &&
-              currentSelectedAddress.id === newAddr.id
-            ) {
-              return {
-                ...newAddr,
-                selected: true,
-              }
-            }
-            return {
-              ...newAddr,
-              selected: false, // 다른 모든 주소는 선택 해제
-            }
-          })
+          // 새로운 데이터에 기존 선택 상태 적용
+          const updatedAddresses = addresses.map((addr, index) => ({
+            ...addr,
+            selected: currentSelected
+              ? currentSelected.id === addr.id
+              : index === 0, // 없으면 첫 번째 데이터 선택
+          }))
 
           return { addresses: updatedAddresses }
         })
@@ -86,24 +74,13 @@ const useAddressStore = create<AddressStore>()(
         priority = 0
       ) => {
         set((state) => {
-          // 좌표 중복 확인
-          const isDuplicate = state.addresses.some(
-            (addr) =>
-              addr.coordinates?.latitude === coordinates?.latitude &&
-              addr.coordinates?.longitude === coordinates?.longitude
-          )
-          if (isDuplicate) {
-            console.warn('이미 동일한 좌표의 주소가 존재합니다.')
-            return state
-          }
-
           return {
             addresses: [
               ...state.addresses,
               {
                 id,
                 address,
-                selected: false, // 새 주소는 기본적으로 선택되지 않음
+                selected: true,
                 isCurrentLocation,
                 coordinates,
                 priority,

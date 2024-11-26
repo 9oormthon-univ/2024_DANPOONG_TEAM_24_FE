@@ -1,8 +1,5 @@
 import { useState, useEffect } from 'react'
-import {
-  addressResponse,
-  addressListResponse,
-} from '../../types/Main/AddressResponse'
+import { addressListResponse } from '../../types/Main/AddressResponse'
 import defaultAxios from '../../api/defaultAxios'
 import useAddressStore from '../../store/useAddressStore'
 import { Address } from '../../store/useAddressStore'
@@ -14,45 +11,64 @@ declare global {
 }
 
 export const useAddress = () => {
-  const { addresses, addAddress, setAddresses } = useAddressStore()
+  const { addresses, setAddresses } = useAddressStore()
 
   const [isLoading, setIsLoading] = useState(false)
   const [errorMessage, setErrorMessage] = useState('')
-  const [addressList, setAddressList] = useState<
-    addressListResponse | undefined
-  >(undefined)
-  const [address, setAddress] = useState('')
 
+  // useEffect 제거하고 명시적으로 초기 로드
   useEffect(() => {
-    fetchAddressList()
-  }, [setAddresses])
+    // 컴포넌트 마운트 시 한 번만 주소 리스트 불러오기
+    const loadInitialAddresses = async () => {
+      setIsLoading(true) // 비동기 작업 시작
+      await fetchAddressList()
+      setIsLoading(false) // 비동기 작업 종료
+    }
+    loadInitialAddresses()
+  }, []) // 의존성 배열 비움
 
-  // 주소 리스트 받아오기
+  // 도로명 주소로 변환
+  const getRoadAddressName = async (latitude: number, longitude: number) => {
+    const geocoder = new window.kakao.maps.services.Geocoder()
+    let roadAddressName = ''
+
+    await new Promise<void>((resolve) => {
+      geocoder.coord2Address(
+        longitude,
+        latitude,
+        (result: any, status: any) => {
+          if (status === window.kakao.maps.services.Status.OK) {
+            roadAddressName =
+              result[0]?.road_address?.address_name ||
+              result[0]?.address?.address_name ||
+              ''
+          }
+          resolve()
+        }
+      )
+    })
+
+    return roadAddressName
+  }
+
+  // 주소 리스트 가져오기
   const fetchAddressList = async () => {
+    setIsLoading(true)
     try {
-      setIsLoading(true)
       const response = await defaultAxios.get<addressListResponse>(
         '/user/location'
       )
-      console.log(response.data)
-      setAddressList(response.data)
-
       const transformedAddresses = await mapAddressResponseToAddress(
         response.data
       )
 
-      // 기존 선택된 주소의 ID 찾기
-      const currentSelectedAddressId = addresses.find(
-        (addr) => addr.selected
-      )?.id
+      // 첫 번째 데이터를 기본으로 selected 상태로 설정
+      if (transformedAddresses.length > 0) {
+        transformedAddresses[0].selected = true
+      }
 
-      // 새로운 주소 목록에서 기존 선택 상태 복원
-      const addressesWithSelection = transformedAddresses.map((addr) => ({
-        ...addr,
-        selected: addr.id === currentSelectedAddressId,
-      }))
-
-      useAddressStore.getState().setAddresses(addressesWithSelection)
+      // 주소 설정
+      setAddresses(transformedAddresses)
     } catch (error) {
       setErrorMessage('주소 리스트를 가져오는 데 실패했습니다.')
     } finally {
@@ -60,48 +76,19 @@ export const useAddress = () => {
     }
   }
 
+  // API 응답을 상태 데이터로 변환
   const mapAddressResponseToAddress = async (
     response: addressListResponse
   ): Promise<Address[]> => {
-    const geocoder = new window.kakao.maps.services.Geocoder()
-
-    const addresses = await Promise.all(
+    return await Promise.all(
       response.data.map(async (item) => {
-        // 이미 roadAddressName이 존재하면 변환 작업 생략
-        if (item.roadAddressName) {
-          return {
-            id: item.id,
-            address: item.roadAddressName,
-            coordinates: {
-              latitude: item.latitude,
-              longitude: item.longitude,
-            },
-            priority: item.priority,
-            selected: false,
-          }
-        }
-
-        // 도로명 주소 변환 작업
-        let roadAddressName = ''
-        await new Promise<void>((resolve) => {
-          geocoder.coord2Address(
-            item.longitude,
-            item.latitude,
-            (result: any, status: any) => {
-              if (status === window.kakao.maps.services.Status.OK) {
-                roadAddressName =
-                  result[0]?.road_address?.address_name ||
-                  result[0]?.address?.address_name ||
-                  ''
-              }
-              resolve()
-            }
-          )
-        })
+        const address = item.roadAddressName
+          ? item.roadAddressName
+          : await getRoadAddressName(item.latitude, item.longitude)
 
         return {
           id: item.id,
-          address: roadAddressName || `Address-${item.id}`,
+          address,
           coordinates: {
             latitude: item.latitude,
             longitude: item.longitude,
@@ -111,53 +98,37 @@ export const useAddress = () => {
         }
       })
     )
-
-    return addresses
   }
 
-  // 새로운 주소 추가하기
+  // 새 주소 추가 로직 개선
   const addNewLocation = async (latitude: number, longitude: number) => {
+    setIsLoading(true)
     try {
-      setIsLoading(true)
-      await defaultAxios.post('/user/location', { latitude, longitude })
-      const geocoder = new window.kakao.maps.services.Geocoder()
-
-      let roadAddressName = ''
-      await new Promise<void>((resolve) => {
-        geocoder.coord2Address(
-          longitude,
-          latitude,
-          (result: any, status: any) => {
-            if (status === window.kakao.maps.services.Status.OK) {
-              roadAddressName =
-                result[0]?.road_address?.address_name ||
-                result[0]?.address?.address_name ||
-                ''
-            }
-            resolve()
-          }
-        )
-      })
-
-      const maxId =
-        addresses.length > 0 ? Math.max(...addresses.map((a) => a.id)) : 0
-      const newAddress = {
-        id: maxId + 1,
-        address: roadAddressName || `Address-${maxId + 1}`,
-        coordinates: { latitude, longitude },
-        priority: addresses.length,
-        selected: false,
+      const roadAddressName = await getRoadAddressName(latitude, longitude)
+      if (!roadAddressName) {
+        alert('주소를 가져올 수 없습니다.')
+        return
       }
 
-      useAddressStore
-        .getState()
-        .addAddress(
-          newAddress.id,
-          newAddress.address,
-          false,
-          newAddress.coordinates,
-          newAddress.priority
-        )
+      // 주소 기반 중복 체크로 변경
+      const isDuplicate = addresses.some(
+        (item) => item.address === roadAddressName
+      )
+
+      if (isDuplicate) {
+        alert('이미 동일한 주소가 존재합니다.')
+        return
+      }
+
+      // 주소 추가 API 호출
+      await defaultAxios.post('/user/location', {
+        roadAddressName,
+        latitude,
+        longitude,
+      })
+
+      // 추가 후 주소 리스트 다시 불러오기
+      await fetchAddressList()
     } catch (error) {
       setErrorMessage('새로운 위치를 추가하는 데 실패했습니다.')
     } finally {
@@ -165,10 +136,10 @@ export const useAddress = () => {
     }
   }
 
-  // 선택된 주소 우선순위 높이기
+  // 우선순위 업데이트
   const updatePriority = async (id: number) => {
+    setIsLoading(true)
     try {
-      setIsLoading(true)
       await defaultAxios.patch(`/user/location?id=${id}`)
       await fetchAddressList()
     } catch (error) {
@@ -178,10 +149,10 @@ export const useAddress = () => {
     }
   }
 
-  // 주소 삭제하기
+  // 주소 삭제
   const deleteLocation = async (id: number) => {
+    setIsLoading(true)
     try {
-      setIsLoading(true)
       await defaultAxios.delete(`/user/location?id=${id}`)
       await fetchAddressList()
     } catch (error) {
@@ -191,107 +162,50 @@ export const useAddress = () => {
     }
   }
 
+  // 현재 위치 추가
   const handleSetCurrentLocation = async () => {
-    if (navigator.geolocation) {
-      setIsLoading(true)
-      navigator.geolocation.getCurrentPosition(
-        async (position) => {
-          try {
-            const latitude = position.coords.latitude
-            const longitude = position.coords.longitude
-
-            // 중복 좌표 체크
-            const isDuplicate = addresses.some(
-              (item) =>
-                item.coordinates?.latitude === latitude &&
-                item.coordinates?.longitude === longitude
-            )
-            if (isDuplicate) {
-              alert('현재 위치가 이미 저장되어 있어요!')
-              setIsLoading(false)
-              return
-            }
-
-            await addNewLocation(latitude, longitude)
-
-            const geocoder = new window.kakao.maps.services.Geocoder()
-            geocoder.coord2Address(
-              longitude,
-              latitude,
-              (result: any, status: any) => {
-                if (status === window.kakao.maps.services.Status.OK) {
-                  const roadAddress = result[0]?.road_address
-                  const jibunAddress = result[0]?.address
-                  const selectedAddress = roadAddress || jibunAddress
-
-                  if (selectedAddress) {
-                    const maxId = addressList
-                      ? Math.max(...addressList.data.map((item) => item.id), 0)
-                      : 0
-                    const maxPriority = addressList
-                      ? Math.max(
-                          ...addressList.data.map((item) => item.priority),
-                          0
-                        )
-                      : 0
-
-                    const id = maxId + 1 // 가장 큰 id에 +1
-                    const priority = maxPriority + 1 // 가장 큰 priority에 +1
-
-                    // 새 객체 생성
-                    const newAddress: addressResponse = {
-                      id,
-                      latitude,
-                      longitude,
-                      priority,
-                      roadAddressName: selectedAddress.address_name, // 도로명 또는 지번 주소
-                    }
-
-                    // addressList에 새 데이터 추가
-                    const updatedAddressList: addressListResponse = {
-                      code: addressList?.code || 200, // 기존 code 유지 또는 기본값 설정
-                      data: [...(addressList?.data || []), newAddress],
-                    }
-
-                    setAddressList(updatedAddressList) // 상태 갱신
-
-                    addAddress(
-                      id, // 고유 id
-                      selectedAddress.address_name, // 주소
-                      false, // isCurrentLocation 값
-                      { latitude, longitude }, // 좌표 정보
-                      priority // 우선순위 값
-                    )
-                  }
-                }
-              }
-            )
-          } catch (error) {
-            setErrorMessage('위치 설정에 실패했습니다.')
-          } finally {
-            setIsLoading(false)
-          }
-        },
-        (error) => {
-          console.log(error.message)
-          setErrorMessage('위치를 가져오는 데 실패했습니다. 권한을 확인하세요.')
-          setIsLoading(false)
-        }
-      )
-    } else {
+    if (!navigator.geolocation) {
       setErrorMessage('현재 위치 기능을 지원하지 않는 브라우저입니다.')
+      return
     }
+
+    setIsLoading(true)
+    navigator.geolocation.getCurrentPosition(
+      async (position) => {
+        const latitude = position.coords.latitude
+        const longitude = position.coords.longitude
+
+        const roadAddressName = await getRoadAddressName(latitude, longitude)
+
+        // 주소 기반 중복 체크
+        const isDuplicate = addresses.some(
+          (item) => item.address === roadAddressName
+        )
+
+        if (isDuplicate) {
+          alert('현재 위치와 동일한 주소가 이미 저장되어 있어요!')
+          return
+        }
+
+        await addNewLocation(latitude, longitude)
+      },
+      (error) => {
+        console.error(error.message)
+        setErrorMessage('위치를 가져오는 데 실패했습니다. 권한을 확인하세요.')
+      },
+      { enableHighAccuracy: true }
+    )
+    setIsLoading(false)
   }
 
   return {
     addresses,
     isLoading,
     errorMessage,
+    fetchAddressList,
     handleSetCurrentLocation,
     addNewLocation,
     updatePriority,
     deleteLocation,
-    setAddress,
-    address,
   }
 }

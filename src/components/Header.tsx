@@ -9,10 +9,12 @@ import useAddressStore from '../store/useAddressStore'
 import { useSearch } from '../hooks/UseSearch'
 import useMapStore from '../store/useMapStore'
 import useMypage from '../hooks/MyPage/useMyPage'
+import { useAddress } from '../hooks/Main/UseAddress'
 
 function Header() {
   const navigation = useNavigate()
-  const { getSelectedAddress } = useAddressStore()
+  const { addresses, selectAddress, getSelectedAddress } = useAddressStore()
+  const { fetchAddressList } = useAddress()
   const { setSelectedPlace } = useMapStore()
   const { profileInfo, fetchGetProfile } = useMypage()
 
@@ -59,6 +61,18 @@ function Header() {
     fetchGetProfile()
   }, [])
 
+  useEffect(() => {
+    fetchAddressList()
+    if (addresses.length > 0) {
+      const firstAddress = addresses[0]
+      if (!getSelectedAddress()) {
+        selectAddress(firstAddress.id) // 첫 번째 주소를 선택
+      }
+    }
+  }, [addresses, selectAddress, getSelectedAddress])
+
+  const selectedAddress = getSelectedAddress()
+
   return (
     <>
       <header className="mt-7 ml-[17px] mr-[19px] w-[390px]">
@@ -73,7 +87,7 @@ function Header() {
           <div className="flex flex-row gap-[10px] items-center justify-center">
             <div className="flex gap-2 items-center">
               <div className="font-SB00 text-[16px] text-ellipsis line-clamp-1">
-                {getSelectedAddress() || '주소 설정하기'}
+                {selectedAddress || '주소 설정하기'}
               </div>
               <img
                 src={arrow}
