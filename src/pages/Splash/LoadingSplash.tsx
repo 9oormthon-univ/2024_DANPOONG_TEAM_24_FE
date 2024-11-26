@@ -4,7 +4,7 @@ import ieum from '../../assets/splash/ieum.svg'
 
 const LoadingSplash: React.FC = () => {
   return (
-    <div className="flex flex-col h-screen bg-white items-center">
+    <div className="flex flex-col bg-white items-center h-screen">
       <div className="absolute bottom-0 flex flex-col items-center">
         <div className="flex flex-col items-center gap-2">
           <p className="font-B00 text-[26px] text-center text-800 leading-140 font-medium">
