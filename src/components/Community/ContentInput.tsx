@@ -17,7 +17,7 @@ const ContentInput: React.FC<ContentInputProps> = ({
       onChange={(e) => {
         onContentChange(e.target.value)
       }}
-      className="w-[357px] h-[232px] bg-100 rounded-[12px] border border-200 py-5 px-[9px] text-sm text-C400 leading-135 font-M00 outline-none resize-none"
+      className="w-[357px] h-[232px] bg-100 rounded-[12px] py-5 px-[9px] text-sm placeholder-C400 text-800 leading-135 font-M00 outline-none resize-none"
     />
   )
 }

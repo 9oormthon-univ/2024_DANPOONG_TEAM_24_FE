@@ -42,7 +42,7 @@ const Contents: React.FC<ContentProps> = ({
   return (
     <div
       onClick={onClickPost}
-      className={`relative flex w-[358px] h-[146px] items-center justify-center bg-[#F4F5F7] rounded-[12px] hover:cursor-pointer ${
+      className={`relative flex w-[358px] h-[146px] items-center justify-center bg-100 rounded-[12px] hover:cursor-pointer ${
         isLastComment ? 'mb-[103px]' : ''
       }`}
     >

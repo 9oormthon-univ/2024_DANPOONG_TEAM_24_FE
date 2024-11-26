@@ -88,7 +88,7 @@ function Main() {
             <CarouselSlider />
           </section>
           <section className="mt-5">
-            <div className="mx-3 px-[10px] pb-[11px] flex flex-wrap justify-center bg-[#F4F5F7] border border-200 rounded-lg">
+            <div className="mx-3 px-[10px] pb-[11px] flex flex-wrap justify-center bg-100 border border-200 rounded-lg">
               {svgs.map((svg, index) => (
                 <div
                   key={index}

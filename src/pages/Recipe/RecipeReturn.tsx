@@ -179,7 +179,7 @@ export default function RecipeReturn() {
             </div>
           )}
 
-          <div className="flex px-[20px] py-[10px] gap-[10px] mb-5 w-[358px] bg-[#F4F5F7] rounded-xl font-M00 text-[14px] leading-[135%]">
+          <div className="flex px-[20px] py-[10px] gap-[10px] mb-5 w-[358px] bg-100 rounded-xl font-M00 text-[14px] leading-[135%]">
             <img src={chef} alt="chef hat" className="self-start" />
             <div className="font-M00 text-[14px] leading-[135%] whitespace-pre-wrap break-words min-h-fit">
               {sentences?.recommendation}
@@ -197,7 +197,7 @@ export default function RecipeReturn() {
             ))}
           </div>
 
-          <div className="px-5 py-3 flex flex-row gap-[10px] bg-[#F4F5F7] rounded-xl mt-5">
+          <div className="px-5 py-3 flex flex-row gap-[10px] bg-100 rounded-xl mt-5">
             <img src={price} alt="price icon" />
             <div>{recipeResponse?.data.selectedCost}</div>
           </div>
