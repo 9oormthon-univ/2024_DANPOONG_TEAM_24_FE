@@ -16,6 +16,7 @@ export default {
         Main: '#FDD835',
         Main2: '#FFF59D',
         ToggleBorder: '#FFBC5F',
+        ContentsBox: '#F4F5F7',
       },
       backgroundImage: {
         'profile-gradient': 'linear-gradient(180deg, #FFA7A4 0%, #FFEA8B 100%)',
