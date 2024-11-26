@@ -6,6 +6,7 @@ const subjects = {
   commented: '댓글을 단 게시글이\n 없어요!',
   liked: '좋아요 누른 글이\n 없어요!',
   store: '앗 1km 내에 \n존재하는 가맹점이 없어요!',
+  address: '앗 설정된 주소가 없어요!',
 }
 
 const NoContents: React.FC<{ subjectKey?: keyof typeof subjects }> = ({

@@ -9,10 +9,12 @@ import useAddressStore from '../store/useAddressStore'
 import { useSearch } from '../hooks/UseSearch'
 import useMapStore from '../store/useMapStore'
 import useMypage from '../hooks/MyPage/useMyPage'
+import { useAddress } from '../hooks/Main/UseAddress'
 
 function Header() {
   const navigation = useNavigate()
-  const { getSelectedAddress } = useAddressStore()
+  const { addresses, selectAddress, getSelectedAddress } = useAddressStore()
+  const { fetchAddressList } = useAddress()
   const { setSelectedPlace } = useMapStore()
   const { profileInfo, fetchGetProfile } = useMypage()
 
@@ -59,6 +61,20 @@ function Header() {
     fetchGetProfile()
   }, [])
 
+  useEffect(() => {
+    const initializeAddresses = async () => {
+      await fetchAddressList() // 주소 리스트 가져오기
+      const firstAddress = addresses[0] // 첫 번째 주소 가져오기
+      if (!getSelectedAddress() && firstAddress) {
+        selectAddress(firstAddress.id) // 첫 번째 주소 선택
+      }
+    }
+
+    initializeAddresses()
+  }, []) // 의존성 배열을 비워서 처음에 한 번만 실행
+
+  const selectedAddress = getSelectedAddress()
+
   return (
     <>
       <header className="mt-7 ml-[17px] mr-[19px] w-[390px]">
@@ -71,15 +87,17 @@ function Header() {
             <img src={logoText} alt="logoText" className="w-[37.33px] h-7" />
           </div>
           <div className="flex flex-row gap-[10px] items-center justify-center">
-            <div className="flex gap-2 items-center">
+            <div
+              onClick={() => navigation('/address')}
+              className="flex gap-2 items-center"
+            >
               <div className="font-SB00 text-[16px] text-ellipsis line-clamp-1">
-                {getSelectedAddress() || '주소 설정하기'}
+                {selectedAddress || '주소 설정하기'}
               </div>
               <img
                 src={arrow}
                 alt="Arrow"
                 className="w-4 h-[6px] cursor-pointer"
-                onClick={() => navigation('/address')}
               />
             </div>
             <img
