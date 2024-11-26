@@ -64,13 +64,13 @@ function MyPage() {
             <img src={Xbutton} alt="Close" />
           </button>
         </div>
-        <div className="w-full h-[212px] flex flex-col items-center justify-center rounded-b-[30px] bg-profile-gradient">
+        <div className="w-full h-[200px] flex flex-col items-center justify-center bg-Main2 gap-[10px]">
           <img
             src={profileInfo?.profileUrl}
             alt="프로필 사진"
-            className="w-[96px] h-[96px] rounded-full mb-[16px] border-[5px] border-500"
+            className="w-[96px] h-[96px] rounded-full border-[5px] border-point1"
           />
-          <p className="font-SB00 mb-3">{profileInfo?.name}</p>
+          <p className="font-SB00 mb-3 text-xl">{profileInfo?.name}</p>
         </div>
         <p className="w-full px-4 pt-6 pb-2 font-SB00">활동내역</p>
         <div className="p-3 grid grid-cols-3 gap-3 h-36">
