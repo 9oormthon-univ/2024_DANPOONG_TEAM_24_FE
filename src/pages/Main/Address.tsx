@@ -6,6 +6,7 @@ import arrow from '../../assets/common/Arrow.svg'
 import AddressCard from '../../components/Main/AddressCard'
 import { useAddress } from '../../hooks/Main/UseAddress'
 import LoadingSplash from '../Splash/LoadingSplash'
+import NoContents from '../../components/Community/NoContents'
 
 export default function Address() {
   const { addresses, isLoading, handleSetCurrentLocation } = useAddress()
@@ -58,19 +59,24 @@ export default function Address() {
             </button>
           </article>
           <article className="pt-[11px]">
-            {addresses.map((item, index) => (
-              <AddressCard
-                key={
-                  item.isCurrentLocation
-                    ? `${item.address}-${index}`
-                    : `${index}`
-                } // 각 주소마다 고유한 key 설정
-                index={index}
-                selected={item.selected}
-                address={item.address}
-                isLastAddress={index === addresses.length - 1}
-              />
-            ))}
+            {addresses.length > 0 ? (
+              addresses.map((item, index) => (
+                <AddressCard
+                  key={
+                    item.isCurrentLocation
+                      ? `${item.address}-${index}`
+                      : `${index}`
+                  } // 각 주소마다 고유한 key 설정
+                  id={item.id}
+                  index={index}
+                  selected={item.selected}
+                  address={item.address}
+                  isLastAddress={index === addresses.length - 1}
+                />
+              ))
+            ) : (
+              <NoContents subjectKey="address" />
+            )}
           </article>
         </section>
       </div>
