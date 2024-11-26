@@ -4,7 +4,7 @@ import loading from '../../assets/splash/loading.gif'
 const LoadingSplash: React.FC = () => {
   return (
     <div className="flex flex-col bg-white items-center h-screen">
-      <div className="flex flex-col items-center my-[218px]">
+      <div className="flex flex-col items-center mt-[218px]">
         <div className="flex flex-col items-center gap-1">
           <p className="font-B00 text-[22px] text-center text-800 leading-140 font-normal">
             잠시만 기다려주세요

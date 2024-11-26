@@ -1,5 +1,5 @@
 import React from 'react'
-import ieum from '../../assets/splash/preparing_ieum.svg'
+import ieum from '../../assets/splash/sad_ieum.svg'
 
 const subjects = {
   my_post: '앗 작성된 글이 없어요!',
