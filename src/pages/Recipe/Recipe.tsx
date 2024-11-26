@@ -213,7 +213,7 @@ export default function Recipe() {
                   value={text} // 현재 상태 바인딩
                   onChange={handleTextChange} // 글자 상태 업데이트
                   className={Cn(
-                    'pt-5 pl-[11px] w-[358px] h-[232px] bg-100 border border-200 rounded-xl',
+                    'pt-5 pl-[11px] w-[358px] h-[232px] bg-[#F4F5F7] rounded-xl',
                     'font-M00 text-[14px] resize-none focus:outline-none'
                   )}
                 ></textarea>

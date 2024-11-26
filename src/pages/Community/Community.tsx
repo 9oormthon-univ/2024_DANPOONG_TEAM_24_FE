@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react'
 import { useLocation } from 'react-router-dom'
-import banner from '../../assets/community/community_banner.svg'
+import banner from '../../assets/community/banner.svg'
 import Header from '../../components/Header'
 import Footer from '../../components/Footer'
 import ScrollCategoryBar from '../../components/Community/ScrollCategoryBar'
