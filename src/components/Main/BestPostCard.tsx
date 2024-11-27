@@ -25,7 +25,7 @@ export default function BestPostCard({
 }: bestPostCardProps) {
   return (
     <>
-      <div className="relative mt-[10px] px-[10px] py-4 bg-100 flex flex-col rounded-xl border border-200">
+      <div className="relative mt-[10px] px-[10px] py-4 bg-ContentsBox flex flex-col rounded-xl">
         <div className="flex justify-between items-center">
           <div className="flex flex-row gap-[10px]">
             <img src={preProfile} alt="pre profile img" />

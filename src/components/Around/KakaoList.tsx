@@ -3,7 +3,6 @@ import { useNavigate } from 'react-router-dom'
 import FilterButton from './FilterButton'
 import Filter from './Filter'
 import useListFilterOptionStore from '../../store/UseListFilterOptionStore'
-import LoadingSplash from '../../pages/Splash/LoadingSplash'
 import defaultAxios from '../../api/defaultAxios'
 import useAddressStore from '../../store/useAddressStore'
 import defaultimg from '../../assets/around/DefaultImg.svg'
@@ -21,11 +20,10 @@ interface Place {
 }
 
 interface KakaoListProps {
-  isLoading: boolean
   setIsLoading: (value: boolean) => void
 }
 
-const KakaoList: React.FC<KakaoListProps> = ({ isLoading, setIsLoading }) => {
+const KakaoList: React.FC<KakaoListProps> = ({ setIsLoading }) => {
   const [userPosition, setUserPosition] = useState<{
     lat: number
     lng: number
@@ -187,7 +185,7 @@ const KakaoList: React.FC<KakaoListProps> = ({ isLoading, setIsLoading }) => {
         ref={filterContainerRef}
         className="[&::-webkit-scrollbar]:hidden mb-4 flex overflow-x-auto whitespace-nowrap space-x-2"
       >
-        <div className="space-x-2">
+        <div className="px-4 space-x-2">
           {Filter.map((filter) => (
             <FilterButton
               key={filter.id}
@@ -203,42 +201,46 @@ const KakaoList: React.FC<KakaoListProps> = ({ isLoading, setIsLoading }) => {
           ))}
         </div>
       </div>
-      {isLoading ? (
-        <LoadingSplash />
-      ) : places.length > 0 ? (
-        <ul className="space-y-2 overflow-visible">
+      {places.length > 0 ? (
+        <ul className="flex flex-col items-center gap-[10px] overflow-visible">
           {places.map((place) => (
             <li
               key={place.storeId}
-              className="p-2 border-b border-200 bg-white cursor-pointer flex justify-between items-center"
-              style={{ width: '390px', height: '120px' }}
+              className="w-[357px] h-[130px] px-4 py-3 rounded-xl bg-white cursor-pointer flex justify-between items-center"
               onClick={() => handlePlaceClick(place.storeName)}
             >
-              <div className="flex-1">
-                <p className="mb-0.5 text-xl font-M00">
-                  {place.storeName}{' '}
-                  <span className="text-sm text-point1">
-                    {place.distance
-                      ? `${Math.round(place.distance)}m`
-                      : '거리 정보 없음'}
-                  </span>
-                </p>
-                <p className="mb-[12px] text-sm font-R00">
-                  {place.roadAddress}
-                </p>
-                {place.phone && (
-                  <p className="text-sm font-R00 text-600">
-                    전화번호: {place.phone}
+              <div className="flex flex-col gap-[10px]">
+                <div className="flex flex-col justify-start gap-1">
+                  <p className="text-lg font-SB00 line-clamp-1 text-ellipsis">
+                    {place.storeName}
                   </p>
-                )}
+                  <div className="flex items-center gap-4">
+                    <p className="text-point1 text-sm font-SB00 leading-140">
+                      단가 8000원
+                    </p>
+                    <span className="rounded-[100px] px-[6px] py-[3px] border border-300 text-[10px] font-M00 text-500">
+                      {place.distance
+                        ? `${Math.round(place.distance)}m`
+                        : '거리 정보 없음'}
+                    </span>
+                  </div>
+                </div>
+                <div className="flex flex-col justify-start gap-1">
+                  <p className="text-400 line-clamp-1 text-ellipsis text-xs font-R00 font-normal">
+                    {place.roadAddress}
+                  </p>
+                  {place.phone && (
+                    <p className="text-xs font-R00 text-700 leading-140 font-normal">
+                      {place.phone}
+                    </p>
+                  )}
+                </div>
               </div>
-              <div className="w-24 h-24 rounded-md bg-cover bg-center ml-4">
-                <img
-                  src={place.imageUrl || defaultimg} // 이미지가 없으면 기본 이미지 사용
-                  alt={place.storeName}
-                  className="w-full h-full rounded-md object-cover"
-                />
-              </div>
+              <img
+                src={place.imageUrl || defaultimg} // 이미지가 없으면 기본 이미지 사용
+                alt={place.storeName}
+                className="w-[106px] h-[106px] rounded-md"
+              />
             </li>
           ))}
         </ul>

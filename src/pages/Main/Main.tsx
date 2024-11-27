@@ -88,14 +88,14 @@ function Main() {
             <CarouselSlider />
           </section>
           <section className="mt-5">
-            <div className="mx-3 px-[10px] pb-[11px] flex flex-wrap justify-center bg-100 border-[0.4px] border-200 rounded-lg">
+            <div className="mx-3 px-[10px] pb-[11px] flex flex-wrap justify-center bg-100 border border-200 rounded-lg">
               {svgs.map((svg, index) => (
                 <div
                   key={index}
                   className="mt-4 w-1/5 flex flex-col gap-[7px] justify-center items-center"
                 >
                   <div
-                    className="p-2 w-[50px] h-[50px] bg-[#ffffff] flex justify-center border border-200 rounded-[5px] cursor-pointer"
+                    className="p-2 w-[50px] h-[50px] bg-white flex justify-center border border-200 rounded-[5px] cursor-pointer"
                     onClick={() => handleSvgClick(svg.description)}
                   >
                     <img src={svg.src} alt={svg.alt} />

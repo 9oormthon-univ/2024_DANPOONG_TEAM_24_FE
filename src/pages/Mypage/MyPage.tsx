@@ -1,10 +1,14 @@
 import { useNavigate } from 'react-router-dom'
+import { useEffect } from 'react'
 import Post from '../../assets/mypage/Post.svg'
 import Comment from '../../assets/mypage/Comment.svg'
 import Like from '../../assets/mypage/Like.svg'
 import Xbutton from '../../assets/mypage/Xbutton.svg'
 import useMypage from '../../hooks/MyPage/useMyPage'
-import { useEffect } from 'react'
+import Assignment from '../../assets/mypage/assignment.svg'
+import Service from '../../assets/mypage/document.svg'
+import Privacy from '../../assets/mypage/privacy.svg'
+import Logout from '../../assets/mypage/logout.svg'
 
 interface SvgItem {
   src: string
@@ -12,6 +16,11 @@ interface SvgItem {
   description: string
   path: string
   category: string
+}
+
+interface BottomSvgItem {
+  src: string
+  subject: string
 }
 
 function MyPage() {
@@ -42,6 +51,21 @@ function MyPage() {
     },
   ]
 
+  const bottomSvgs: BottomSvgItem[] = [
+    {
+      src: Assignment,
+      subject: '계정 정보',
+    },
+    {
+      src: Service,
+      subject: '서비스 이용약관',
+    },
+    {
+      src: Privacy,
+      subject: '개인정보 처리 방침',
+    },
+  ]
+
   useEffect(() => {
     fetchGetProfile()
   }, [])
@@ -64,13 +88,13 @@ function MyPage() {
             <img src={Xbutton} alt="Close" />
           </button>
         </div>
-        <div className="w-full h-[212px] flex flex-col items-center justify-center rounded-b-[30px] bg-profile-gradient">
+        <div className="w-full h-[200px] flex flex-col items-center justify-center bg-Main2 gap-[10px]">
           <img
             src={profileInfo?.profileUrl}
             alt="프로필 사진"
-            className="w-[96px] h-[96px] rounded-full mb-[16px] border-[5px] border-500"
+            className="w-[96px] h-[96px] rounded-full border-[5px] border-point1"
           />
-          <p className="font-SB00 mb-3">{profileInfo?.name}</p>
+          <p className="font-SB00 mb-3 text-xl">{profileInfo?.name}</p>
         </div>
         <p className="w-full px-4 pt-6 pb-2 font-SB00">활동내역</p>
         <div className="p-3 grid grid-cols-3 gap-3 h-36">
@@ -97,21 +121,21 @@ function MyPage() {
         </div>
 
         <div className="px-4">
-          {['계정 정보', '서비스 이용약관', '개인정보처리 방침'].map(
-            (text, index) => (
-              <div
-                key={index}
-                className="py-3 border-b border-200"
-                onClick={handleClick}
-              >
-                <a className="font-M00 text-m">{text}</a>
-              </div>
-            )
-          )}
+          {bottomSvgs.map((svg, index) => (
+            <div
+              key={index}
+              className="flex items-center justify-start gap-4 py-3 border-b border-200 text-800"
+              onClick={handleClick}
+            >
+              <img src={svg.src} />
+              <a className="font-M00 text-m">{svg.subject}</a>
+            </div>
+          ))}
           <div
-            className="py-3 border-b border-200 cursor-pointer"
+            className="flex items-center justify-start gap-4 py-3 border-b border-200 cursor-pointer"
             onClick={handleLogout}
           >
+            <img src={Logout} alt="로그아웃" />
             <span className="font-M00 text-m">로그아웃</span>
           </div>
         </div>
