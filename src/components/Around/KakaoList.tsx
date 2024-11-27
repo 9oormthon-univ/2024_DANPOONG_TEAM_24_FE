@@ -209,23 +209,32 @@ const KakaoList: React.FC<KakaoListProps> = ({ setIsLoading }) => {
               className="w-[357px] h-[130px] px-4 py-3 rounded-xl bg-white cursor-pointer flex justify-between items-center"
               onClick={() => handlePlaceClick(place.storeName)}
             >
-              <div className="flex-1">
-                <p className="text-lg font-SB00 line-clamp-1 text-ellipsis">
-                  {place.storeName}{' '}
-                  <span className="rounded-[100px] px-[6px] py-[3px] border border-300 text-[10px] font-M00 text-500">
-                    {place.distance
-                      ? `${Math.round(place.distance)}m`
-                      : '거리 정보 없음'}
-                  </span>
-                </p>
-                <p className="text-400 line-clamp-1 text-ellipsis text-xs font-R00">
-                  {place.roadAddress}
-                </p>
-                {place.phone && (
-                  <p className="text-sm font-R00 text-600">
-                    전화번호: {place.phone}
+              <div className="flex flex-col gap-[10px]">
+                <div className="flex flex-col justify-start gap-1">
+                  <p className="text-lg font-SB00 line-clamp-1 text-ellipsis">
+                    {place.storeName}
                   </p>
-                )}
+                  <div className="flex items-center gap-4">
+                    <p className="text-point1 text-sm font-SB00 leading-140">
+                      단가 8000원
+                    </p>
+                    <span className="rounded-[100px] px-[6px] py-[3px] border border-300 text-[10px] font-M00 text-500">
+                      {place.distance
+                        ? `${Math.round(place.distance)}m`
+                        : '거리 정보 없음'}
+                    </span>
+                  </div>
+                </div>
+                <div className="flex flex-col justify-start gap-1">
+                  <p className="text-400 line-clamp-1 text-ellipsis text-xs font-R00 font-normal">
+                    {place.roadAddress}
+                  </p>
+                  {place.phone && (
+                    <p className="text-xs font-R00 text-700 leading-140 font-normal">
+                      {place.phone}
+                    </p>
+                  )}
+                </div>
               </div>
               <img
                 src={place.imageUrl || defaultimg} // 이미지가 없으면 기본 이미지 사용

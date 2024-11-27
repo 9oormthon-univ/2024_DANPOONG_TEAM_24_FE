@@ -1,21 +1,20 @@
-import all from '../../assets/around/All.svg'
-import korean from '../../assets/around/Korean.svg'
-import chinese from '../../assets/around/Chinese.svg'
-import western from '../../assets/around/Western.svg'
-import bunsic from '../../assets/around/Bunsik.svg'
-import fastfood from '../../assets/around/Fastfood.svg'
-import convenience from '../../assets/around/Convenience.svg'
-import japanese from '../../assets/around/Japanese.svg'
-import cafe from '../../assets/around/Cafe.svg'
-import etc from '../../assets/around/Etc.svg'
+import all from '../../assets/around/All.gif'
+import korean from '../../assets/around/Korean.gif'
+import chinese from '../../assets/around/Chinese.gif'
+import western from '../../assets/around/Western.gif'
+import bunsic from '../../assets/around/Bunsik.gif'
+import fastfood from '../../assets/around/Fastfood.gif'
+import convenience from '../../assets/around/Convenience.gif'
+import japanese from '../../assets/around/Japanese.gif'
+import cafe from '../../assets/around/Cafe.gif'
+import etc from '../../assets/around/Etc.gif'
 import verified from '../../assets/around/Verified.svg'
-
 
 interface Filter {
   id: number
   label: string
   category_id?: number
-  image?: string;
+  image?: string
 }
 
 // 24/11/22 희진 category_id 추가

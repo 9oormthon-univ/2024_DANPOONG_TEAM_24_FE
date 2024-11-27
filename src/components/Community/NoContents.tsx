@@ -33,7 +33,7 @@ const NoContents: React.FC<{ subjectKey?: keyof typeof subjects }> = ({
   subjectKey,
 }) => {
   return (
-    <div className="flex justify-center items-center bg-white">
+    <div className="flex justify-center items-center">
       <div className="flex flex-col items-center justify-center gap-1 mt-[148px] ">
         <p className="font-B00 text-[22px] text-center text-800 leading-140 font-medium whitespace-pre-wrap">
           {subjectKey ? subjects[subjectKey].main : ''}
