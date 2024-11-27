@@ -42,6 +42,15 @@ const KakaoList: React.FC<KakaoListProps> = ({ setIsLoading }) => {
 
   const navigate = useNavigate()
 
+  useEffect(() => {
+    if (selectedFilterOption) {
+      const filter = Filter.find((f) => f.label === selectedFilterOption)
+      if (filter) {
+        setSelectedCategoryId(filter.category_id || 3)
+      }
+    }
+  }, [selectedFilterOption])
+
   // 사용자 위치 가져오기
   useEffect(() => {
     if (!window.kakao || !window.kakao.maps) {
