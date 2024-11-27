@@ -19,7 +19,7 @@ const FilterButton = ({
     <button
       id={label} // 24/11/20 희진 추가
       onClick={() => onClick(id)}
-      className={`inline-flex items-center rounded-full px-3 py-1.5 text-sm font-M00 
+      className={`inline-flex items-center rounded-full px-3 py-1.5 text-sm font-M00
                     border border-200 transition-colors focus:outline-none 
                     focus-visible:ring-2 ${
                       selected ? 'bg-Main2 border-Main' : 'bg-white' // 24/11/20 희진 selectedFilter 사용에서 selected로 변경
