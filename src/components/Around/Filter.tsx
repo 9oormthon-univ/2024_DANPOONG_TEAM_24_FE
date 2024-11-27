@@ -8,7 +8,7 @@ import convenience from '../../assets/around/Convenience.gif'
 import japanese from '../../assets/around/Japanese.gif'
 import cafe from '../../assets/around/Cafe.gif'
 import etc from '../../assets/around/Etc.gif'
-import verified from '../../assets/around/Verified.svg'
+import verified from '../../assets/around/Verified.gif'
 
 interface Filter {
   id: number
