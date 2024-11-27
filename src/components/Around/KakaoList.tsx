@@ -202,7 +202,7 @@ const KakaoList: React.FC<KakaoListProps> = ({ setIsLoading }) => {
         </div>
       </div>
       {places.length > 0 ? (
-        <ul className="flex flex-col items-center space-y-2 overflow-visible">
+        <ul className="flex flex-col items-center gap-[10px] overflow-visible">
           {places.map((place) => (
             <li
               key={place.storeId}
