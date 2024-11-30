@@ -192,8 +192,8 @@ const KaKaoMap = () => {
               image={{
                 src: searchIcon, // 카테고리 이미지, 없으면 기본 이미지
                 size: {
-                  width: 52,
-                  height: 52,
+                  width: 60,
+                  height: 80,
                 },
               }}
               onClick={() => handleMarkerClick(selectedPlace.storeName)}
@@ -214,8 +214,8 @@ const KaKaoMap = () => {
                 image={{
                   src: category?.image || '/images/default.svg', // 카테고리 이미지, 없으면 기본 이미지
                   size: {
-                    width: 52,
-                    height: 52,
+                    width: 60,
+                    height: 80,
                   },
                 }}
                 onClick={() => handleMarkerClick(place.storeName)}
@@ -227,7 +227,7 @@ const KaKaoMap = () => {
           ref={filterContainerRef}
           className="[&::-webkit-scrollbar]:hidden absolute top-2 left-0 right-0 overflow-x-auto whitespace-nowrap z-10"
         >
-          <div className="inline-flex space-x-2">
+          <div className="px-4 inline-flex space-x-2">
             {Filter.map((filter) => (
               <FilterButton
                 key={filter.id}

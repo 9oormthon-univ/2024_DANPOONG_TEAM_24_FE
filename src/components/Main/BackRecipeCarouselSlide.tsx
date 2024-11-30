@@ -16,7 +16,7 @@ export default function BackRecipeCarouselSlide({
             alt={recipe.recipeName}
             className="w-[169px] h-[130px] cursor-pointer rounded-t-lg"
           />
-          <div className="py-[10px] w-[169px] h-[54px] flex flex-row gap-[70px] bg-100 rounded-b-lg border border-200">
+          <div className="py-[10px] w-[169px] h-[54px] flex flex-row gap-[70px] bg-[#F4F5F7] rounded-b-lg border border-200">
             <div className="pl-[13px]">
               <div className="max-w-[108px] w-fit text-nowrap font-SB00 text-[14px] text-800">
                 {recipe.recipeName}

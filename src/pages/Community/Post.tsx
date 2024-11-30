@@ -42,7 +42,7 @@ const Post: React.FC = () => {
           contentCommentInfo={contentCommentInfo}
           onLikeToggle={handleLikeToggle} // onLikeToggle 전달
         />
-        <div className="w-full h-2 bg-[#D9D9D9] mb-[30px]" />
+        <div className="w-full h-2 bg-100 mb-[30px]" />
         <div className="flex flex-col gap-[10px]">
           {contentCommentInfo?.comments.map((comment, index) => (
             <PostComment

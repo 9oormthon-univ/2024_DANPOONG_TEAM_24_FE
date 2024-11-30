@@ -14,7 +14,7 @@ export default function RecipeItem({
       <div className="flex flex-col gap-1 font-SB00">
         <div className="text-sm text-black">{name}</div>
         <div className="text-xs text-500">{price}</div>
-        <div className="text-[10px] text-400">{description}</div>
+        <div className="text-[10px] text-400 font-R00">{description}</div>
       </div>
     </div>
   )
