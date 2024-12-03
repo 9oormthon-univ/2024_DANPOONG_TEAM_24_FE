@@ -17,6 +17,8 @@ interface Place {
   distance: number
   phone: string
   imageUrl: string
+  averagePrice: string
+  kakaoMapUrl: string
 }
 
 interface KakaoListProps {
@@ -225,7 +227,7 @@ const KakaoList: React.FC<KakaoListProps> = ({ setIsLoading }) => {
                   </p>
                   <div className="flex items-center gap-4">
                     <p className="text-point1 text-sm font-SB00 leading-140">
-                      단가 8000원
+                      단가 {place.averagePrice}
                     </p>
                     <span className="rounded-[100px] px-[6px] py-[3px] border border-300 text-[10px] font-M00 text-500">
                       {place.distance
