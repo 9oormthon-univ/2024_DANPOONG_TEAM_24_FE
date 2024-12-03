@@ -11,7 +11,8 @@ import fastfood from '../../assets/main/Fastfood.svg'
 import convenience from '../../assets/main/Convenience.svg'
 import japanese from '../../assets/main/Japanese.svg'
 import cafe from '../../assets/main/Cafe.svg'
-import etc from '../../assets/main/Etc.svg'
+import kind from '../../assets/main/Kind.svg'
+
 import introRecipe from '../../assets/main/IntroRecipe.svg'
 import BackRecipeCarouselSlider from '../../components/Main/BackRecipeCarouselSlider'
 import { Link, useNavigate } from 'react-router-dom'
@@ -71,7 +72,12 @@ function Main() {
       category_id: 4,
     },
     { src: cafe, alt: 'Cafe', description: '카페', category_id: 6 },
-    { src: etc, alt: 'Etc', description: '기타', category_id: 2 },
+    {
+      src: kind,
+      alt: 'Kind',
+      description: '선한영향력\n가게',
+      category_id: 11,
+    },
   ]
 
   const handleSvgClick = (description: string) => {
@@ -88,11 +94,13 @@ function Main() {
             <CarouselSlider />
           </section>
           <section className="mt-5">
-            <div className="mx-3 px-[10px] pb-[11px] flex flex-wrap justify-center bg-100 border border-200 rounded-lg">
+            <div className="mx-3 px-[10px] pb-[11px] first:flex flex-wrap justify-center bg-100 border border-200 rounded-lg">
               {svgs.map((svg, index) => (
                 <div
                   key={index}
-                  className="mt-4 w-1/5 flex flex-col gap-[7px] justify-center items-center"
+                  className={`mt-4 w-1/5 flex flex-col ${
+                    svg.category_id === 11 ? 'gap-[1px]' : 'gap-[7px]'
+                  } justify-start items-center`}
                 >
                   <div
                     className="p-2 w-[50px] h-[50px] bg-white flex justify-center border border-200 rounded-[5px] cursor-pointer"
@@ -100,7 +108,13 @@ function Main() {
                   >
                     <img src={svg.src} alt={svg.alt} />
                   </div>
-                  <div className="font-M00 text-sm leading-[135%]">
+                  <div
+                    className={
+                      svg.category_id === 11
+                        ? 'p-[3px] font-M00 text-[11px] leading-[120%] text-center whitespace-pre-wrap'
+                        : 'font-M00 text-sm leading-[135%]'
+                    }
+                  >
                     {svg.description}
                   </div>
                 </div>
