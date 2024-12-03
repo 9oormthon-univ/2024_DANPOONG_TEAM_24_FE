@@ -9,6 +9,7 @@ import japanese from '../../assets/around/Japanese.gif'
 import cafe from '../../assets/around/Cafe.gif'
 import etc from '../../assets/around/Etc.gif'
 import verified from '../../assets/around/Verified.gif'
+import kind from '../../assets/around/Kind.gif'
 
 interface Filter {
   id: number
@@ -29,7 +30,7 @@ const Filter: Filter[] = [
   { id: 8, label: '패스트푸드', category_id: 5, image: fastfood },
   { id: 9, label: '편의점', category_id: 4, image: convenience },
   { id: 10, label: '카페', category_id: 6, image: cafe },
-  { id: 11, label: '선한 영향력', category_id: 11, image: etc },
+  { id: 11, label: '선한영향력가게😇', category_id: 11, image: kind },
   { id: 12, label: '기타', category_id: 2, image: etc },
 ]
 
