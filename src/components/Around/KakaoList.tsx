@@ -17,6 +17,8 @@ interface Place {
   distance: number
   phone: string
   imageUrl: string
+  averagePrice: string
+  kakaoMapUrl: string
 }
 
 interface KakaoListProps {
@@ -86,7 +88,7 @@ const KakaoList: React.FC<KakaoListProps> = ({ setIsLoading }) => {
         const url =
           selectedCategoryId === 3
             ? `/stores?latitude=${userPosition.lat}&longitude=${userPosition.lng}` // 전체 카테고리
-            : selectedCategoryId === 11
+            : selectedCategoryId === 12
             ? `/stores?options=score>=4&latitude=${userPosition.lat}&longitude=${userPosition.lng}` // 검증된 맛집 카테고리
             : `/stores/category/${selectedCategoryId}?latitude=${userPosition.lat}&longitude=${userPosition.lng}` // 나머지 카테고리
 
@@ -225,7 +227,7 @@ const KakaoList: React.FC<KakaoListProps> = ({ setIsLoading }) => {
                   </p>
                   <div className="flex items-center gap-4">
                     <p className="text-point1 text-sm font-SB00 leading-140">
-                      단가 8000원
+                      평균 {place.averagePrice}
                     </p>
                     <span className="rounded-[100px] px-[6px] py-[3px] border border-300 text-[10px] font-M00 text-500">
                       {place.distance
