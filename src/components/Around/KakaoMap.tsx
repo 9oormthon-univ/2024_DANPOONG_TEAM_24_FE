@@ -55,6 +55,23 @@ const KaKaoMap = () => {
   }
 
   useEffect(() => {
+    if (selectedFilterOption) {
+      let filter
+      if (selectedFilterOption === `선한영향력\n가게`) {
+        filter = Filter.find(
+          (f) => normalizeText(f.label) === normalizeText(selectedFilterOption)
+        )
+      } else {
+        filter = Filter.find((f) => f.label === selectedFilterOption)
+      }
+      console.log('bug:', filter)
+      if (filter) {
+        setSelectedCategoryId(filter.category_id || 3)
+      }
+    }
+  }, [selectedFilterOption])
+
+  useEffect(() => {
     const selectedAddress = getSelectedAddress()
     if (selectedAddress) {
       const geocoder = new kakao.maps.services.Geocoder()
@@ -90,7 +107,7 @@ const KaKaoMap = () => {
         const url =
           selectedCategoryId === 3
             ? `/stores?latitude=${userPosition.lat}&longitude=${userPosition.lng}`
-            : selectedCategoryId === 11
+            : selectedCategoryId === 12
             ? `/stores?options=score>=4&latitude=${userPosition.lat}&longitude=${userPosition.lng}` // 검증된 맛집 카테고리
             : `/stores/category/${selectedCategoryId}?latitude=${userPosition.lat}&longitude=${userPosition.lng}` // 나머지 카테고리
 
@@ -114,13 +131,28 @@ const KaKaoMap = () => {
     return () => {
       ignore = true
     }
-  }, [userPosition, selectedCategoryId, selectedFilter, setPlaces])
+  }, [
+    userPosition,
+    selectedCategoryId,
+    selectedFilter,
+    setPlaces,
+    selectedFilterOption,
+  ])
 
   // 24/11/20 희진 추가
   // 페이지 로드 시 선택된 필터 버튼이 가운데로 오도록 처리
   useEffect(() => {
     if (selectedFilterOption && filterContainerRef.current) {
-      const selectedButton = document.getElementById(selectedFilterOption)
+      let selectedButton
+      if (selectedFilterOption === `선한영향력\n가게`) {
+        selectedButton = document.getElementById(
+          normalizeText(selectedFilterOption)
+        )
+      } else {
+        selectedButton = document.getElementById(selectedFilterOption)
+      }
+      console.log('selectedFilterOption:', selectedFilterOption)
+      console.log('selectedButton: ', selectedButton)
       if (selectedButton) {
         selectedButton.scrollIntoView({
           behavior: 'smooth',
@@ -130,6 +162,13 @@ const KaKaoMap = () => {
       }
     }
   }, [selectedFilterOption]) // selectedFilterOption이 변경될 때마다 실행
+
+  const normalizeText = (text: string) => {
+    return text
+      .replace(/\s+/g, '') // 공백 제거
+      .replace(/[^a-zA-Z가-힣0-9]/g, '') // 특수 문자 제거
+      .concat('😇')
+  }
 
   useEffect(() => {
     if (selectedPlace && mapRef.current) {
@@ -235,7 +274,10 @@ const KaKaoMap = () => {
                 label={filter.label}
                 category_id={filter.category_id ? filter.category_id : 0} // 24/11/22 희진 추가
                 selectedFilter={selectedFilter}
-                selected={selectedFilterOption === filter.label} // 24/11/20 희진 추가
+                selected={
+                  normalizeText(selectedFilterOption) ===
+                  normalizeText(filter.label)
+                } // 24/11/20 희진 추가
                 onClick={() =>
                   handleFilterClick(filter.id, filter.label, filter.category_id)
                 } // 24/11/20 희진 추가
