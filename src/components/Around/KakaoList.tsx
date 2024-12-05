@@ -46,7 +46,15 @@ const KakaoList: React.FC<KakaoListProps> = ({ setIsLoading }) => {
 
   useEffect(() => {
     if (selectedFilterOption) {
-      const filter = Filter.find((f) => f.label === selectedFilterOption)
+      let filter
+      if (selectedFilterOption === `선한영향력\n가게`) {
+        filter = Filter.find(
+          (f) => normalizeText(f.label) === normalizeText(selectedFilterOption)
+        )
+      } else {
+        filter = Filter.find((f) => f.label === selectedFilterOption)
+      }
+      console.log('bug:', filter)
       if (filter) {
         setSelectedCategoryId(filter.category_id || 3)
       }
@@ -149,7 +157,16 @@ const KakaoList: React.FC<KakaoListProps> = ({ setIsLoading }) => {
   // 페이지 로드 시 선택된 필터 버튼이 가운데로 오도록 처리
   useEffect(() => {
     if (selectedFilterOption && filterContainerRef.current) {
-      const selectedButton = document.getElementById(selectedFilterOption)
+      let selectedButton
+      if (selectedFilterOption === `선한영향력\n가게`) {
+        selectedButton = document.getElementById(
+          normalizeText(selectedFilterOption)
+        )
+      } else {
+        selectedButton = document.getElementById(selectedFilterOption)
+      }
+      console.log('selectedFilterOption:', selectedFilterOption)
+      console.log('selectedButton: ', selectedButton)
       if (selectedButton) {
         selectedButton.scrollIntoView({
           behavior: 'smooth',
@@ -159,6 +176,13 @@ const KakaoList: React.FC<KakaoListProps> = ({ setIsLoading }) => {
       }
     }
   }, [selectedFilterOption]) // selectedFilterOption이 변경될 때마다 실행
+
+  const normalizeText = (text: string) => {
+    return text
+      .replace(/\s+/g, '') // 공백 제거
+      .replace(/[^a-zA-Z가-힣0-9]/g, '') // 특수 문자 제거
+      .concat('😇')
+  }
 
   // 24/11/20 희진 변경
   const handleFilterClick = (
@@ -200,11 +224,14 @@ const KakaoList: React.FC<KakaoListProps> = ({ setIsLoading }) => {
           {Filter.map((filter) => (
             <FilterButton
               key={filter.id}
-              id={filter.id}
+              id={filter.id} // 정규화된 id
               label={filter.label}
-              category_id={filter.category_id ? filter.category_id : 0}
+              category_id={filter.category_id || 0}
               selectedFilter={selectedFilter}
-              selected={selectedFilterOption === filter.label}
+              selected={
+                normalizeText(selectedFilterOption) ===
+                normalizeText(filter.label)
+              }
               onClick={() =>
                 handleFilterClick(filter.id, filter.label, filter.category_id)
               }
