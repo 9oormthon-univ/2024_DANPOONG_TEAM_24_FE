@@ -18,7 +18,7 @@ import Recipe from './pages/Recipe/Recipe.tsx'
 import RecipeReturn from './pages/Recipe/RecipeReturn.tsx'
 import AuthLoading from './pages/Splash/AuthLoading.tsx'
 import PreparingSplash from './pages/Splash/PreparingSplash.tsx'
-import LoadingSplash from './pages/Splash/LoadingSplash.tsx'
+import Splash from './pages/Splash/Splash.tsx'
 
 const router = createBrowserRouter([
   {
@@ -42,7 +42,7 @@ const router = createBrowserRouter([
   { path: 'recipeReturn', element: <RecipeReturn /> },
   { path: '/auth', element: <AuthLoading /> },
   { path: '/preparingSplash', element: <PreparingSplash /> },
-  { path: '/loadingSplash', element: <LoadingSplash /> },
+  { path: '/splash', element: <Splash /> },
 ])
 
 createRoot(document.getElementById('root')!).render(

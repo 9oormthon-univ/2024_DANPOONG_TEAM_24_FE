@@ -51,7 +51,7 @@ export default function Splash() {
         </svg>
         <div className="absolute flex flex-col gap-4 items-center top-[calc(50%-50px)] left-1/2 transform -translate-x-1/2 -translate-y-1/2">
           <img src={logo} className="w-[241px]" alt="로고" />
-          <p className="text-white text-lg font-normal">
+          <p className="text-white text-lg font-normal font-M00">
             따뜻한 한 끼를 이어주다
           </p>
         </div>
