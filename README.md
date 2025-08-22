@@ -51,8 +51,8 @@
           </a>
         </td>
         <td align="center">
-          <a href="https://github.com/doyun5565">
-            <img src="https://avatars.githubusercontent.com/doyun5565" width="100px" alt="_" />
+          <a href="https://github.com/uwoon">
+            <img src="https://avatars.githubusercontent.com/uwoon" width="100px" alt="_" />
           </a>
         </td>
       </tr>
